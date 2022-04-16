@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smartnotes/screens/classrooms.dart';
+import 'package:smartnotes/screens/personal_notes.dart';
 import 'package:smartnotes/screens/profile.dart';
 import 'package:smartnotes/screens/explore.dart';
 import 'package:smartnotes/screens/dashboard.dart';
@@ -28,6 +29,7 @@ class _MainScreenState extends State<MainScreen> {
     Dashboard(),
     Explore(),
     Classrooms(),
+    PersonalNotes(),
     Profile(),
   ];
 
@@ -37,44 +39,53 @@ class _MainScreenState extends State<MainScreen> {
       child: Scaffold(
         body: pageList[pageIndex],
         bottomNavigationBar: BottomNavigationBar(
-            selectedItemColor: Colors.amber,
-            unselectedItemColor: Colors.black.withOpacity(0.32),
-            currentIndex: pageIndex,
-            onTap: (value) {
-              setState(() {
-                pageIndex = value;
-              });
-            },
-            type: BottomNavigationBarType.fixed,
-            items: [
-              BottomNavigationBarItem(
-                icon: Image.asset(
-                  'assets/icons/Home.png',
-                  height: 25,
-                ),
-                label: "Home",
+          selectedItemColor: Colors.amber,
+          unselectedItemColor: Colors.black.withOpacity(0.32),
+          currentIndex: pageIndex,
+          onTap: (value) {
+            setState(() {
+              pageIndex = value;
+            });
+          },
+          type: BottomNavigationBarType.fixed,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.space_dashboard,
+                size: 25,
               ),
-              BottomNavigationBarItem(
-                icon: Image.asset(
-                  'assets/icons/Discovery.png',
-                  height: 25,
-                ),
-                label: "Explore",
+              label: "Home",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.explore_outlined,
+                size: 25,
               ),
-              BottomNavigationBarItem(
-                icon: Image.asset(
-                  'assets/icons/Video.png',
-                  height: 25,
-                ),
-                label: "Classroom",
+              label: "Explore",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.tv_rounded,
+                size: 25,
               ),
-              const BottomNavigationBarItem(
-                icon: CircleAvatar(
-                  radius: 15,
-                ),
-                label: "Profile",
+              label: "Classroom",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.notes_outlined,
+                size: 25,
               ),
-            ]),
+              label: "My Notes",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.account_circle_outlined,
+                size: 25,
+              ),
+              label: "Profile",
+            ),
+          ],
+        ),
       ),
     );
   }
