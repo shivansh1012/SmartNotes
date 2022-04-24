@@ -146,7 +146,7 @@ class Explore extends StatelessWidget {
                   children: [
                     // TopicTag(), // * Try to implement Topic Tag in explore page
                     GestureDetector(
-                      onTap: (() => const NoteDetails()),
+                      // onTap: Navigator.push(context, ),
                       child: Card(
                         margin: const EdgeInsets.symmetric(horizontal: 15.0),
                         child: Row(
