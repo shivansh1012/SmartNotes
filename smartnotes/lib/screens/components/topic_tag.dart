@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:smartnotes/constants.dart';
-import 'package:smartnotes/screens/components/carousel.dart';
 
 List<Card> tags = [
-  const Card(
-    shape: RoundedRectangleBorder(
+  Card(
+    color: Colors.grey[100],
+    shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(35.0),
         topRight: Radius.circular(35.0),
@@ -13,16 +12,20 @@ List<Card> tags = [
         bottomRight: Radius.circular(35.0),
       ),
     ),
-    child: Text(
-      "Physics",
-      style: TextStyle(
-        fontSize: 16.0,
-        fontWeight: FontWeight.w500,
+    child: const Align(
+      alignment: Alignment.center,
+      child: Text(
+        "Physics",
+        style: TextStyle(
+          fontSize: 16.0,
+          fontWeight: FontWeight.w500,
+        ),
       ),
     ),
   ),
-  const Card(
-    shape: RoundedRectangleBorder(
+  Card(
+    color: Colors.grey[100],
+    shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(35.0),
         topRight: Radius.circular(35.0),
@@ -30,11 +33,56 @@ List<Card> tags = [
         bottomRight: Radius.circular(35.0),
       ),
     ),
-    child: Text(
-      "Chemistry",
-      style: TextStyle(
-        fontSize: 16.0,
-        fontWeight: FontWeight.w500,
+    child: const Align(
+      alignment: Alignment.center,
+      child: Text(
+        "Chemistry",
+        style: TextStyle(
+          fontSize: 16.0,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+    ),
+  ),
+  Card(
+    color: Colors.grey[100],
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(35.0),
+        topRight: Radius.circular(35.0),
+        bottomLeft: Radius.circular(35.0),
+        bottomRight: Radius.circular(35.0),
+      ),
+    ),
+    child: const Align(
+      alignment: Alignment.center,
+      child: Text(
+        "Biology",
+        style: TextStyle(
+          fontSize: 16.0,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+    ),
+  ),
+  Card(
+    color: Colors.grey[100],
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(35.0),
+        topRight: Radius.circular(35.0),
+        bottomLeft: Radius.circular(35.0),
+        bottomRight: Radius.circular(35.0),
+      ),
+    ),
+    child: const Align(
+      alignment: Alignment.center,
+      child: Text(
+        "Maths",
+        style: TextStyle(
+          fontSize: 16.0,
+          fontWeight: FontWeight.w500,
+        ),
       ),
     ),
   ),
@@ -49,28 +97,21 @@ class TopicTag extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: CarouselSlider(
-          options: CarouselOptions(
-            enableInfiniteScroll: false,
-            viewportFraction: 0.3,
-            autoPlay: false,
-            aspectRatio: 2.0,
-          ),
-          items: const [
-            Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(15.0),
-                ),
+        options: CarouselOptions(
+          enableInfiniteScroll: false,
+          viewportFraction: 0.4,
+          autoPlay: false,
+          height: 50,
+        ),
+        items: tags
+            .map(
+              (tag) => Container(
+                margin: const EdgeInsets.all(5.0),
+                child: tag,
               ),
-              child: Text(
-                "Physics",
-                style: TextStyle(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-          ]),
+            )
+            .toList(),
+      ),
     );
   }
 }

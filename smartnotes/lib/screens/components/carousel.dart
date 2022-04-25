@@ -2,29 +2,113 @@ import 'dart:math';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:smartnotes/screens/note_details.dart';
 
 var rng = Random();
 
 List<Widget> noteCard = [
-  GestureDetector(
-    // ! Add Navigation to note details
-    // onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const NoteDetails())),
+  InkWell(
+    onTap: () => print("Working"),
     child: Card(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(15.0),
-          topRight: Radius.circular(15.0),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0),
+        side: const BorderSide(
+          color: Colors.grey,
+          width: 1.0,
         ),
       ),
+      child: Container(
+        padding: const EdgeInsets.all(5.0),
+        child: Column(
+          children: [
+            Container(
+              height: 80,
+              decoration: BoxDecoration(
+                color: Colors.red,
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+            ),
+            const SizedBox(
+              height: 5.0,
+            ),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  children: const [
+                    Text(
+                      "Thermodynamics",
+                      style: TextStyle(
+                        fontSize: 18.0,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5.0,
+                    ),
+                    Text(
+                      "Shivansh Pandey",
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    ),
+  ),
+  Card(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(15.0),
+      side: const BorderSide(
+        color: Colors.grey,
+        width: 1.0,
+      ),
+    ),
+    child: Container(
+      padding: const EdgeInsets.all(5.0),
       child: Column(
         children: [
-          Image.network(
-              "https://picsum.photos/1200/800?random=${rng.nextInt(100)}"),
-          const Text(
-            "Thermodynamics",
-            style: TextStyle(
-              fontSize: 16.0,
+          Container(
+            height: 80,
+            decoration: BoxDecoration(
+              color: Colors.red,
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+          ),
+          const SizedBox(
+            height: 5.0,
+          ),
+          Align(
+            alignment: Alignment.topLeft,
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 10.0),
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                children: const [
+                  Text(
+                    "Thermodynamics",
+                    style: TextStyle(
+                      fontSize: 18.0,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5.0,
+                  ),
+                  Text(
+                    "Shivansh Pandey",
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
+              ),
             ),
           )
         ],
@@ -32,63 +116,109 @@ List<Widget> noteCard = [
     ),
   ),
   Card(
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(15.0),
-        topRight: Radius.circular(15.0),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(15.0),
+      side: const BorderSide(
+        color: Colors.grey,
+        width: 1.0,
       ),
     ),
-    child: Column(
-      children: [
-        Image.network(
-            "https://picsum.photos/1200/800?random=${rng.nextInt(100)}"),
-        const Text(
-          "Nuclear Chemistry",
-          style: TextStyle(
-            fontSize: 16.0,
+    child: Container(
+      padding: const EdgeInsets.all(5.0),
+      child: Column(
+        children: [
+          Container(
+            height: 80,
+            decoration: BoxDecoration(
+              color: Colors.red,
+              borderRadius: BorderRadius.circular(15.0),
+            ),
           ),
-        )
-      ],
+          const SizedBox(
+            height: 5.0,
+          ),
+          Align(
+            alignment: Alignment.topLeft,
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 10.0),
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                children: const [
+                  Text(
+                    "Thermodynamics",
+                    style: TextStyle(
+                      fontSize: 18.0,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5.0,
+                  ),
+                  Text(
+                    "Shivansh Pandey",
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
     ),
   ),
   Card(
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(15.0),
-        topRight: Radius.circular(15.0),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(15.0),
+      side: const BorderSide(
+        color: Colors.grey,
+        width: 1.0,
       ),
     ),
-    child: Column(
-      children: [
-        Image.network(
-            "https://picsum.photos/1200/800?random=${rng.nextInt(100)}"),
-        const Text(
-          "Generators",
-          style: TextStyle(
-            fontSize: 16.0,
+    child: Container(
+      padding: const EdgeInsets.all(5.0),
+      child: Column(
+        children: [
+          Container(
+            height: 80,
+            decoration: BoxDecoration(
+              color: Colors.red,
+              borderRadius: BorderRadius.circular(15.0),
+            ),
           ),
-        )
-      ],
-    ),
-  ),
-  Card(
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(15.0),
-        topRight: Radius.circular(15.0),
+          const SizedBox(
+            height: 5.0,
+          ),
+          Align(
+            alignment: Alignment.topLeft,
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 10.0),
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                children: const [
+                  Text(
+                    "Thermodynamics",
+                    style: TextStyle(
+                      fontSize: 18.0,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5.0,
+                  ),
+                  Text(
+                    "Shivansh Pandey",
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
+        ],
       ),
-    ),
-    child: Column(
-      children: [
-        Image.network(
-            "https://picsum.photos/1200/800?random=${rng.nextInt(100)}"),
-        const Text(
-          "Gravity Explained",
-          style: TextStyle(
-            fontSize: 16.0,
-          ),
-        )
-      ],
     ),
   ),
 ];
@@ -104,7 +234,7 @@ class Carousel extends StatelessWidget {
       child: CarouselSlider(
         options: CarouselOptions(
           enableInfiniteScroll: false,
-          viewportFraction: 0.6,
+          viewportFraction: 0.7,
           autoPlay: false,
           aspectRatio: 2.0,
         ),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:smartnotes/constants.dart';
+
 import 'package:smartnotes/screens/main_screen.dart';
 
 void main() {
@@ -15,10 +17,12 @@ class MyApp extends StatelessWidget {
       title: 'Smart Notes',
       debugShowCheckedModeBanner: false,
       home: const MainScreen(),
+      // home: const MainScreen(),
       theme: ThemeData(
-          textButtonTheme: TextButtonThemeData(
-        style: TextButton.styleFrom(primary: const Color(0xff0081C6)),
-      )),
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(primary: const Color(0xff0081C6)),
+        ),
+      ),
     );
   }
 }

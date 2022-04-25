@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smartnotes/screens/classrooms.dart';
 import 'package:smartnotes/screens/personal_notes.dart';
-import 'package:smartnotes/screens/profile.dart';
 import 'package:smartnotes/screens/explore.dart';
 import 'package:smartnotes/screens/dashboard.dart';
 import 'package:smartnotes/screens/sign_in.dart';

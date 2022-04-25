@@ -26,15 +26,20 @@ class NoteDetails extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
-                  margin: const EdgeInsets.all(15.0),
-                  child: const CircleAvatar(
-                    radius: 15.0,
-                    child: Icon(
-                      Icons.chevron_left_outlined,
-                      color: Colors.white,
+                InkWell(
+                  onTap: () {
+                    print("Works");
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.all(15.0),
+                    child: const CircleAvatar(
+                      radius: 15.0,
+                      child: Icon(
+                        Icons.chevron_left_outlined,
+                        color: Colors.white,
+                      ),
+                      backgroundColor: Colors.grey,
                     ),
-                    backgroundColor: Colors.grey,
                   ),
                 )
               ],
