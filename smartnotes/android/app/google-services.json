@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "486764833620",
+    "project_id": "smartnotes-46d96",
+    "storage_bucket": "smartnotes-46d96.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:486764833620:android:a2f19f77b72e90415af6c1",
+        "android_client_info": {
+          "package_name": "com.example.smartnotes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "486764833620-kinmrsk9cfmj3u5et2dci41196goanr2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.smartnotes",
+            "certificate_hash": "6d917a9e4151889639444a77161be928547f71c5"
+          }
+        },
+        {
+          "client_id": "486764833620-4mcalggvvpqrv1laf5qlkhjd80na010r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6miefBW3NzVSB58vwWng_fUW2F64VjwI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "486764833620-4mcalggvvpqrv1laf5qlkhjd80na010r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

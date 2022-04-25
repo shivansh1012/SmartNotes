@@ -35,6 +35,10 @@ dependencies:
   cupertino_icons: ^1.0.2
   carousel_slider: ^4.0.0
   flutter_native_splash: ^2.1.6
+  cloud_firestore: ^3.1.13
+  firebase_auth: ^3.3.15
+  firebase_core: ^1.15.0
+  fluttertoast: ^8.0.9
 
 flutter_native_splash:
   color: "#0081C6"
