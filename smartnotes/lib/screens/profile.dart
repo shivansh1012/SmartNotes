@@ -49,7 +49,7 @@ class _ProfileState extends State<Profile> {
         signOut(context);
       },
     );
-
+    
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -142,7 +142,6 @@ class _ProfileState extends State<Profile> {
       ),
     );
   }
-
   Future<void> signOut(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
     Navigator.of(context).pushReplacement(

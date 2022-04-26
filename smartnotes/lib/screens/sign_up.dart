@@ -118,7 +118,6 @@ class _SignUpState extends State<SignUp> {
         _signUpWithEmailAndPassword();
       },
     );
-
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,

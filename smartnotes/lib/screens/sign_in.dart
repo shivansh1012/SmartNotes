@@ -189,7 +189,6 @@ class _SignInState extends State<SignIn> {
       ),
     );
   }
-
   void _signInWithEmailAndPassword() async {
     if (_formKey.currentState!.validate()) {
       await _auth

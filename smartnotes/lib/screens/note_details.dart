@@ -28,7 +28,7 @@ class NoteDetails extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    print("Works");
+                    Navigator.pop(context);
                   },
                   child: Container(
                     margin: const EdgeInsets.all(15.0),
