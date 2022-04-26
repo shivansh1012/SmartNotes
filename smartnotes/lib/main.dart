@@ -1,8 +1,11 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-import 'package:smartnotes/screens/main_screen.dart';
+import 'package:smartnotes/views/mobile_view/mobile_view.dart';
 
-void main() {
+Future<void> main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -15,7 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Smart Notes',
       debugShowCheckedModeBanner: false,
-      home: const MainScreen(),
+      home: const MobileView(),
       // home: const MainScreen(),
       theme: ThemeData(
         textButtonTheme: TextButtonThemeData(
