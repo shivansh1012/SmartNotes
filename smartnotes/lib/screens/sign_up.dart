@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:smartnotes/constants.dart';
-import 'package:smartnotes/screens/sign_in.dart';
 
 class SignUp extends StatelessWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -111,12 +110,7 @@ class SignUp extends StatelessWidget {
                       style: TextStyle(fontSize: 16.0),
                     ),
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SignIn(),
-                        ),
-                      );
+                      Navigator.pop(context);
                     },
                   )
                 ],
