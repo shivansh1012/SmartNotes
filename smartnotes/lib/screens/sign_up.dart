@@ -17,9 +17,9 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   //firebase
   final _auth = FirebaseAuth.instance;
@@ -28,10 +28,10 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     final nameField = TextFormField(
       autofocus: false,
-      controller: nameController,
+      controller: _nameController,
       keyboardType: TextInputType.emailAddress,
       onSaved: (value) {
-        nameController.text = value!;
+        _nameController.text = value!;
       },
       validator: (value) {
         if (value!.isEmpty) {
@@ -53,10 +53,10 @@ class _SignUpState extends State<SignUp> {
 
     final emailField = TextFormField(
       autofocus: false,
-      controller: emailController,
+      controller: _emailController,
       keyboardType: TextInputType.emailAddress,
       onSaved: (value) {
-        emailController.text = value!;
+        _emailController.text = value!;
       },
       validator: (value) {
         if (value!.isEmpty) {
@@ -79,9 +79,9 @@ class _SignUpState extends State<SignUp> {
 
     final passwordField = TextFormField(
       autofocus: false,
-      controller: passwordController,
+      controller: _passwordController,
       onSaved: (value) {
-        passwordController.text = value!;
+        _passwordController.text = value!;
       },
       validator: (value) {
         if (value!.isEmpty) {
@@ -115,8 +115,7 @@ class _SignUpState extends State<SignUp> {
         backgroundColor: MaterialStateProperty.all(primary),
       ),
       onPressed: () {
-        signUp(
-            nameController.text, emailController.text, passwordController.text);
+        _signUpWithEmailAndPassword();
       },
     );
 
@@ -223,22 +222,25 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  void signUp(String name, String email, String password) async {
+  void _signUpWithEmailAndPassword() async {
     if (_formKey.currentState!.validate()) {
       await _auth
-          .createUserWithEmailAndPassword(email: email, password: password)
-          .then((value) => {saveDetailsToFirestore(name, email, password)})
+          .createUserWithEmailAndPassword(
+              email: _emailController.text, password: _passwordController.text)
+          .then((value) => {
+                saveDetailsToFirestore()
+              })
           .catchError((e) => {Fluttertoast.showToast(msg: e!.message)});
     }
   }
 
-  saveDetailsToFirestore(String name, String email, String password) async {
+  void saveDetailsToFirestore() async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = _auth.currentUser;
 
     UserModel userModel = UserModel();
 
-    userModel.name = name;
+    userModel.name = _nameController.text;
     userModel.email = user!.email;
     userModel.uid = user.uid;
 
@@ -249,10 +251,20 @@ class _SignUpState extends State<SignUp> {
 
     Fluttertoast.showToast(msg: "Account Created Successfully");
 
-    Navigator.replace(context, oldRoute: MaterialPageRoute(builder: (context) => const SignUp()), newRoute: MaterialPageRoute(builder: (context) => const Dashboard()));
+    Navigator.replace(context,
+        oldRoute: MaterialPageRoute(builder: (context) => const SignUp()),
+        newRoute: MaterialPageRoute(builder: (context) => const Dashboard()));
     // Navigator.pushAndRemoveUntil(
     //     (context),
     //     MaterialPageRoute(builder: (context) => const Dashboard()),
     //     (route) => false);
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 }

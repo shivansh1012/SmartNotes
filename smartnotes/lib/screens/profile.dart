@@ -1,11 +1,55 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smartnotes/constants.dart';
+import 'package:smartnotes/models/user_model.dart';
+import 'package:smartnotes/screens/dashboard.dart';
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
 
   @override
+  State<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      loggedInUser = UserModel.fromMap(value.data());
+      Fluttertoast.showToast(msg: "Profile for" + loggedInUser.name.toString());
+      setState(() {});
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final signOutButton = OutlinedButton(
+      child: const Text(
+        "Sign Out",
+        style: TextStyle(
+          fontSize: 16.0,
+          color: Colors.white,
+        ),
+      ),
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(primary),
+      ),
+      onPressed: () {
+        signOut(context);
+      },
+    );
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -32,7 +76,7 @@ class Profile extends StatelessWidget {
                     width: 15.0,
                   ),
                   Text(
-                    "Gaurav Gupta",
+                    "${loggedInUser.name}",
                     style: TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
@@ -92,9 +136,16 @@ class Profile extends StatelessWidget {
                 ],
               ),
             ),
+            signOutButton
           ],
         ),
       ),
     );
+  }
+
+  Future<void> signOut(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const Dashboard()));
   }
 }

@@ -16,8 +16,8 @@ class _SignInState extends State<SignIn> {
   final _formKey = GlobalKey<FormState>();
 
   //editing controller
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   //firebase
   final _auth = FirebaseAuth.instance;
@@ -26,10 +26,10 @@ class _SignInState extends State<SignIn> {
   Widget build(BuildContext context) {
     final emailField = TextFormField(
       autofocus: false,
-      controller: emailController,
+      controller: _emailController,
       keyboardType: TextInputType.emailAddress,
       onSaved: (value) {
-        emailController.text = value!;
+        _emailController.text = value!;
       },
       validator: (value) {
         if (value!.isEmpty) {
@@ -52,9 +52,9 @@ class _SignInState extends State<SignIn> {
 
     final passwordField = TextFormField(
       autofocus: false,
-      controller: passwordController,
+      controller: _passwordController,
       onSaved: (value) {
-        passwordController.text = value!;
+        _passwordController.text = value!;
       },
       validator: (value) {
         if (value!.isEmpty) {
@@ -88,7 +88,7 @@ class _SignInState extends State<SignIn> {
         backgroundColor: MaterialStateProperty.all(primary),
       ),
       onPressed: () {
-        signIn(emailController.text, passwordController.text);
+        _signInWithEmailAndPassword();
       },
     );
 
@@ -190,17 +190,26 @@ class _SignInState extends State<SignIn> {
     );
   }
 
-  void signIn(String email, String password) async {
-    if(_formKey.currentState!.validate()) {
-      await _auth.signInWithEmailAndPassword(email: email, password: password)
-        .then((uid) => {
-          Fluttertoast.showToast(msg: "Login Successful"),
-          // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const Dashboard()))
-          Navigator.pushNamed(context, '0')
-        })
-        .catchError((error) {
-          Fluttertoast.showToast(msg: error!.message);
-        });
+  void _signInWithEmailAndPassword() async {
+    if (_formKey.currentState!.validate()) {
+      await _auth
+          .signInWithEmailAndPassword(
+              email: _emailController.text, password: _passwordController.text)
+          .then((uid) => {
+                Fluttertoast.showToast(msg: "Login Successful"),
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const Dashboard()))
+                // Navigator.pushNamed(context, '0')
+              })
+          .catchError((error) {
+        Fluttertoast.showToast(msg: error!.message);
+      });
     }
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 }
