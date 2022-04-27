@@ -2,14 +2,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:smartnotes/constants.dart';
 import 'package:smartnotes/models/user_model.dart';
 
 import 'package:smartnotes/screens/Dashboard/dashboard.dart';
 import 'package:smartnotes/screens/Explore/explore.dart';
 import 'package:smartnotes/screens/Classroom/classroom.dart';
-import 'package:smartnotes/screens/PersonalNotes/personal_notes.dart';
+// import 'package:smartnotes/screens/PersonalNotes/personal_notes.dart';
 import 'package:smartnotes/screens/Profile/profile.dart';
 import 'package:smartnotes/screens/Authentication/sign_in.dart';
+import 'package:smartnotes/screens/Upload/upload.dart';
 
 class MobileView extends StatefulWidget {
   const MobileView({Key? key}) : super(key: key);
@@ -25,8 +27,9 @@ class _MobileViewState extends State<MobileView> {
   final List<Widget> pages = [
     const Dashboard(),
     const Explore(),
+    const Upload(),
     const Classroom(),
-    const PersonalNotes(),
+    // const PersonalNotes(),
     const SignIn()
   ];
 
@@ -66,6 +69,24 @@ class _MobileViewState extends State<MobileView> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 1,
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: IconButton(
+                onPressed: () => {
+                  Fluttertoast.showToast(msg: "Personal Notes clicked"),
+                },
+                icon: const Icon(
+                  Icons.article_outlined,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ],
+        ),
         // body: pages[currentSelectedPage],
         body: IndexedStack(
           index: currentSelectedPage,
@@ -75,7 +96,7 @@ class _MobileViewState extends State<MobileView> {
           onTap: (onTap),
           currentIndex: currentSelectedPage,
 
-          selectedItemColor: Colors.amber,
+          selectedItemColor: primaryLight,
           // showSelectedLabels: false,
           // selectedFontSize: 0,
 
@@ -89,16 +110,37 @@ class _MobileViewState extends State<MobileView> {
 
           items: const [
             BottomNavigationBarItem(
-                label: 'Dashboard', icon: Icon(Icons.space_dashboard_rounded)),
+              label: 'Dashboard',
+              icon: Icon(
+                Icons.space_dashboard_rounded,
+              ),
+            ),
             BottomNavigationBarItem(
-                label: 'Explore', icon: Icon(Icons.explore_outlined)),
+              label: 'Explore',
+              icon: Icon(
+                Icons.explore_outlined,
+              ),
+            ),
             BottomNavigationBarItem(
-                label: 'Classrooms',
-                icon: Icon(Icons.cast_for_education_rounded)),
+              label: 'Upload',
+              icon: Icon(
+                Icons.add_circle_outline_outlined,
+              ),
+            ),
             BottomNavigationBarItem(
-                label: 'Notes', icon: Icon(Icons.notes_rounded)),
+              label: 'Classrooms',
+              icon: Icon(
+                Icons.cast_for_education_rounded,
+              ),
+            ),
+            // BottomNavigationBarItem(
+            //     label: 'Notes', icon: Icon(Icons.notes_rounded,),),
             BottomNavigationBarItem(
-                label: 'Profile', icon: Icon(Icons.account_circle_outlined)),
+              label: 'Profile',
+              icon: Icon(
+                Icons.account_circle_outlined,
+              ),
+            ),
           ],
         ),
       ),

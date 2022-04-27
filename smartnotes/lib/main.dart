@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:smartnotes/views/mobile_view/mobile_view.dart';
+import 'package:smartnotes/screens/SplashScreen/splash_screen.dart';
+// import 'package:smartnotes/views/mobile_view/mobile_view.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
       // showPerformanceOverlay: true,
       title: 'Smart Notes',
       debugShowCheckedModeBanner: false,
-      home: const MobileView(),
+      home: const SplashScreen(),
       // home: const MainScreen(),
       theme: ThemeData(
         textButtonTheme: TextButtonThemeData(

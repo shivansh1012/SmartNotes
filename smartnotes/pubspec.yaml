@@ -39,11 +39,12 @@ dependencies:
   firebase_auth: ^3.3.15
   firebase_core: ^1.15.0
   fluttertoast: ^8.0.9
+  animated_text_kit: ^4.2.1
 
-flutter_native_splash:
-  color: "#0081C6"
-  image: assets/icons/splash.png
-  web: false
+# flutter_native_splash:
+#   color: "#0081C6"
+#   image: assets/icons/splash.png
+#   web: false
 
 dev_dependencies:
   flutter_test:
