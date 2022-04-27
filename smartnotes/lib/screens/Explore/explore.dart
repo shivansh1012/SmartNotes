@@ -1,9 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smartnotes/screens/Explore/explore_card.dart';
 import 'package:smartnotes/screens/components/search_bar.dart';
 import 'package:smartnotes/screens/Explore/topic_tag.dart';
-import 'package:smartnotes/models/course_model.dart';
 
 class Explore extends StatefulWidget {
   const Explore({Key? key}) : super(key: key);
@@ -13,11 +13,30 @@ class Explore extends StatefulWidget {
 }
 
 class _ExploreState extends State<Explore> {
-  List<CourseModel> courseList = [];
+  List courseList = [];
 
   @override
   void initState() {
     super.initState();
+    fetchCoursesList();
+  }
+
+  void fetchCoursesList() async {
+    try {
+      await FirebaseFirestore.instance
+          .collection("courses")
+          .get()
+          .then((querySnapshot) {
+        for (var element in querySnapshot.docs) {
+          setState(() {
+            courseList.add(element);
+          });
+        }
+      });
+    } catch (e) {
+      Fluttertoast.showToast(msg: "Fetch Error" + e.toString());
+      print(e.toString());
+    }
   }
 
   @override
@@ -31,38 +50,25 @@ class _ExploreState extends State<Explore> {
             const SearchBar(),
             // Note Cards
             Expanded(
-              child: SingleChildScrollView(
-                child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Column(
-                    children: [
-                      const TopicTag(),
-                      ExploreCard(
-                          topicName: "Thermodynamics",
-                          author: "Gaurav Gupta",
-                          action: () {
-                            Fluttertoast.showToast(msg: "Thermodynamics");
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Column(
+                  children: [
+                    const TopicTag(),
+                    Expanded(
+                      child: ListView.builder(
+                          itemCount: courseList.length,
+                          itemBuilder: (context, index) {
+                            return ExploreCard(
+                                topicName: courseList[index]['title'],
+                                author: courseList[index]['author'],
+                                action: () {
+                                  Fluttertoast.showToast(
+                                      msg: courseList[index]['title']);
+                                });
                           }),
-                      ExploreCard(
-                          topicName: "Physics",
-                          author: "Anand Singh",
-                          action: () {
-                            Fluttertoast.showToast(msg: "Physics");
-                          }),
-                      ExploreCard(
-                          topicName: "Mathematics",
-                          author: "Shivansh Pandey",
-                          action: () {
-                            Fluttertoast.showToast(msg: "Mathematics");
-                          }),
-                      ExploreCard(
-                          topicName: "CPPS",
-                          author: "Gaurav Gupta",
-                          action: () {
-                            Fluttertoast.showToast(msg: "CPPS");
-                          }),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
