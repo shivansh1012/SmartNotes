@@ -5,9 +5,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smartnotes/constants.dart';
 import 'package:smartnotes/models/user_model.dart';
 
-import 'package:smartnotes/screens/Dashboard/dashboard.dart';
+import 'package:smartnotes/screens/Home/home.dart';
 import 'package:smartnotes/screens/Explore/explore.dart';
-import 'package:smartnotes/screens/Classroom/classroom.dart';
+import 'package:smartnotes/screens/Forums/forum.dart';
 // import 'package:smartnotes/screens/PersonalNotes/personal_notes.dart';
 import 'package:smartnotes/screens/Profile/profile.dart';
 import 'package:smartnotes/screens/Authentication/sign_in.dart';
@@ -25,10 +25,10 @@ class _MobileViewState extends State<MobileView> {
   UserModel loggedInUser = UserModel();
 
   final List<Widget> pages = [
-    const Dashboard(),
+    const Home(),
     const Explore(),
     const Upload(),
-    const Classroom(),
+    const Forum(),
     // const PersonalNotes(),
     const SignIn()
   ];

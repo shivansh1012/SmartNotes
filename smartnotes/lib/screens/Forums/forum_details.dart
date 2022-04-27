@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:smartnotes/constants.dart';
 
-class ClassroomDetails extends StatefulWidget {
-  const ClassroomDetails({Key? key}) : super(key: key);
+class ForumDetails extends StatefulWidget {
+  const ForumDetails({Key? key}) : super(key: key);
 
   @override
-  State<ClassroomDetails> createState() => _ClassroomDetailsState();
+  State<ForumDetails> createState() => _ForumDetailsState();
 }
 
-class _ClassroomDetailsState extends State<ClassroomDetails> {
+class _ForumDetailsState extends State<ForumDetails> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(

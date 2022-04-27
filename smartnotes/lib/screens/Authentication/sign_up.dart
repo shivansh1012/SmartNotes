@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smartnotes/constants.dart';
 import 'package:smartnotes/models/user_model.dart';
-import 'package:smartnotes/screens/Dashboard/dashboard.dart';
+import 'package:smartnotes/screens/Home/home.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -253,13 +253,13 @@ class _SignUpState extends State<SignUp> {
         builder: (context) => const SignUp(),
       ),
       newRoute: MaterialPageRoute(
-        builder: (context) => const Dashboard(),
+        builder: (context) => const Home(),
       ),
     );
 
     // Navigator.pushAndRemoveUntil(
     //     (context),
-    //     MaterialPageRoute(builder: (context) => const Dashboard()),
+    //     MaterialPageRoute(builder: (context) => const Home()),
     //     (route) => false);
   }
 

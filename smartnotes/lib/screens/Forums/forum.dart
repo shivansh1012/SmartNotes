@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:smartnotes/screens/Classroom/classroom_details.dart';
+import 'package:smartnotes/screens/Forums/forum_details.dart';
 import 'package:smartnotes/screens/components/content_card.dart';
 import 'package:smartnotes/screens/components/search_bar.dart';
 
-class Classroom extends StatelessWidget {
-  const Classroom({Key? key}) : super(key: key);
+class Forum extends StatelessWidget {
+  const Forum({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +27,12 @@ class Classroom extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    // Classroom cards
+                    // Forum cards
                     InkWell(
                       onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const ClassroomDetails(),
+                          builder: (context) => const ForumDetails(),
                         ),
                       ),
                       child: const ContentCard(),
