@@ -38,6 +38,39 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          leading: Builder(
+            builder: (context) {
+              return TextButton(
+                onPressed: () => print("Pressed"),
+                child: const Text(
+                  "Welcome",
+                  style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),
+                ),
+              );
+              // return const Text(
+              //   'Welcome',
+              //   style: TextStyle(
+              //     fontSize: 18.0,
+              //     fontWeight: FontWeight.bold,
+              //     color: Colors.amber,
+              //   ),
+              // );
+            },
+          ),
+          leadingWidth: 150,
+          // actions: const [
+          //   Text(
+          //     'Welcome',
+          //     style: TextStyle(
+          //       fontSize: 18.0,
+          //       fontWeight: FontWeight.bold,
+          //       color: Colors.amber,
+          //     ),
+          //   ),
+          // ],
+        ),
         body: pageList[pageIndex],
         bottomNavigationBar: BottomNavigationBar(
           selectedItemColor: Colors.amber,

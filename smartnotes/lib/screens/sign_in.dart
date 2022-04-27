@@ -164,7 +164,7 @@ class _SignInState extends State<SignIn> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        const Text("Dont have an account? "),
+                        const Text("Don't have an account? "),
                         GestureDetector(
                           onTap: () {
                             Navigator.push(
@@ -173,13 +173,16 @@ class _SignInState extends State<SignIn> {
                                     builder: (context) => const SignUp()));
                           },
                           child: const Text(
-                            "SignUp",
+                            "Sign Up",
                             style: TextStyle(
-                                fontWeight: FontWeight.w400, fontSize: 16.0),
+                              fontWeight: FontWeight.w400,
+                              fontSize: 16.0,
+                              color: Colors.blue,
+                            ),
                           ),
-                        )
+                        ),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -189,6 +192,7 @@ class _SignInState extends State<SignIn> {
       ),
     );
   }
+
   void _signInWithEmailAndPassword() async {
     if (_formKey.currentState!.validate()) {
       await _auth
@@ -196,7 +200,8 @@ class _SignInState extends State<SignIn> {
               email: _emailController.text, password: _passwordController.text)
           .then((uid) => {
                 Fluttertoast.showToast(msg: "Login Successful"),
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const Dashboard()))
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => const Dashboard()))
                 // Navigator.pushNamed(context, '0')
               })
           .catchError((error) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smartnotes/screens/classroom_details.dart';
 import 'package:smartnotes/screens/components/content_card.dart';
 import 'package:smartnotes/screens/components/search_bar.dart';
 
@@ -11,26 +12,38 @@ class Classrooms extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
-          child: Container(
-            margin: const EdgeInsets.symmetric(
-              horizontal: 10.0,
-            ),
-            child: Column(
-              children: const [
-                // Searchbar
-                SearchBar(),
+          child: Column(
+            children: [
+              // Searchbar
+              const SearchBar(),
 
-                SizedBox(
-                  height: 30,
+              const SizedBox(
+                height: 15,
+              ),
+
+              Container(
+                margin: const EdgeInsets.symmetric(
+                  horizontal: 10.0,
                 ),
-
-                // Classroom cards
-                ContentCard(),
-                ContentCard(),
-                ContentCard(),
-                ContentCard(),
-              ],
-            ),
+                child: Column(
+                  children: [
+                    // Classroom cards
+                    InkWell(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ClassroomDetails(),
+                        ),
+                      ),
+                      child: const ContentCard(),
+                    ),
+                    const ContentCard(),
+                    const ContentCard(),
+                    const ContentCard(),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
       ),
