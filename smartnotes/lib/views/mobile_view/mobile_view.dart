@@ -72,6 +72,14 @@ class _MobileViewState extends State<MobileView> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 1,
+          title: const Text(
+            'Smart Notes',
+            style: TextStyle(
+              fontSize: 30.0,
+              color: Colors.black,
+              fontFamily: 'LobsterTwo',
+            ),
+          ),
           actions: [
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -110,7 +118,7 @@ class _MobileViewState extends State<MobileView> {
 
           items: const [
             BottomNavigationBarItem(
-              label: 'Dashboard',
+              label: 'Home',
               icon: Icon(
                 Icons.space_dashboard_rounded,
               ),
@@ -128,7 +136,7 @@ class _MobileViewState extends State<MobileView> {
               ),
             ),
             BottomNavigationBarItem(
-              label: 'Classrooms',
+              label: 'Forums',
               icon: Icon(
                 Icons.cast_for_education_rounded,
               ),
