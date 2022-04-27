@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:smartnotes/screens/note_details.dart';
+import 'package:smartnotes/screens/Course/note_details.dart';
 
 int index = 0;
 

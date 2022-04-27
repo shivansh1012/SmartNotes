@@ -6,7 +6,7 @@ import 'package:smartnotes/screens/Explore/topic_tag.dart';
 import 'package:smartnotes/models/course_model.dart';
 
 class Explore extends StatefulWidget {
-  const Explore({ Key? key }) : super(key: key);
+  const Explore({Key? key}) : super(key: key);
 
   @override
   State<Explore> createState() => _ExploreState();
@@ -18,7 +18,6 @@ class _ExploreState extends State<Explore> {
   @override
   void initState() {
     super.initState();
-
   }
 
   @override
@@ -33,7 +32,6 @@ class _ExploreState extends State<Explore> {
             // Note Cards
             Expanded(
               child: SingleChildScrollView(
-                // scrollDirection: Axis.vertical,
                 child: Container(
                   margin: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Column(
@@ -45,36 +43,24 @@ class _ExploreState extends State<Explore> {
                           action: () {
                             Fluttertoast.showToast(msg: "Thermodynamics");
                           }),
-                      const SizedBox(
-                        height: 15,
-                      ),
                       ExploreCard(
                           topicName: "Physics",
                           author: "Anand Singh",
                           action: () {
                             Fluttertoast.showToast(msg: "Physics");
                           }),
-                      const SizedBox(
-                        height: 15,
-                      ),
                       ExploreCard(
                           topicName: "Mathematics",
                           author: "Shivansh Pandey",
                           action: () {
                             Fluttertoast.showToast(msg: "Mathematics");
                           }),
-                      const SizedBox(
-                        height: 15,
-                      ),
                       ExploreCard(
                           topicName: "CPPS",
                           author: "Gaurav Gupta",
                           action: () {
                             Fluttertoast.showToast(msg: "CPPS");
                           }),
-                      const SizedBox(
-                        height: 15,
-                      ),
                     ],
                   ),
                 ),

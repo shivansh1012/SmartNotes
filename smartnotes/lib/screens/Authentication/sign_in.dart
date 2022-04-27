@@ -1,22 +1,21 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smartnotes/constants.dart';
-import 'package:smartnotes/models/user_model.dart';
-import 'package:smartnotes/screens/dashboard.dart';
+import 'package:smartnotes/screens/Dashboard/dashboard.dart';
+import 'package:smartnotes/screens/Authentication/sign_up.dart';
 
-class SignUp extends StatefulWidget {
-  const SignUp({Key? key}) : super(key: key);
+class SignIn extends StatefulWidget {
+  const SignIn({Key? key}) : super(key: key);
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  State<SignIn> createState() => _SignInState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _SignInState extends State<SignIn> {
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _nameController = TextEditingController();
+  //editing controller
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -25,31 +24,6 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
-    final nameField = TextFormField(
-      autofocus: false,
-      controller: _nameController,
-      keyboardType: TextInputType.emailAddress,
-      onSaved: (value) {
-        _nameController.text = value!;
-      },
-      validator: (value) {
-        if (value!.isEmpty) {
-          return ("Name cannot be empty");
-        }
-        if (!RegExp(r"^.{3,}$").hasMatch(value)) {
-          return ("Enter Valid Name(Min. 3 Character)");
-        }
-        return null;
-      },
-      textInputAction: TextInputAction.next,
-      decoration: InputDecoration(
-        labelText: "Name",
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-      ),
-    );
-
     final emailField = TextFormField(
       autofocus: false,
       controller: _emailController,
@@ -102,9 +76,9 @@ class _SignUpState extends State<SignUp> {
       ),
     );
 
-    final signUpButton = OutlinedButton(
+    final signInButton = OutlinedButton(
       child: const Text(
-        "Sign Up",
+        "Sign In",
         style: TextStyle(
           fontSize: 16.0,
           color: Colors.white,
@@ -114,9 +88,10 @@ class _SignUpState extends State<SignUp> {
         backgroundColor: MaterialStateProperty.all(primary),
       ),
       onPressed: () {
-        _signUpWithEmailAndPassword();
+        _signInWithEmailAndPassword();
       },
     );
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -133,13 +108,13 @@ class _SignUpState extends State<SignUp> {
                   children: [
                     const CircleAvatar(
                       radius: 50,
-                      backgroundColor: Colors.green,
+                      backgroundColor: Colors.amber,
                     ),
                     const SizedBox(
                       height: 30.0,
                     ),
                     Text(
-                      "Sign Up",
+                      "Sign In",
                       style: TextStyle(
                         fontSize: 22.0,
                         color: primary,
@@ -148,20 +123,15 @@ class _SignUpState extends State<SignUp> {
                     const SizedBox(
                       height: 30.0,
                     ),
-                    nameField,
-                    const SizedBox(
-                      height: 15.0,
-                    ),
                     emailField,
                     const SizedBox(
                       height: 15.0,
                     ),
-                    // Password
                     passwordField,
                     const SizedBox(
                       height: 15.0,
                     ),
-                    signUpButton,
+                    signInButton,
                     const Divider(
                       color: Colors.black,
                     ),
@@ -170,7 +140,7 @@ class _SignUpState extends State<SignUp> {
                     ),
                     // const Center(
                     //   child: Text(
-                    //     "Already have an account?",
+                    //     "Don't have an account?",
                     //     style: TextStyle(color: Colors.grey, fontSize: 15.0),
                     //   ),
                     // ),
@@ -179,14 +149,14 @@ class _SignUpState extends State<SignUp> {
                     // ),
                     // OutlinedButton(
                     //   child: const Text(
-                    //     "Sign In",
+                    //     "Sign Up",
                     //     style: TextStyle(fontSize: 16.0),
                     //   ),
                     //   onPressed: () {
                     //     Navigator.push(
                     //       context,
                     //       MaterialPageRoute(
-                    //         builder: (context) => const SignIn(),
+                    //         builder: (context) => const SignUp(),
                     //       ),
                     //     );
                     //   },
@@ -194,13 +164,16 @@ class _SignUpState extends State<SignUp> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        const Text("Already have an account? "),
+                        const Text("Don't have an account? "),
                         GestureDetector(
                           onTap: () {
-                            Navigator.pop(context);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const SignUp()));
                           },
                           child: const Text(
-                            "Sign In",
+                            "Sign Up",
                             style: TextStyle(
                               fontWeight: FontWeight.w400,
                               fontSize: 16.0,
@@ -209,7 +182,7 @@ class _SignUpState extends State<SignUp> {
                           ),
                         ),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -220,52 +193,25 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  void _signUpWithEmailAndPassword() async {
+  void _signInWithEmailAndPassword() async {
     if (_formKey.currentState!.validate()) {
       await _auth
-          .createUserWithEmailAndPassword(
+          .signInWithEmailAndPassword(
               email: _emailController.text, password: _passwordController.text)
-          .then((value) => {saveDetailsToFirestore()})
-          .catchError((e) => {Fluttertoast.showToast(msg: e!.message)});
+          .then((uid) => {
+                Fluttertoast.showToast(msg: "Login Successful"),
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => const Dashboard()))
+                // Navigator.pushNamed(context, '0')
+              })
+          .catchError((error) {
+        Fluttertoast.showToast(msg: error!.message);
+      });
     }
-  }
-
-  void saveDetailsToFirestore() async {
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    User? user = _auth.currentUser;
-
-    UserModel userModel = UserModel();
-
-    userModel.name = _nameController.text;
-    userModel.email = user!.email;
-    userModel.uid = user.uid;
-
-    await firebaseFirestore
-        .collection("users")
-        .doc(user.uid)
-        .set(userModel.toMap());
-
-    Fluttertoast.showToast(msg: "Account Created Successfully");
-
-    Navigator.replace(
-      context,
-      oldRoute: MaterialPageRoute(
-        builder: (context) => const SignUp(),
-      ),
-      newRoute: MaterialPageRoute(
-        builder: (context) => const Dashboard(),
-      ),
-    );
-
-    // Navigator.pushAndRemoveUntil(
-    //     (context),
-    //     MaterialPageRoute(builder: (context) => const Dashboard()),
-    //     (route) => false);
   }
 
   @override
   void dispose() {
-    _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();

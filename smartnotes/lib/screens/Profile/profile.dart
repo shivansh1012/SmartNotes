@@ -5,7 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smartnotes/constants.dart';
 import 'package:smartnotes/models/user_model.dart';
 import 'package:smartnotes/screens/Profile/profile_button.dart';
-import 'package:smartnotes/screens/dashboard.dart';
+import 'package:smartnotes/screens/Dashboard/dashboard.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);

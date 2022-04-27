@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smartnotes/models/user_model.dart';
 
-import 'package:smartnotes/screens/dashboard.dart';
+import 'package:smartnotes/screens/Dashboard/dashboard.dart';
 import 'package:smartnotes/screens/Explore/explore.dart';
 import 'package:smartnotes/screens/Classroom/classroom.dart';
-import 'package:smartnotes/screens/personal_notes.dart';
+import 'package:smartnotes/screens/PersonalNotes/personal_notes.dart';
 import 'package:smartnotes/screens/Profile/profile.dart';
-import 'package:smartnotes/screens/sign_in.dart';
+import 'package:smartnotes/screens/Authentication/sign_in.dart';
 
 class MobileView extends StatefulWidget {
   const MobileView({Key? key}) : super(key: key);
@@ -91,13 +91,14 @@ class _MobileViewState extends State<MobileView> {
             BottomNavigationBarItem(
                 label: 'Dashboard', icon: Icon(Icons.space_dashboard_rounded)),
             BottomNavigationBarItem(
-                label: 'Explore', icon: Icon(Icons.explore_rounded)),
+                label: 'Explore', icon: Icon(Icons.explore_outlined)),
             BottomNavigationBarItem(
                 label: 'Classrooms',
                 icon: Icon(Icons.cast_for_education_rounded)),
             BottomNavigationBarItem(
                 label: 'Notes', icon: Icon(Icons.notes_rounded)),
-            BottomNavigationBarItem(label: 'Profile', icon: Icon(Icons.person)),
+            BottomNavigationBarItem(
+                label: 'Profile', icon: Icon(Icons.account_circle_outlined)),
           ],
         ),
       ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smartnotes/screens/classroom_details.dart';
+import 'package:smartnotes/screens/Classroom/classroom_details.dart';
 import 'package:smartnotes/screens/components/content_card.dart';
 import 'package:smartnotes/screens/components/search_bar.dart';
 

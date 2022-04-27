@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:smartnotes/screens/Classroom/classroom.dart';
-import 'package:smartnotes/screens/dashboard.dart';
+import 'package:smartnotes/screens/Dashboard/dashboard.dart';
 import 'package:smartnotes/screens/Explore/explore.dart';
-import 'package:smartnotes/screens/personal_notes.dart';
+import 'package:smartnotes/screens/PersonalNotes/personal_notes.dart';
 import 'package:smartnotes/screens/Profile/profile.dart';
 
 class TabNavigator extends StatelessWidget {
