@@ -4,7 +4,13 @@ import 'package:smartnotes/views/mobile_view/mobile_view.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    // options: const FirebaseOptions(
+    //     apiKey: "AIzaSyAJJolI6XzawYLR1heg3hzanWP-35NuIQ8",
+    //     projectId: "smartnotes-46d96",
+    //     messagingSenderId: "486764833620",
+    //     appId: "1:486764833620:web:11a35126d22886295af6c1"),
+  );
   runApp(const MyApp());
 }
 
@@ -19,7 +25,6 @@ class MyApp extends StatelessWidget {
       title: 'Smart Notes',
       debugShowCheckedModeBanner: false,
       home: const MobileView(),
-      // home: const MainScreen(),
       theme: ThemeData(
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(primary: const Color(0xff0081C6)),

@@ -108,5 +108,24 @@
       loadMainDartJs();
     }
   </script>
+
+<script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-analytics.js"></script>
+<script>
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
+  
+  var firebaseConfig = {
+    apiKey: "AIzaSyAJJolI6XzawYLR1heg3hzanWP-35NuIQ8",
+    authDomain: "smartnotes-46d96.firebaseapp.com",
+    projectId: "smartnotes-46d96",
+    storageBucket: "smartnotes-46d96.appspot.com",
+    messagingSenderId: "486764833620",
+    appId: "1:486764833620:web:11a35126d22886295af6c1"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+</script>
 </body>
 </html>

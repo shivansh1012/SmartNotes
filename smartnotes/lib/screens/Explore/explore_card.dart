@@ -8,7 +8,7 @@ class ExploreCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: action,
       child: Card(
         shape: RoundedRectangleBorder(
