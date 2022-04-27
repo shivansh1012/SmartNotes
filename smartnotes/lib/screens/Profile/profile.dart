@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smartnotes/constants.dart';
 import 'package:smartnotes/models/user_model.dart';
+import 'package:smartnotes/screens/Profile/profile_button.dart';
 import 'package:smartnotes/screens/dashboard.dart';
 
 class Profile extends StatefulWidget {
@@ -19,7 +20,6 @@ class _ProfileState extends State<Profile> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     FirebaseFirestore.instance
         .collection("users")
@@ -27,29 +27,12 @@ class _ProfileState extends State<Profile> {
         .get()
         .then((value) {
       loggedInUser = UserModel.fromMap(value.data());
-      Fluttertoast.showToast(msg: "Profile for" + loggedInUser.name.toString());
       setState(() {});
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final signOutButton = OutlinedButton(
-      child: const Text(
-        "Sign Out",
-        style: TextStyle(
-          fontSize: 16.0,
-          color: Colors.white,
-        ),
-      ),
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(primary),
-      ),
-      onPressed: () {
-        signOut(context);
-      },
-    );
-    
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -76,7 +59,7 @@ class _ProfileState extends State<Profile> {
                     width: 15.0,
                   ),
                   Text(
-                    "${loggedInUser.name}",
+                    "Welcome, ${loggedInUser.name}",
                     style: TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
@@ -86,62 +69,57 @@ class _ProfileState extends State<Profile> {
                 ],
               ),
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(
-                horizontal: 35.0,
-                vertical: 15.0,
-              ),
-              child: Row(
-                children: [
-                  const CircleAvatar(
-                    radius: 20.0,
-                    backgroundColor: Colors.blueAccent,
-                  ),
-                  const SizedBox(
-                    width: 15.0,
-                  ),
-                  Text(
-                    "General",
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: secondary,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(
-                horizontal: 35.0,
-                vertical: 15.0,
-              ),
-              child: Row(
-                children: [
-                  const CircleAvatar(
-                    radius: 20.0,
-                    backgroundColor: Colors.green,
-                  ),
-                  const SizedBox(
-                    width: 15.0,
-                  ),
-                  Text(
-                    "Preferences",
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: secondary,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            signOutButton
+            ProfileButton(
+                buttonName: "Profile",
+                buttonIcon: Icons.person_rounded,
+                action: () {
+                  Fluttertoast.showToast(msg: "Profile Clicked");
+                },
+                link: ""),
+            ProfileButton(
+                buttonName: "Settings",
+                buttonIcon: Icons.settings,
+                action: () {
+                  Fluttertoast.showToast(msg: "Settings Clicked");
+                },
+                link: ""),
+            ProfileButton(
+                buttonName: "Preference",
+                buttonIcon: Icons.precision_manufacturing,
+                action: () {
+                  Fluttertoast.showToast(msg: "Preferecnde Clicked");
+                },
+                link: ""),
+            ProfileButton(
+                buttonName: "Personal Notes",
+                buttonIcon: Icons.notes_rounded,
+                action: () {
+                  Fluttertoast.showToast(msg: "Personal Notes Clicked");
+                },
+                link: ""),
+            ProfileButton(
+                buttonName: "About",
+                buttonIcon: Icons.engineering_rounded,
+                action: () {
+                  Fluttertoast.showToast(msg: "About Clicked");
+                },
+                link: ""),
+            ProfileButton(
+                buttonName: "Sign Out",
+                buttonIcon: Icons.exit_to_app,
+                action: () {
+                  Fluttertoast.showToast(msg: "Signout Clicked");
+                  signOut(context);
+                },
+                link: ""),
+            const Text("App Version: 1.0.0",
+                style: TextStyle(fontSize: 10.0, color: Colors.grey))
           ],
         ),
       ),
     );
   }
+
   Future<void> signOut(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
     Navigator.of(context).pushReplacement(

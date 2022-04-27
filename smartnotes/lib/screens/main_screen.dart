@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:smartnotes/screens/classrooms.dart';
+import 'package:smartnotes/screens/Classroom/classroom.dart';
 import 'package:smartnotes/screens/personal_notes.dart';
-import 'package:smartnotes/screens/explore.dart';
+import 'package:smartnotes/screens/Explore/explore.dart';
 import 'package:smartnotes/screens/dashboard.dart';
 import 'package:smartnotes/screens/sign_in.dart';
 
@@ -28,7 +28,7 @@ class _MainScreenState extends State<MainScreen> {
   List<Widget> pageList = const <Widget>[
     Dashboard(),
     Explore(),
-    Classrooms(),
+    Classroom(),
     PersonalNotes(),
     // Profile(),
     SignIn(),

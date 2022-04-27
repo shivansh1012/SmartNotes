@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:smartnotes/screens/classrooms.dart';
+import 'package:smartnotes/screens/Classroom/classroom.dart';
 import 'package:smartnotes/screens/dashboard.dart';
-import 'package:smartnotes/screens/explore.dart';
+import 'package:smartnotes/screens/Explore/explore.dart';
 import 'package:smartnotes/screens/personal_notes.dart';
-import 'package:smartnotes/screens/profile.dart';
+import 'package:smartnotes/screens/Profile/profile.dart';
 
 class TabNavigator extends StatelessWidget {
   final GlobalKey<NavigatorState> navigatorKey;
@@ -19,7 +19,7 @@ class TabNavigator extends StatelessWidget {
     } else if(tabItem == "explore") {
       child = const Explore();
     } else if(tabItem == "classroom") {
-      child = const Classrooms();
+      child = const Classroom();
     } else if(tabItem == "personalnotes") {
       child = const PersonalNotes();
     } else if(tabItem == "profile") {

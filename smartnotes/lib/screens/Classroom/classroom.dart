@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:smartnotes/screens/components/content_card.dart';
 import 'package:smartnotes/screens/components/search_bar.dart';
 
-class Classrooms extends StatelessWidget {
-  const Classrooms({Key? key}) : super(key: key);
+class Classroom extends StatelessWidget {
+  const Classroom({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

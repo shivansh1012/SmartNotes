@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:smartnotes/screens/components/content_card.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:smartnotes/screens/Explore/explore_card.dart';
 import 'package:smartnotes/screens/components/search_bar.dart';
-import 'package:smartnotes/screens/components/topic_tag.dart';
+import 'package:smartnotes/screens/Explore/topic_tag.dart';
 
 var imageSrc = 'assets/images/Thumbnail.png';
 var title = 'New Heading';
@@ -101,22 +102,42 @@ class Explore extends StatelessWidget {
                 child: Container(
                   margin: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Column(
-                    children: const [
-                      TopicTag(),
-                      ContentCard(),
-                      SizedBox(
+                    children: [
+                      const TopicTag(),
+                      ExploreCard(
+                          topicName: "Thermodynamics",
+                          autor: "Gaurav Gupta",
+                          action: () {
+                            Fluttertoast.showToast(msg: "Thermodynamics");
+                          }),
+                      const SizedBox(
                         height: 15,
                       ),
-                      ContentCard(),
-                      SizedBox(
+                      ExploreCard(
+                          topicName: "Physics",
+                          autor: "Anand Singh",
+                          action: () {
+                            Fluttertoast.showToast(msg: "Physics");
+                          }),
+                      const SizedBox(
                         height: 15,
                       ),
-                      ContentCard(),
-                      SizedBox(
+                      ExploreCard(
+                          topicName: "Mathematics",
+                          autor: "Shivansh Pandey",
+                          action: () {
+                            Fluttertoast.showToast(msg: "Mathematics");
+                          }),
+                      const SizedBox(
                         height: 15,
                       ),
-                      ContentCard(),
-                      SizedBox(
+                      ExploreCard(
+                          topicName: "CPPS",
+                          autor: "Gaurav Gupta",
+                          action: () {
+                            Fluttertoast.showToast(msg: "CPPS");
+                          }),
+                      const SizedBox(
                         height: 15,
                       ),
                     ],

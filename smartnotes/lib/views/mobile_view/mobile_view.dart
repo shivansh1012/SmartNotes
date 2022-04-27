@@ -5,10 +5,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smartnotes/models/user_model.dart';
 
 import 'package:smartnotes/screens/dashboard.dart';
-import 'package:smartnotes/screens/explore.dart';
-import 'package:smartnotes/screens/classrooms.dart';
+import 'package:smartnotes/screens/Explore/explore.dart';
+import 'package:smartnotes/screens/Classroom/classroom.dart';
 import 'package:smartnotes/screens/personal_notes.dart';
-import 'package:smartnotes/screens/profile.dart';
+import 'package:smartnotes/screens/Profile/profile.dart';
 import 'package:smartnotes/screens/sign_in.dart';
 
 class MobileView extends StatefulWidget {
@@ -25,7 +25,7 @@ class _MobileViewState extends State<MobileView> {
   final List<Widget> pages = [
     const Dashboard(),
     const Explore(),
-    const Classrooms(),
+    const Classroom(),
     const PersonalNotes(),
     const SignIn()
   ];
@@ -66,7 +66,11 @@ class _MobileViewState extends State<MobileView> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: pages[currentSelectedPage],
+        // body: pages[currentSelectedPage],
+        body: IndexedStack(
+          index: currentSelectedPage,
+          children: pages,
+        ),
         bottomNavigationBar: BottomNavigationBar(
           onTap: (onTap),
           currentIndex: currentSelectedPage,
