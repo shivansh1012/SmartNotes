@@ -5,7 +5,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smartnotes/constants.dart';
 import 'package:smartnotes/models/user_model.dart';
 import 'package:smartnotes/screens/dashboard.dart';
-import 'package:smartnotes/screens/sign_in.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -198,17 +197,17 @@ class _SignUpState extends State<SignUp> {
                         const Text("Already have an account? "),
                         GestureDetector(
                           onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const SignIn()));
+                            Navigator.pop(context);
                           },
                           child: const Text(
-                            "SignIn",
+                            "Sign In",
                             style: TextStyle(
-                                fontWeight: FontWeight.w400, fontSize: 16.0),
+                              fontWeight: FontWeight.w400,
+                              fontSize: 16.0,
+                              color: Colors.blue,
+                            ),
                           ),
-                        )
+                        ),
                       ],
                     )
                   ],
@@ -226,9 +225,7 @@ class _SignUpState extends State<SignUp> {
       await _auth
           .createUserWithEmailAndPassword(
               email: _emailController.text, password: _passwordController.text)
-          .then((value) => {
-                saveDetailsToFirestore()
-              })
+          .then((value) => {saveDetailsToFirestore()})
           .catchError((e) => {Fluttertoast.showToast(msg: e!.message)});
     }
   }
@@ -250,9 +247,16 @@ class _SignUpState extends State<SignUp> {
 
     Fluttertoast.showToast(msg: "Account Created Successfully");
 
-    Navigator.replace(context,
-        oldRoute: MaterialPageRoute(builder: (context) => const SignUp()),
-        newRoute: MaterialPageRoute(builder: (context) => const Dashboard()));
+    Navigator.replace(
+      context,
+      oldRoute: MaterialPageRoute(
+        builder: (context) => const SignUp(),
+      ),
+      newRoute: MaterialPageRoute(
+        builder: (context) => const Dashboard(),
+      ),
+    );
+
     // Navigator.pushAndRemoveUntil(
     //     (context),
     //     MaterialPageRoute(builder: (context) => const Dashboard()),

@@ -12,7 +12,7 @@ class Dashboard extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              // Continue Reading container
+              // ---------------Continue Reading container----------------------
               Container(
                 margin: const EdgeInsets.all(10),
                 height: safeHeight * 0.2,
@@ -60,7 +60,7 @@ class Dashboard extends StatelessWidget {
                   ),
                 ),
               ),
-              // Trending Now section
+              // ---------------Trending Now section---------------
               Container(
                 margin: const EdgeInsets.all(15),
                 alignment: Alignment.topLeft,

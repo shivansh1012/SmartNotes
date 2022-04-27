@@ -42,7 +42,8 @@ dependencies:
 
 flutter_native_splash:
   color: "#0081C6"
-  image: assets/icons/note.png
+  image: assets/icons/splash.png
+  web: false
 
 dev_dependencies:
   flutter_test:

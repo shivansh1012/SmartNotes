@@ -18,8 +18,9 @@ class Carousel extends StatelessWidget {
     return SafeArea(
       child: CarouselSlider(
         options: CarouselOptions(
+          height: 200,
           enableInfiniteScroll: false,
-          viewportFraction: 0.7,
+          viewportFraction: 0.6,
           autoPlay: false,
           aspectRatio: 2.0,
         ),
@@ -39,7 +40,7 @@ class Carousel extends StatelessWidget {
                   },
                   child: Card(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
+                      borderRadius: BorderRadius.circular(20.0),
                       side: const BorderSide(
                         color: Colors.grey,
                         width: 1.0,
@@ -50,7 +51,7 @@ class Carousel extends StatelessWidget {
                       child: Column(
                         children: [
                           Container(
-                            height: 80,
+                            height: 100,
                             decoration: BoxDecoration(
                               color: Colors.red,
                               borderRadius: BorderRadius.circular(15.0),
@@ -69,6 +70,7 @@ class Carousel extends StatelessWidget {
                                 children: [
                                   Text(
                                     note['title'].toString(),
+                                    textAlign: TextAlign.start,
                                     style: const TextStyle(
                                       fontSize: 18.0,
                                     ),
