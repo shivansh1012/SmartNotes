@@ -52,6 +52,7 @@ class Carousel extends StatelessWidget {
                         children: [
                           Container(
                             height: 100,
+                            width: double.infinity,
                             decoration: BoxDecoration(
                               color: Colors.red,
                               borderRadius: BorderRadius.circular(15.0),
@@ -62,30 +63,33 @@ class Carousel extends StatelessWidget {
                           ),
                           Align(
                             alignment: Alignment.topLeft,
-                            child: Container(
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 10.0),
-                              padding: const EdgeInsets.all(10.0),
-                              child: Column(
-                                children: [
-                                  Text(
-                                    note['title'].toString(),
-                                    textAlign: TextAlign.start,
-                                    style: const TextStyle(
-                                      fontSize: 18.0,
+                            child: Align(
+                              alignment: Alignment.topRight,
+                              child: Container(
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 10.0),
+                                padding: const EdgeInsets.all(10.0),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      note['title'].toString(),
+                                      textAlign: TextAlign.left,
+                                      style: const TextStyle(
+                                        fontSize: 18.0,
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    height: 5.0,
-                                  ),
-                                  Text(
-                                    note['author'].toString(),
-                                    style: const TextStyle(
-                                      fontSize: 16.0,
-                                      color: Colors.grey,
+                                    const SizedBox(
+                                      height: 5.0,
                                     ),
-                                  ),
-                                ],
+                                    Text(
+                                      note['author'].toString(),
+                                      style: const TextStyle(
+                                        fontSize: 16.0,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           )
