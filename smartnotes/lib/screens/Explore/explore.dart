@@ -3,88 +3,23 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smartnotes/screens/Explore/explore_card.dart';
 import 'package:smartnotes/screens/components/search_bar.dart';
 import 'package:smartnotes/screens/Explore/topic_tag.dart';
+import 'package:smartnotes/models/course_model.dart';
 
-var imageSrc = 'assets/images/Thumbnail.png';
-var title = 'New Heading';
-var author = 'John Doe';
+class Explore extends StatefulWidget {
+  const Explore({ Key? key }) : super(key: key);
 
-// List<Widget> exploreCards = [
-//   Card(
-//     margin: const EdgeInsets.symmetric(horizontal: 15.0),
-//     child: Row(
-//       children: [
-//         const SizedBox(
-//           width: 10.0,
-//         ),
-//         Image.asset(
-//           imageSrc,
-//           height: safeHeight * 0.25,
-//           width: safeWidth * 0.25,
-//         ),
-//         const SizedBox(
-//           width: 15.0,
-//         ),
-//         Column(
-//           children: [
-//             Text(
-//               title,
-//               textAlign: TextAlign.left,
-//               style: const TextStyle(
-//                 fontSize: 18.0,
-//                 fontWeight: FontWeight.bold,
-//               ),
-//             ),
-//             Text(
-//               text,
-//               style: const TextStyle(
-//                 fontSize: 16.0,
-//               ),
-//             ),
-//           ],
-//         ),
-//       ],
-//     ),
-//   ),
-//   Card(
-//     margin: const EdgeInsets.symmetric(horizontal: 15.0),
-//     child: Row(
-//       children: [
-//         const SizedBox(
-//           width: 10.0,
-//         ),
-//         Image.asset(
-//           imageSrc,
-//           height: safeHeight * 0.25,
-//           width: safeWidth * 0.25,
-//         ),
-//         const SizedBox(
-//           width: 15.0,
-//         ),
-//         Column(
-//           children: [
-//             Text(
-//               title,
-//               textAlign: TextAlign.left,
-//               style: const TextStyle(
-//                 fontSize: 18.0,
-//                 fontWeight: FontWeight.bold,
-//               ),
-//             ),
-//             Text(
-//               text,
-//               style: const TextStyle(
-//                 fontSize: 16.0,
-//               ),
-//             ),
-//           ],
-//         ),
-//       ],
-//     ),
-//   ),
-// ];
+  @override
+  State<Explore> createState() => _ExploreState();
+}
 
-class Explore extends StatelessWidget {
-  const Explore({Key? key}) : super(key: key);
+class _ExploreState extends State<Explore> {
+  List<CourseModel> courseList = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +41,7 @@ class Explore extends StatelessWidget {
                       const TopicTag(),
                       ExploreCard(
                           topicName: "Thermodynamics",
-                          autor: "Gaurav Gupta",
+                          author: "Gaurav Gupta",
                           action: () {
                             Fluttertoast.showToast(msg: "Thermodynamics");
                           }),
@@ -115,7 +50,7 @@ class Explore extends StatelessWidget {
                       ),
                       ExploreCard(
                           topicName: "Physics",
-                          autor: "Anand Singh",
+                          author: "Anand Singh",
                           action: () {
                             Fluttertoast.showToast(msg: "Physics");
                           }),
@@ -124,7 +59,7 @@ class Explore extends StatelessWidget {
                       ),
                       ExploreCard(
                           topicName: "Mathematics",
-                          autor: "Shivansh Pandey",
+                          author: "Shivansh Pandey",
                           action: () {
                             Fluttertoast.showToast(msg: "Mathematics");
                           }),
@@ -133,7 +68,7 @@ class Explore extends StatelessWidget {
                       ),
                       ExploreCard(
                           topicName: "CPPS",
-                          autor: "Gaurav Gupta",
+                          author: "Gaurav Gupta",
                           action: () {
                             Fluttertoast.showToast(msg: "CPPS");
                           }),
