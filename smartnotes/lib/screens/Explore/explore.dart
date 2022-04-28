@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:smartnotes/screens/Course/course_details.dart';
 import 'package:smartnotes/screens/Explore/explore_card.dart';
 import 'package:smartnotes/screens/components/search_bar.dart';
 import 'package:smartnotes/screens/Explore/topic_tag.dart';
@@ -63,8 +64,7 @@ class _ExploreState extends State<Explore> {
                                 topicName: courseList[index]['title'],
                                 author: courseList[index]['author'],
                                 action: () {
-                                  Fluttertoast.showToast(
-                                      msg: courseList[index]['title']);
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => CourseDetails(courseUID: courseList[index]['uid'])));
                                 });
                           }),
                     ),
