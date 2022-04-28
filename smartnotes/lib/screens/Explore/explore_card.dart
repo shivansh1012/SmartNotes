@@ -4,7 +4,12 @@ class ExploreCard extends StatelessWidget {
   final String topicName;
   final String author;
   final Function() action;
-  const ExploreCard({Key? key, required this.topicName, required this.author, required this.action}) : super(key: key);
+  const ExploreCard(
+      {Key? key,
+      required this.topicName,
+      required this.author,
+      required this.action})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,32 +37,17 @@ class ExploreCard extends StatelessWidget {
               const SizedBox(
                 height: 5.0,
               ),
-              Align(
-                alignment: Alignment.topLeft,
-                child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(
-                    children: [
-                      Text(
-                        topicName,
-                        style: const TextStyle(
-                          fontSize: 18.0,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5.0,
-                      ),
-                      Text(
-                        author,
-                        style: const TextStyle(
-                          fontSize: 16.0,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+              ListTile(
+                title: Container(
+                    margin: const EdgeInsets.only(bottom: 10.0),
+                    child: Text(topicName,
+                        style: const TextStyle(fontSize: 18.0))),
+                subtitle: Text(author, style: const TextStyle(fontSize: 16.0)),
+                leading: const CircleAvatar(backgroundColor: Colors.pink),
+                trailing: const Text.rich(TextSpan(children: [
+                  TextSpan(text: "0 ", style: TextStyle(fontSize: 18)),
+                  WidgetSpan(child: Icon(Icons.thumb_up, size: 22.0))
+                ])),
               )
             ],
           ),
