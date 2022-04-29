@@ -57,16 +57,17 @@ class _ExploreState extends State<Explore> {
                     const TopicTag(),
                     Expanded(
                       child: ListView.builder(
-                          itemCount: courseList.length,
-                          itemBuilder: (context, index) {
-                            return ExploreCard(
-                                topicName: courseList[index]['title'],
-                                author: courseList[index]['author'],
-                                action: () {
-                                  Fluttertoast.showToast(
-                                      msg: courseList[index]['title']);
-                                });
-                          }),
+                        itemCount: courseList.length,
+                        itemBuilder: (context, index) {
+                          return ExploreCard(
+                              topicName: courseList[index]['title'],
+                              author: courseList[index]['author'],
+                              action: () {
+                                Fluttertoast.showToast(
+                                    msg: courseList[index]['title']);
+                              });
+                        },
+                      ),
                     ),
                   ],
                 ),

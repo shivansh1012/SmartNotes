@@ -5,7 +5,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smartnotes/constants.dart';
 import 'package:smartnotes/models/user_model.dart';
 import 'package:smartnotes/screens/Profile/profile_button.dart';
-import 'package:smartnotes/screens/Home/home.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -122,7 +121,8 @@ class _ProfileState extends State<Profile> {
 
   Future<void> signOut(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const Home()));
+    Navigator.popAndPushNamed(context, '/mobileView');
+    // Navigator.of(context).pushReplacement(
+    //     MaterialPageRoute(builder: (context) => const Home()));
   }
 }

@@ -1,6 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:smartnotes/screens/Course/note_details.dart';
 
 int index = 0;
 
@@ -31,12 +30,7 @@ class Carousel extends StatelessWidget {
                 child: InkWell(
                   onTap: () => {
                     // Navigator.of(context)
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const NoteDetails(),
-                      ),
-                    ),
+                    Navigator.pushNamed(context, '/noteDetails'),
                   },
                   child: Card(
                     shape: RoundedRectangleBorder(

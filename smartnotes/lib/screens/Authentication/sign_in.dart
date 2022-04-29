@@ -2,8 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smartnotes/constants.dart';
-import 'package:smartnotes/screens/Home/home.dart';
-import 'package:smartnotes/screens/Authentication/sign_up.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -167,10 +165,11 @@ class _SignInState extends State<SignIn> {
                         const Text("Don't have an account? "),
                         GestureDetector(
                           onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const SignUp()));
+                            Navigator.pushNamed(context, '/signUp');
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) => const SignUp()));
                           },
                           child: const Text(
                             "Sign Up",
@@ -198,15 +197,20 @@ class _SignInState extends State<SignIn> {
       await _auth
           .signInWithEmailAndPassword(
               email: _emailController.text, password: _passwordController.text)
-          .then((uid) => {
-                Fluttertoast.showToast(msg: "Login Successful"),
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => const Home()))
-                // Navigator.pushNamed(context, '0')
-              })
-          .catchError((error) {
-        Fluttertoast.showToast(msg: error!.message);
-      });
+          .then(
+            (uid) => {
+              Fluttertoast.showToast(msg: "Login Successful"),
+              Navigator.pushNamed(context, '/mobileView')
+              // Navigator.of(context).pushReplacement(
+              //     MaterialPageRoute(builder: (context) => const Home()))
+              // Navigator.pushNamed(context, '0')
+            },
+          )
+          .catchError(
+        (error) {
+          Fluttertoast.showToast(msg: error!.message);
+        },
+      );
     }
   }
 
