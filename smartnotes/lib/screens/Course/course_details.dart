@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:smartnotes/constants.dart';
 import 'package:smartnotes/models/course_model.dart';
 
 class CourseDetails extends StatefulWidget {
@@ -39,109 +38,48 @@ class _CourseDetailsState extends State<CourseDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: Column(
-          children: [
-            Stack(
-              children: [
-                Container(
-                  height: safeHeight * 0.25,
-                  width: safeWidth,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(
-                        'assets/images/Thumbnail.png',
-                      ),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    margin: const EdgeInsets.all(15.0),
-                    child: const CircleAvatar(
-                      radius: 15.0,
-                      child: Icon(
-                        Icons.chevron_left_outlined,
-                        color: Colors.white,
-                      ),
-                      backgroundColor: Colors.grey,
-                    ),
-                  ),
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 15.0,
-            ),
-            // Note Heading
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 15.0),
-              child: Column(
-                children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      courseInfo.title.toString(),
-                      style: const TextStyle(
-                        fontSize: 22.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15.0,
-                  ),
-                  const Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      "Fugiat in laborum ipsum dolore id officia nulla laborum aliquip. Aliqua officia aute adipisicing commodo velit laboris. Ut et commodo non dolor sint consequat non ipsum Lorem ad deserunt voluptate qui. Ut sint sunt officia ea anim sint ut excepteur esse anim. Tempor sint amet proident dolore ipsum excepteur.\n\nAliquip sunt esse non excepteur eiusmod ea enim consectetur amet. Ut nulla commodo veniam commodo exercitation fugiat eu anim. In fugiat veniam nisi incididunt qui voluptate. Tempor irure aliqua reprehenderit aute. Amet nulla enim deserunt excepteur laboris ad officia nisi eiusmod.\n\nEst in est quis sit cillum sint ut fugiat. Minim tempor veniam ullamco ullamco magna mollit enim reprehenderit aliquip sunt enim. Nulla laboris eu nulla elit. Ipsum cupidatat irure ad quis est id quis dolore.",
-                      style: TextStyle(fontSize: 16.0),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15.0,
-                  ),
-                  Row(
-                    children: const [
-                      Icon(
-                        Icons.thumb_up_outlined,
-                        size: 25.0,
-                      ),
-                      SizedBox(
-                        width: 5.0,
-                      ),
-                      Text(
-                        "15",
-                        style: TextStyle(fontSize: 16.0),
-                      ),
-                      SizedBox(
-                        width: 15.0,
-                      ),
-                      Icon(
-                        Icons.comment_outlined,
-                        size: 25.0,
-                      ),
-                      SizedBox(
-                        width: 5.0,
-                      ),
-                      Text(
-                        "3",
-                        style: TextStyle(fontSize: 16.0),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
+    final basicCourseDetails = Column(
+      children: <Widget>[
+        Text(courseInfo.title.toString(),
+            style: const TextStyle( fontSize: 35.0)),
+        const SizedBox(height: 30.0)
+      ],
     );
+
+    final topContent = Stack(
+      children: <Widget>[
+        Container(
+          padding: const EdgeInsets.only(left: 10),
+          height: MediaQuery.of(context).size.height * 0.4,
+          // decoration: const BoxDecoration(color: Colors.grey),
+          // Image Intended
+        ),
+        Container(
+          padding: const EdgeInsets.all(40.0),
+          height: MediaQuery.of(context).size.height * 0.4,
+          width: MediaQuery.of(context).size.width,
+          // allow when there is image
+          // decoration: const BoxDecoration(color: Color.fromRGBO(58, 66, 86, 0.9)),
+          child: Center(child: basicCourseDetails),
+        ),
+        Positioned(
+            left: 8.0,
+            top: 60.0,
+            child: InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: const Icon(Icons.arrow_back, color: Colors.white)))
+      ],
+    );
+
+    final bottomContent = Container(
+      width: MediaQuery.of(context).size.width,
+    );
+    return SafeArea(
+        child: Scaffold(
+      backgroundColor: Colors.white,
+      body: Column(children: [topContent, bottomContent]),
+    ));
   }
 }

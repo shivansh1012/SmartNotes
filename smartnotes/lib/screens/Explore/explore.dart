@@ -36,7 +36,6 @@ class _ExploreState extends State<Explore> {
       });
     } catch (e) {
       Fluttertoast.showToast(msg: "Fetch Error" + e.toString());
-      print(e.toString());
     }
   }
 

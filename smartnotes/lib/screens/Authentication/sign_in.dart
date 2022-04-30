@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smartnotes/constants.dart';
-import 'package:smartnotes/screens/Home/home.dart';
 import 'package:smartnotes/screens/Authentication/sign_up.dart';
 
 class SignIn extends StatefulWidget {
@@ -200,8 +199,7 @@ class _SignInState extends State<SignIn> {
               email: _emailController.text, password: _passwordController.text)
           .then((uid) => {
                 Fluttertoast.showToast(msg: "Login Successful"),
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => const Home()))
+                Navigator.pop(context)
                 // Navigator.pushNamed(context, '0')
               })
           .catchError((error) {

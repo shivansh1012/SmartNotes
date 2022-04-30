@@ -10,9 +10,12 @@ class Upload extends StatefulWidget {
 class _UploadState extends State<Upload> {
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
+    return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.purple,
+        backgroundColor: Colors.white,
+        body: Column(children: const [
+          Text("Upload")
+        ],),
       ),
     );
   }
