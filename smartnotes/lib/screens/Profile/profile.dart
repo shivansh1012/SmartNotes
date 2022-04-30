@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smartnotes/constants.dart';
 import 'package:smartnotes/models/user_model.dart';
+import 'package:smartnotes/screens/AboutUs/about_us.dart';
 import 'package:smartnotes/screens/Authentication/sign_in.dart';
 import 'package:smartnotes/screens/Profile/profile_button.dart';
 
@@ -27,6 +28,7 @@ class _ProfileState extends State<Profile> {
     User? user = FirebaseAuth.instance.currentUser;
     if (FirebaseAuth.instance.currentUser == null) {
       // Fluttertoast.showToast(msg: "No User");
+      loggedInUser = UserModel();
       setState(() {});
     } else {
       FirebaseFirestore.instance
@@ -50,7 +52,11 @@ class _ProfileState extends State<Profile> {
         buttonIcon: Icons.add,
         action: () {
           Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => const SignIn()));
+            .push(MaterialPageRoute(builder: (context) => const SignIn()))
+            .then((value) => {
+                  Fluttertoast.showToast(msg: "Inititating User Search"),
+                  fetchUserData()
+                });
         },
         link: "");
 
@@ -131,7 +137,7 @@ class _ProfileState extends State<Profile> {
                 padding: const EdgeInsets.all(20.0),
                 child: loggedInUser.name == null ? signInGreeting : greeting),
             ProfileButton(
-                buttonName: "Profile",
+                buttonName: "Account",
                 buttonIcon: Icons.person_rounded,
                 action: () {
                   Fluttertoast.showToast(msg: "Profile Clicked");
@@ -162,7 +168,7 @@ class _ProfileState extends State<Profile> {
                 buttonName: "About",
                 buttonIcon: Icons.engineering_rounded,
                 action: () {
-                  Fluttertoast.showToast(msg: "About Clicked");
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AboutUs()));
                 },
                 link: ""),
             loggedInUser.email == null ? signInButton : signOutButton,

@@ -21,11 +21,11 @@ class BottomNavigation extends StatelessWidget {
       currentIndex: MobileViewState.currentSelectedPage,
 
       selectedItemColor: primaryLight,
-      // showSelectedLabels: false,
+      showSelectedLabels: false,
       // selectedFontSize: 0,
 
       unselectedItemColor: Colors.black.withOpacity(0.32),
-      // showUnselectedLabels: false,
+      showUnselectedLabels: false,
       // unselectedFontSize: 0,
 
       elevation: 0,
