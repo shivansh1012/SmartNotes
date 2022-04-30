@@ -33,17 +33,17 @@ class MobileViewState extends State<MobileView> {
         tabName: "Explore",
         icon: Icons.explore_outlined,
         page: const Explore()),
-    TabItem(
-        tabName: "Upload",
-        icon: Icons.add_circle_outline_outlined,
-        page: const Upload()),
+    // TabItem(
+    //     tabName: "Upload",
+    //     icon: Icons.add_circle_outline_outlined,
+    //     page: const Upload()),
     TabItem(
         tabName: "Forum",
         icon: Icons.cast_for_education_rounded,
         page: const Forum()),
     TabItem(
         tabName: "Profile",
-        icon: Icons.account_circle_outlined,
+        icon: Icons.person_outline,
         page: const Profile())
   ];
 

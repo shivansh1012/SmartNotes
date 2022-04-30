@@ -7,6 +7,7 @@ import 'package:smartnotes/models/user_model.dart';
 import 'package:smartnotes/screens/AboutUs/about_us.dart';
 import 'package:smartnotes/screens/Authentication/sign_in.dart';
 import 'package:smartnotes/screens/Profile/profile_button.dart';
+import 'package:smartnotes/screens/Upload/upload.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -47,18 +48,6 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    final signInButton = ProfileButton(
-        buttonName: "Sign In",
-        buttonIcon: Icons.add,
-        action: () {
-          Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const SignIn()))
-            .then((value) => {
-                  Fluttertoast.showToast(msg: "Inititating User Search"),
-                  fetchUserData()
-                });
-        },
-        link: "");
 
     final signOutButton = ProfileButton(
         buttonName: "Sign Out",
@@ -136,13 +125,14 @@ class _ProfileState extends State<Profile> {
                 ),
                 padding: const EdgeInsets.all(20.0),
                 child: loggedInUser.name == null ? signInGreeting : greeting),
-            ProfileButton(
-                buttonName: "Account",
-                buttonIcon: Icons.person_rounded,
-                action: () {
-                  Fluttertoast.showToast(msg: "Profile Clicked");
-                },
-                link: ""),
+            if (loggedInUser.email != null)
+              ProfileButton(
+                  buttonName: "Account",
+                  buttonIcon: Icons.person_rounded,
+                  action: () {
+                    Fluttertoast.showToast(msg: "Profile Clicked");
+                  },
+                  link: ""),
             ProfileButton(
                 buttonName: "Settings",
                 buttonIcon: Icons.settings,
@@ -157,21 +147,32 @@ class _ProfileState extends State<Profile> {
                   Fluttertoast.showToast(msg: "Preferecnde Clicked");
                 },
                 link: ""),
-            ProfileButton(
-                buttonName: "Personal Notes",
-                buttonIcon: Icons.notes_rounded,
-                action: () {
-                  Fluttertoast.showToast(msg: "Personal Notes Clicked");
-                },
-                link: ""),
+            if (loggedInUser.email != null)
+              ProfileButton(
+                  buttonName: "Personal Notes",
+                  buttonIcon: Icons.notes_rounded,
+                  action: () {
+                    Fluttertoast.showToast(msg: "Personal Notes Clicked");
+                  },
+                  link: ""),
+            if (loggedInUser.email != null)
+              ProfileButton(
+                  buttonName: "Upload",
+                  buttonIcon: Icons.add_circle_outline_outlined,
+                  action: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const Upload()));
+                  },
+                  link: ""),
             ProfileButton(
                 buttonName: "About",
                 buttonIcon: Icons.engineering_rounded,
                 action: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AboutUs()));
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const AboutUs()));
                 },
                 link: ""),
-            loggedInUser.email == null ? signInButton : signOutButton,
+            if (loggedInUser.email != null) signOutButton,
             const Text("App Version: 1.0.0",
                 style: TextStyle(fontSize: 10.0, color: Colors.grey))
           ],

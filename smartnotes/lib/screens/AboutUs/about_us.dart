@@ -36,7 +36,7 @@ class _AboutUsState extends State<AboutUs> {
           viewportFraction: 0.8,
           aspectRatio: 2.0,
           autoPlay: true,
-          autoPlayInterval: const Duration(seconds: 1),
+          autoPlayInterval: const Duration(seconds: 2),
           height: 500),
       itemCount: contributors.length,
       itemBuilder: (context, index, realIndex) => Container(

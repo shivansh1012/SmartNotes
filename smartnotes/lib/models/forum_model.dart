@@ -1,22 +1,22 @@
-class CourseModel {
+class ForumModel {
   String? uid;
   String? title;
   String? author;
   String? description;
   Map? authorRef;
 
-  CourseModel({this.uid, this.title, this.author});
+  ForumModel({this.uid, this.title, this.author});
   
   //converter
-  CourseModel.fromJson(Map<String, Object?> json)
+  ForumModel.fromJson(Map<String, Object?> json)
       : this(
             uid: json['uid']! as String,
             author: json['author']! as String,
             title: json['title']! as String);
 
   //data from server
-  factory CourseModel.fromMap(map) {
-    return CourseModel(
+  factory ForumModel.fromMap(map) {
+    return ForumModel(
         uid: map['uid'], title: map['title'], author: map['author']);
   }
 
