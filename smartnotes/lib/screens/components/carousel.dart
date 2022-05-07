@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:smartnotes/models/course_model.dart';
 import 'package:smartnotes/screens/Course/note_details.dart';
 import 'package:smartnotes/screens/Explore/explore_card.dart';
 
@@ -10,11 +11,15 @@ class Carousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String, String>> noteCard = [
-      {'title': "Thermodynamics", 'author': "Shiv"},
-      {'title': "Thermo", 'author': "Shi"},
-      {'title': "dynamics", 'author': "Shiva"},
-      {'title': "TheDya", 'author': "Shivam"},
+    List<CourseModel> noteCard = [
+      CourseModel(
+          uid: "1", author: "Shivansh", title: "Thermodynamics", description: "", coverImageURL: "https://firebasestorage.googleapis.com/v0/b/smartnotes-46d96.appspot.com/o/notesA1_comparison.png?alt=media&token=bd5f1a19-5cdc-4534-ac49-f2b16f9e2eb9"),
+      CourseModel(
+          uid: "2", author: "Shivansh2", title: "Thermodynamics1", description: "", coverImageURL: "https://firebasestorage.googleapis.com/v0/b/smartnotes-46d96.appspot.com/o/notesA1_comparison.png?alt=media&token=bd5f1a19-5cdc-4534-ac49-f2b16f9e2eb9"),
+      CourseModel(
+          uid: "3", author: "Shivansh4", title: "Thermodynamics3", description: "", coverImageURL: "https://firebasestorage.googleapis.com/v0/b/smartnotes-46d96.appspot.com/o/notesA1_comparison.png?alt=media&token=bd5f1a19-5cdc-4534-ac49-f2b16f9e2eb9"),
+      CourseModel(
+          uid: "4", author: "Shivansh3", title: "Thermodynamics4", description: "", coverImageURL: "https://firebasestorage.googleapis.com/v0/b/smartnotes-46d96.appspot.com/o/notesA1_comparison.png?alt=media&token=bd5f1a19-5cdc-4534-ac49-f2b16f9e2eb9"),
     ];
     return SafeArea(
       child: CarouselSlider.builder(
@@ -29,8 +34,7 @@ class Carousel extends StatelessWidget {
         itemBuilder: (context, index, realIndex) => Container(
           margin: const EdgeInsets.symmetric(horizontal: 5),
           child: ExploreCard(
-              topicName: noteCard[index]['title'].toString(),
-              author: noteCard[index]['author'].toString(),
+              courseData: noteCard[index],
               action: () {
                 Navigator.push(
                   context,

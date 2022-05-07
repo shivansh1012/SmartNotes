@@ -1,3 +1,4 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 class Upload extends StatefulWidget {
@@ -8,6 +9,15 @@ class Upload extends StatefulWidget {
 }
 
 class _UploadState extends State<Upload> {
+  PlatformFile? pickedFile;
+  Future selectFile() async {
+    final result = await FilePicker.platform.pickFiles();
+    if (result == null) return;
+    setState(() {
+      pickedFile = result.files.first;
+    });
+  }
+
   final TextEditingController _courseNameController = TextEditingController();
   final TextEditingController _courseDescriptionController =
       TextEditingController();
@@ -56,8 +66,14 @@ class _UploadState extends State<Upload> {
                   const SizedBox(height: 30),
                   courseDescriptionTextBox,
                   const SizedBox(height: 30),
+                  if (pickedFile != null)
+                    Container(
+                      height: 100,
+                      padding: const EdgeInsets.all(10),
+                      child: Center(child: Text((pickedFile!.name))),
+                    ),
                   ElevatedButton(
-                      onPressed: () {}, child: const Text("Select File")),
+                      onPressed: selectFile, child: const Text("Select File")),
                   const SizedBox(height: 30),
                   ElevatedButton(
                       onPressed: () {}, child: const Text('Upload File'))

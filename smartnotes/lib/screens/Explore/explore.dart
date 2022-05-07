@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:smartnotes/screens/Course/course_info.dart';
+import 'package:smartnotes/models/course_model.dart';
+import 'package:smartnotes/screens/Course/course_preview.dart';
 import 'package:smartnotes/screens/Explore/explore_card.dart';
 import 'package:smartnotes/screens/components/search_bar.dart';
 import 'package:smartnotes/screens/Explore/topic_tag.dart';
@@ -60,13 +61,13 @@ class _ExploreState extends State<Explore> {
                           itemCount: courseList.length,
                           itemBuilder: (context, index) {
                             return ExploreCard(
-                                topicName: courseList[index]['title'],
-                                author: courseList[index]['author'],
+                                courseData:
+                                    CourseModel.fromMap(courseList[index]),
                                 action: () {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => CourseInfo(
+                                          builder: (context) => CoursePreview(
                                               courseUID: courseList[index]
                                                   ['uid'])));
                                 });

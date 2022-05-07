@@ -7,9 +7,7 @@ import 'package:smartnotes/models/user_model.dart';
 import 'package:smartnotes/screens/Home/home.dart';
 import 'package:smartnotes/screens/Explore/explore.dart';
 import 'package:smartnotes/screens/Forums/forum.dart';
-// import 'package:smartnotes/screens/PersonalNotes/personal_notes.dart';
 import 'package:smartnotes/screens/Profile/profile.dart';
-import 'package:smartnotes/screens/Upload/upload.dart';
 import 'package:smartnotes/views/mobile_view/bottom_navigation.dart';
 import 'package:smartnotes/views/mobile_view/tab_item.dart';
 
@@ -33,18 +31,12 @@ class MobileViewState extends State<MobileView> {
         tabName: "Explore",
         icon: Icons.explore_outlined,
         page: const Explore()),
-    // TabItem(
-    //     tabName: "Upload",
-    //     icon: Icons.add_circle_outline_outlined,
-    //     page: const Upload()),
     TabItem(
         tabName: "Forum",
         icon: Icons.cast_for_education_rounded,
         page: const Forum()),
     TabItem(
-        tabName: "Profile",
-        icon: Icons.person_outline,
-        page: const Profile())
+        tabName: "Profile", icon: Icons.person_outline, page: const Profile())
   ];
 
   void onTap(int index) {
@@ -78,14 +70,6 @@ class MobileViewState extends State<MobileView> {
         .then((value) {
       loggedInUser = UserModel.fromMap(value.data());
       Fluttertoast.showToast(msg: "Welcome " + loggedInUser.name.toString());
-
-      // setState(() {
-      //   tabs[4] = TabItem(
-      //       tabName: "Profile", icon: Icons.account_circle_outlined, page: const Profile());
-      //   tabs.asMap().forEach((index, details) {
-      //     details.setIndex(index);
-      //   });
-      // });
     }).catchError((error) {
       Fluttertoast.showToast(msg: error);
     });

@@ -3,24 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smartnotes/models/course_model.dart';
 
-class CourseInfo extends StatefulWidget {
+class CoursePreview extends StatefulWidget {
   final String courseUID;
-  const CourseInfo({Key? key, required this.courseUID}) : super(key: key);
+  const CoursePreview({Key? key, required this.courseUID}) : super(key: key);
 
   @override
-  State<CourseInfo> createState() => _CourseInfoState();
+  State<CoursePreview> createState() => _CoursePreviewState();
 }
 
-class _CourseInfoState extends State<CourseInfo> {
-  CourseModel courseInfo = CourseModel();
+class _CoursePreviewState extends State<CoursePreview> {
+  CourseModel courseDetails = CourseModel();
 
   @override
   void initState() {
     super.initState();
-    fetchCourseInfo();
+    fetchCourseDetails();
   }
 
-  void fetchCourseInfo() async {
+  void fetchCourseDetails() async {
     try {
       await FirebaseFirestore.instance
           .collection("courses")
@@ -28,7 +28,8 @@ class _CourseInfoState extends State<CourseInfo> {
           .get()
           .then((value) {
         setState(() {
-          courseInfo = CourseModel.fromMap(value.data());
+          courseDetails =
+              CourseModel.fromMap(value.data() as Map<String, dynamic>);
         });
       });
     } catch (e) {
@@ -38,13 +39,13 @@ class _CourseInfoState extends State<CourseInfo> {
 
   @override
   Widget build(BuildContext context) {
-    final basicCourseInfo = Column(
+    final basicCourseDetails = Column(
       children: <Widget>[
-        Text(courseInfo.title.toString(),
+        Text(courseDetails.title.toString(),
             textAlign: TextAlign.center,
             style: const TextStyle(fontSize: 35.0)),
         const SizedBox(height: 30.0),
-        Text(courseInfo.author.toString()),
+        Text(courseDetails.author.toString()),
         const SizedBox(height: 30.0),
         const Text("Free")
       ],
@@ -64,7 +65,7 @@ class _CourseInfoState extends State<CourseInfo> {
           width: MediaQuery.of(context).size.width,
           // allow when there is image
           // decoration: const BoxDecoration(color: Color.fromRGBO(58, 66, 86, 0.9)),
-          child: Center(child: basicCourseInfo),
+          child: Center(child: basicCourseDetails),
         ),
         Positioned(
             left: 8.0,
@@ -82,12 +83,12 @@ class _CourseInfoState extends State<CourseInfo> {
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height * 0.5,
       child: Column(
-        children: const [
-          Text("Course Description"),
-          SizedBox(height: 10),
+        children: [
+          const Text("Course Description"),
+          const SizedBox(height: 10),
           Text(
-            "Fugiat in laborum ipsum dolore id officia nulla laborum aliquip. Aliqua officia aute adipisicing commodo velit laboris. Ut et commodo non dolor sint consequat non ipsum Lorem ad deserunt voluptate qui. Ut sint sunt officia ea anim sint ut excepteur esse anim. Tempor sint amet proident dolore ipsum excepteur.\n\nAliquip sunt esse non excepteur eiusmod ea enim consectetur amet. Ut nulla commodo veniam commodo exercitation fugiat eu anim. In fugiat veniam nisi incididunt qui voluptate. Tempor irure aliqua reprehenderit aute. Amet nulla enim deserunt excepteur laboris ad officia nisi eiusmod.\n\nEst in est quis sit cillum sint ut fugiat. Minim tempor veniam ullamco ullamco magna mollit enim reprehenderit aliquip sunt enim. Nulla laboris eu nulla elit. Ipsum cupidatat irure ad quis est id quis dolore.",
-            style: TextStyle(fontSize: 16.0),
+            courseDetails.description.toString(),
+            style: const TextStyle(fontSize: 16.0),
           ),
         ],
       ),
@@ -99,6 +100,7 @@ class _CourseInfoState extends State<CourseInfo> {
       height: MediaQuery.of(context).size.height * 0.1,
       child: ElevatedButton(onPressed: () {}, child: const Text("Buy Course")),
     );
+
     return SafeArea(
         child: Scaffold(
       backgroundColor: Colors.white,
