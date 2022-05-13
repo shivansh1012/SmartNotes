@@ -15,7 +15,7 @@ class Explore extends StatefulWidget {
 }
 
 class _ExploreState extends State<Explore> {
-  List courseList = [];
+  // List courseList = [];
 
   @override
   void initState() {
@@ -23,21 +23,22 @@ class _ExploreState extends State<Explore> {
     fetchCoursesList();
   }
 
-  void fetchCoursesList() async {
-    try {
-      await FirebaseFirestore.instance
-          .collection("courses")
-          .get()
-          .then((querySnapshot) {
-        for (var element in querySnapshot.docs) {
-          setState(() {
-            courseList.add(element);
-          });
-        }
-      });
-    } catch (e) {
-      Fluttertoast.showToast(msg: "Fetch Error" + e.toString());
+  Future<List> fetchCoursesList() async {
+    List courseList = [];
+    final rawData =
+        await FirebaseFirestore.instance.collection("courses").get();
+    for (var element in rawData.docs) {
+      // courseList.add(CourseModel.fromMap(element));
+      courseList.add(element);
     }
+    return courseList;
+    //     .then((querySnapshot) {
+    //   for (var element in querySnapshot.docs) {
+    //     setState(() {
+    //       courseList.add(element);
+    //     });
+    //   }
+    // });
   }
 
   @override
@@ -56,23 +57,48 @@ class _ExploreState extends State<Explore> {
                 child: Column(
                   children: [
                     const TopicTag(),
-                    Expanded(
-                      child: ListView.builder(
-                          itemCount: courseList.length,
-                          itemBuilder: (context, index) {
-                            return ExploreCard(
-                                courseData:
-                                    CourseModel.fromMap(courseList[index]),
-                                action: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => CoursePreview(
-                                              courseUID: courseList[index]
-                                                  ['uid'])));
-                                });
-                          }),
-                    ),
+                    FutureBuilder<List>(
+                        future: fetchCoursesList(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return Expanded(
+                              child: ListView.builder(
+                                  physics: const BouncingScrollPhysics(),
+                                  itemCount: snapshot.data?.length,
+                                  itemBuilder: (context, index) {
+                                    return ExploreCard(
+                                        courseData: CourseModel.fromMap(
+                                            snapshot.data?[index]),
+                                        action: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      CoursePreview(
+                                                          courseUID: snapshot
+                                                              .data?[index]
+                                                              .id)));
+                                        });
+                                  }),
+                            );
+                          } else {
+                            return Center(
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: const [
+                                    SizedBox(
+                                      width: 60,
+                                      height: 60,
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(top: 16),
+                                      child: Text('Awaiting Data...'),
+                                    )
+                                  ]),
+                            );
+                          }
+                        })
                   ],
                 ),
               ),

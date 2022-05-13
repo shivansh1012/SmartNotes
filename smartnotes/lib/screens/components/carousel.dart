@@ -13,13 +13,25 @@ class Carousel extends StatelessWidget {
   Widget build(BuildContext context) {
     List<CourseModel> noteCard = [
       CourseModel(
-          uid: "1", author: "Shivansh", title: "Thermodynamics", description: "", coverImageURL: "https://firebasestorage.googleapis.com/v0/b/smartnotes-46d96.appspot.com/o/notesA1_comparison.png?alt=media&token=bd5f1a19-5cdc-4534-ac49-f2b16f9e2eb9"),
+          title: "Thermodynamics",
+          description: "",
+          coverImageURL:
+              "https://firebasestorage.googleapis.com/v0/b/smartnotes-46d96.appspot.com/o/notesA1_comparison.png?alt=media&token=bd5f1a19-5cdc-4534-ac49-f2b16f9e2eb9"),
       CourseModel(
-          uid: "2", author: "Shivansh2", title: "Thermodynamics1", description: "", coverImageURL: "https://firebasestorage.googleapis.com/v0/b/smartnotes-46d96.appspot.com/o/notesA1_comparison.png?alt=media&token=bd5f1a19-5cdc-4534-ac49-f2b16f9e2eb9"),
+          title: "Thermodynamics1",
+          description: "",
+          coverImageURL:
+              "https://firebasestorage.googleapis.com/v0/b/smartnotes-46d96.appspot.com/o/notesA1_comparison.png?alt=media&token=bd5f1a19-5cdc-4534-ac49-f2b16f9e2eb9"),
       CourseModel(
-          uid: "3", author: "Shivansh4", title: "Thermodynamics3", description: "", coverImageURL: "https://firebasestorage.googleapis.com/v0/b/smartnotes-46d96.appspot.com/o/notesA1_comparison.png?alt=media&token=bd5f1a19-5cdc-4534-ac49-f2b16f9e2eb9"),
+          title: "Thermodynamics3",
+          description: "",
+          coverImageURL:
+              "https://firebasestorage.googleapis.com/v0/b/smartnotes-46d96.appspot.com/o/notesA1_comparison.png?alt=media&token=bd5f1a19-5cdc-4534-ac49-f2b16f9e2eb9"),
       CourseModel(
-          uid: "4", author: "Shivansh3", title: "Thermodynamics4", description: "", coverImageURL: "https://firebasestorage.googleapis.com/v0/b/smartnotes-46d96.appspot.com/o/notesA1_comparison.png?alt=media&token=bd5f1a19-5cdc-4534-ac49-f2b16f9e2eb9"),
+          title: "Thermodynamics4",
+          description: "",
+          coverImageURL:
+              "https://firebasestorage.googleapis.com/v0/b/smartnotes-46d96.appspot.com/o/notesA1_comparison.png?alt=media&token=bd5f1a19-5cdc-4534-ac49-f2b16f9e2eb9"),
     ];
     return SafeArea(
       child: CarouselSlider.builder(

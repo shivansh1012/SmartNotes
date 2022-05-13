@@ -1,5 +1,12 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:smartnotes/models/course_model.dart';
 
 class Upload extends StatefulWidget {
   const Upload({Key? key}) : super(key: key);
@@ -9,18 +16,74 @@ class Upload extends StatefulWidget {
 }
 
 class _UploadState extends State<Upload> {
-  PlatformFile? pickedFile;
-  Future selectFile() async {
-    final result = await FilePicker.platform.pickFiles();
-    if (result == null) return;
-    setState(() {
-      pickedFile = result.files.first;
-    });
-  }
-
+  List<PlatformFile>? pickedFile;
+  PlatformFile? coverImageFile;
+  UploadTask? uploadTask;
   final TextEditingController _courseNameController = TextEditingController();
   final TextEditingController _courseDescriptionController =
       TextEditingController();
+
+  final _storage = FirebaseStorage.instance;
+
+  Future selectCoverImage() async {
+    final result = await FilePicker.platform.pickFiles(type: FileType.image);
+    if (result == null) return;
+    setState(() {
+      coverImageFile = result.files.first;
+    });
+  }
+
+  Future selectDocuments() async {
+    final result = await FilePicker.platform.pickFiles(
+        allowMultiple: true,
+        type: FileType.custom,
+        allowedExtensions: ['jpg', 'png', 'pdf', 'doc']);
+    if (result == null) return;
+    setState(() {
+      pickedFile = result.files;
+    });
+  }
+
+  Future<String> uploadFile(selectedFile) async {
+    final path = 'files/${selectedFile!.name}';
+    final file = File(selectedFile!.path);
+
+    final ref = _storage.ref().child(path);
+    uploadTask = ref.putFile(file);
+
+    final snapShot = await uploadTask!.whenComplete(() {});
+
+    final urlDownload = await snapShot.ref.getDownloadURL();
+    Fluttertoast.showToast(msg: 'FIle Uploaded');
+    return urlDownload;
+  }
+
+  Future saveNewCourse() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = FirebaseAuth.instance.currentUser;
+    CollectionReference _users = firebaseFirestore.collection("users");
+    List documentURL = [];
+
+    String coverImageURL = await uploadFile(coverImageFile);
+    for (PlatformFile file in pickedFile!) {
+      documentURL.add(await uploadFile(file));
+    }
+
+    CourseModel newCourse = CourseModel(
+        title: _courseNameController.text,
+        authorRef: _users.doc(user!.uid),
+        description: _courseDescriptionController.text,
+        coverImageURL: coverImageURL,
+        documentURL: documentURL);
+        
+    firebaseFirestore
+        .collection("courses")
+        .doc()
+        .set(newCourse.toMap())
+        .then((value) => Fluttertoast.showToast(msg: "Upload Success"))
+        .catchError((error) => Fluttertoast.showToast(msg: "Error $error"));
+  }
+
   @override
   Widget build(BuildContext context) {
     final courseNameTextBox = TextFormField(
@@ -62,21 +125,33 @@ class _UploadState extends State<Upload> {
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                  if (coverImageFile != null) Text(coverImageFile!.name),
+                  ElevatedButton(
+                      onPressed: selectCoverImage,
+                      child: const Text("Select Cover Image")),
                   courseNameTextBox,
                   const SizedBox(height: 30),
                   courseDescriptionTextBox,
                   const SizedBox(height: 30),
                   if (pickedFile != null)
-                    Container(
-                      height: 100,
-                      padding: const EdgeInsets.all(10),
-                      child: Center(child: Text((pickedFile!.name))),
+                    SingleChildScrollView(
+                      child: Container(
+                        height: 100,
+                        padding: const EdgeInsets.all(10),
+                        child: Center(
+                            child: Column(
+                                children: pickedFile!
+                                    .map((file) => Text(file.name))
+                                    .toList())),
+                      ),
                     ),
                   ElevatedButton(
-                      onPressed: selectFile, child: const Text("Select File")),
+                      onPressed: selectDocuments,
+                      child: const Text("Select Documents")),
                   const SizedBox(height: 30),
                   ElevatedButton(
-                      onPressed: () {}, child: const Text('Upload File'))
+                      onPressed: saveNewCourse,
+                      child: const Text('Upload Course'))
                 ])),
           )),
     );

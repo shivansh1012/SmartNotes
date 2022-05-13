@@ -1,55 +1,46 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:smartnotes/models/user_model.dart';
 
 class CourseModel {
-  final String? uid;
-  final String? title;
-  final String? author;
-  final String? description;
-  final String? coverImageURL;
-  final DocumentReference? authorRef;
+  String? title;
+  DocumentReference? authorRef;
+  String? description;
+  String? coverImageURL;
+  List? documentURL;
 
   CourseModel(
-      {this.uid,
-      this.title,
-      this.author,
+      {this.title,
       this.description,
       this.coverImageURL,
-      this.authorRef});
+      this.authorRef,
+      this.documentURL});
 
   //converter
   CourseModel.fromJson(Map<String, Object?> json)
       : this(
-            uid: json['uid']! as String,
-            author: json['author']! as String,
             title: json['title']! as String,
             description: json['description']! as String,
             coverImageURL: json['coverImageURL']! as String,
-            authorRef: json['authorRef']! as DocumentReference);
+            authorRef: json['authorRef']! as DocumentReference,
+            documentURL: json['documentURL']! as List);
 
   //data from server
   factory CourseModel.fromMap(map) {
-    // print(UserModel.fromMap(map['authorRef']).name);
-    // print(map['authorRef']);
-    // print(map as Map<String, dynamic>);
     return CourseModel(
-        uid: map['uid'],
         title: map['title'],
-        author: map['author'],
+        authorRef: map['authorRef'],
         description: map['description'],
         coverImageURL: map['coverImageURL'],
-        authorRef: map['authorRef']);
+        documentURL: map['documentURL']);
   }
 
   //data format to server
   Map<String, dynamic> toMap() {
     return {
-      'uid': uid,
       'title': title,
-      'author': author,
+      'authorRef': authorRef,
       'description': description,
       'coverImageURL': coverImageURL,
-      'authorRef': authorRef
+      'documentURL': documentURL
     };
   }
 }

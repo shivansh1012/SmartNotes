@@ -12,100 +12,112 @@ class CoursePreview extends StatefulWidget {
 }
 
 class _CoursePreviewState extends State<CoursePreview> {
-  CourseModel courseDetails = CourseModel();
 
-  @override
-  void initState() {
-    super.initState();
-    fetchCourseDetails();
-  }
+  Future<CourseModel> fetchCourseDetails() async {
+    final rawData = await FirebaseFirestore.instance
+        .collection("courses")
+        .doc(widget.courseUID)
+        .get();
 
-  void fetchCourseDetails() async {
-    try {
-      await FirebaseFirestore.instance
-          .collection("courses")
-          .doc(widget.courseUID)
-          .get()
-          .then((value) {
-        setState(() {
-          courseDetails =
-              CourseModel.fromMap(value.data() as Map<String, dynamic>);
-        });
-      });
-    } catch (e) {
-      Fluttertoast.showToast(msg: "Fetch Error");
-    }
+    Fluttertoast.showToast(msg: "Fetch Complete");
+    final courseDetails =
+        CourseModel.fromMap(rawData.data() as Map<String, dynamic>);
+
+    return courseDetails;
   }
 
   @override
   Widget build(BuildContext context) {
-    final basicCourseDetails = Column(
-      children: <Widget>[
-        Text(courseDetails.title.toString(),
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 35.0)),
-        const SizedBox(height: 30.0),
-        Text(courseDetails.author.toString()),
-        const SizedBox(height: 30.0),
-        const Text("Free")
-      ],
-    );
+    Widget _topContent(courseDetails) => Stack(
+          children: <Widget>[
+            Container(
+              padding: const EdgeInsets.only(left: 10),
+              height: MediaQuery.of(context).size.height * 0.4,
+              // decoration: const BoxDecoration(color: Colors.grey),
+              // Image Intended
+            ),
+            Container(
+              padding: const EdgeInsets.all(40.0),
+              height: MediaQuery.of(context).size.height * 0.4,
+              width: MediaQuery.of(context).size.width,
+              // allow when there is image
+              // decoration: const BoxDecoration(color: Color.fromRGBO(58, 66, 86, 0.9)),
+              child: Center(
+                  child: Column(
+                children: <Widget>[
+                  Text(courseDetails.title.toString(),
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontSize: 35.0)),
+                  const SizedBox(height: 30.0),
+                  // Text(courseDetails.author.toString()),
+                  const SizedBox(height: 30.0),
+                  const Text("Free")
+                ],
+              )),
+            ),
+            Positioned(
+                left: 8.0,
+                top: 60.0,
+                child: InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Icon(Icons.arrow_back, color: Colors.black)))
+          ],
+        );
 
-    final topContent = Stack(
-      children: <Widget>[
-        Container(
-          padding: const EdgeInsets.only(left: 10),
-          height: MediaQuery.of(context).size.height * 0.4,
-          // decoration: const BoxDecoration(color: Colors.grey),
-          // Image Intended
-        ),
-        Container(
-          padding: const EdgeInsets.all(40.0),
-          height: MediaQuery.of(context).size.height * 0.4,
+    Widget _bottomContent(courseDetails) => Container(
+          padding: const EdgeInsets.all(10),
           width: MediaQuery.of(context).size.width,
-          // allow when there is image
-          // decoration: const BoxDecoration(color: Color.fromRGBO(58, 66, 86, 0.9)),
-          child: Center(child: basicCourseDetails),
-        ),
-        Positioned(
-            left: 8.0,
-            top: 60.0,
-            child: InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: const Icon(Icons.arrow_back, color: Colors.black)))
-      ],
-    );
-
-    final bottomContent = Container(
-      padding: const EdgeInsets.all(10),
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.5,
-      child: Column(
-        children: [
-          const Text("Course Description"),
-          const SizedBox(height: 10),
-          Text(
-            courseDetails.description.toString(),
-            style: const TextStyle(fontSize: 16.0),
+          height: MediaQuery.of(context).size.height * 0.5,
+          child: Column(
+            children: [
+              const Text("Course Description"),
+              const SizedBox(height: 10),
+              Text(
+                courseDetails.description.toString(),
+                style: const TextStyle(fontSize: 16.0),
+              ),
+            ],
           ),
-        ],
-      ),
-    );
+        );
 
-    final joinCourse = Container(
+    final _joinCourse = Container(
       padding: const EdgeInsets.all(10),
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height * 0.1,
       child: ElevatedButton(onPressed: () {}, child: const Text("Buy Course")),
     );
 
-    return SafeArea(
-        child: Scaffold(
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-          child: Column(children: [topContent, bottomContent, joinCourse])),
-    ));
+    return Scaffold(
+      body: FutureBuilder<CourseModel>(
+          future: fetchCourseDetails(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return SingleChildScrollView(
+                  child: Column(children: [
+                _topContent(snapshot.data),
+                _bottomContent(snapshot.data),
+                _joinCourse
+              ]));
+            } else {
+              return Center(
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      SizedBox(
+                        width: 60,
+                        height: 60,
+                        child: CircularProgressIndicator(),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 16),
+                        child: Text('Awaiting Data...'),
+                      )
+                    ]),
+              );
+            }
+          }),
+    );
   }
 }
