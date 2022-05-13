@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smartnotes/models/course_model.dart';
 import 'package:smartnotes/screens/Course/course_preview.dart';
 import 'package:smartnotes/screens/Explore/explore_card.dart';
+import 'package:smartnotes/screens/Explore/topic_category.dart';
 import 'package:smartnotes/screens/components/search_bar.dart';
 import 'package:smartnotes/screens/Explore/topic_tag.dart';
 
@@ -56,7 +57,34 @@ class _ExploreState extends State<Explore> {
                 margin: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: Column(
                   children: [
-                    const TopicTag(),
+                    Container(
+                      height: 60,
+                      child: ListView(
+                        physics: const BouncingScrollPhysics(),
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          const SizedBox(
+                            width: 28,
+                          ),
+                          TopicCategory(
+                            text: "Chemistry",
+                            onPressed: (value) => print(value),
+                          ),
+                          TopicCategory(
+                            text: "Physics",
+                            onPressed: (value) => print(value),
+                          ),
+                          TopicCategory(
+                            text: "Mathematics",
+                            onPressed: (value) => print(value),
+                          ),
+                          TopicCategory(
+                            text: "Programming",
+                            onPressed: (value) => print(value),
+                          ),
+                        ],
+                      ),
+                    ),
                     FutureBuilder<List>(
                         future: fetchCoursesList(),
                         builder: (context, snapshot) {
