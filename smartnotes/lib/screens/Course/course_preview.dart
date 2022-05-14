@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smartnotes/models/course_model.dart';
+import 'package:smartnotes/screens/Authentication/sign_in.dart';
+import 'package:smartnotes/screens/Course/course_details.dart';
 
 class CoursePreview extends StatefulWidget {
   final String courseUID;
@@ -125,7 +128,7 @@ class _CoursePreviewState extends State<CoursePreview> {
                     courseDetails.description,
                     style: TextStyle(
                         color: Colors.black.withOpacity(0.7),
-                        fontWeight: FontWeight.w400,
+                        height: 1.5,
                         fontSize: 16),
                   ),
                 )
@@ -137,7 +140,7 @@ class _CoursePreviewState extends State<CoursePreview> {
                 color: Colors.white,
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      left: 22, right: 22, top: 20, bottom: 10),
+                      left: 22, right: 22, top: 40, bottom: 10),
                   child: Material(
                     color: Colors.transparent,
                     child: Row(
@@ -161,7 +164,26 @@ class _CoursePreviewState extends State<CoursePreview> {
                               ),
                             ),
                           ),
-                        )
+                        ),
+                        InkWell(
+                          borderRadius: BorderRadius.circular(360),
+                          onTap: () {
+                            Fluttertoast.showToast(msg: "Add to wishlist");
+                          },
+                          child: Container(
+                            height: 35,
+                            width: 35,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(360),
+                            ),
+                            child: const Center(
+                              child: Icon(
+                                Icons.playlist_add,
+                                size: 26,
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -191,8 +213,7 @@ class _CoursePreviewState extends State<CoursePreview> {
                     child: InkWell(
                       borderRadius: BorderRadius.circular(16),
                       onTap: () {
-                        Fluttertoast.showToast(
-                            msg: "Dum Dum Dum, this is not yet done");
+                        _startCourse();
                       },
                       child: Ink(
                         decoration: BoxDecoration(
@@ -243,5 +264,15 @@ class _CoursePreviewState extends State<CoursePreview> {
             }
           }),
     );
+  }
+
+  _startCourse() {
+    if (FirebaseAuth.instance.currentUser == null) {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => const SignIn()));
+    } else {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: ((context) => CourseDetails(courseUID: widget.courseUID))));
+    }
   }
 }

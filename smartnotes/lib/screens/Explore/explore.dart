@@ -47,6 +47,32 @@ class _ExploreState extends State<Explore> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 1,
+          title: const Text(
+            'Smart Notes',
+            style: TextStyle(
+              fontSize: 30.0,
+              color: Colors.black,
+              fontFamily: 'LobsterTwo',
+            ),
+          ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: IconButton(
+                onPressed: () => {
+                  Fluttertoast.showToast(msg: "Personal Notes clicked"),
+                },
+                icon: const Icon(
+                  Icons.article_outlined,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ],
+        ),
         body: Column(
           children: [
             // Search Box
