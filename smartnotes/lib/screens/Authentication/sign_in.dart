@@ -1,8 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 import 'package:smartnotes/constants.dart';
+import 'package:smartnotes/models/user_model.dart';
 import 'package:smartnotes/screens/Authentication/sign_up.dart';
+import 'package:smartnotes/services/user_status.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -87,7 +90,7 @@ class _SignInState extends State<SignIn> {
         backgroundColor: MaterialStateProperty.all(primary),
       ),
       onPressed: () {
-        _signInWithEmailAndPassword();
+        _signInWithEmailAndPassword(context);
       },
     );
 
@@ -193,15 +196,18 @@ class _SignInState extends State<SignIn> {
     );
   }
 
-  void _signInWithEmailAndPassword() async {
+  void _signInWithEmailAndPassword(context) async {
+    UserStatus provider = Provider.of<UserStatus>(context, listen: false);
     if (_formKey.currentState!.validate()) {
       await _auth
           .signInWithEmailAndPassword(
               email: _emailController.text, password: _passwordController.text)
           .then(
-            (uid) => {
-              Fluttertoast.showToast(msg: "Login Successful"),
-              Navigator.pop(context)
+            (uid) async {
+              Fluttertoast.showToast(msg: "Login Successful");
+              UserModel? userData = await UserStatus().fetchUserData();
+              provider.updateUserStatus(userData);
+              Navigator.pop(context);
             },
           )
           .catchError(

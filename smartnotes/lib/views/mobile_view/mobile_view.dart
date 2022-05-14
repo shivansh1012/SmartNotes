@@ -1,8 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:smartnotes/models/user_model.dart';
 
 import 'package:smartnotes/screens/Home/home.dart';
 import 'package:smartnotes/screens/Explore/explore.dart';
@@ -20,7 +16,6 @@ class MobileView extends StatefulWidget {
 
 class MobileViewState extends State<MobileView> {
   static int currentSelectedPage = 0;
-  UserModel loggedInUser = UserModel();
 
   final List<TabItem> tabs = [
     TabItem(
@@ -56,26 +51,6 @@ class MobileViewState extends State<MobileView> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    User? user = FirebaseAuth.instance.currentUser;
-    if (FirebaseAuth.instance.currentUser == null) {
-      Fluttertoast.showToast(msg: "No User");
-      return;
-    }
-    FirebaseFirestore.instance
-        .collection("users")
-        .doc(user?.uid)
-        .get()
-        .then((value) {
-      loggedInUser = UserModel.fromMap(value.data());
-      Fluttertoast.showToast(msg: "Welcome " + loggedInUser.name.toString());
-    }).catchError((error) {
-      Fluttertoast.showToast(msg: error);
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
@@ -90,33 +65,6 @@ class MobileViewState extends State<MobileView> {
         return isFirstRouteInCurrentTab;
       },
       child: Scaffold(
-        // appBar: AppBar(
-        //   backgroundColor: Colors.white,
-        //   elevation: 1,
-        //   title: const Text(
-        //     'Smart Notes',
-        //     style: TextStyle(
-        //       fontSize: 30.0,
-        //       color: Colors.black,
-        //       fontFamily: 'LobsterTwo',
-        //     ),
-        //   ),
-        //   actions: [
-        //     Padding(
-        //       padding: const EdgeInsets.all(8.0),
-        //       child: IconButton(
-        //         onPressed: () => {
-        //           Fluttertoast.showToast(msg: "Personal Notes clicked"),
-        //            Navigator.pushNamed(context, '/notesView')
-        //         },
-        //         icon: const Icon(
-        //           Icons.article_outlined,
-        //           color: Colors.black,
-        //         ),
-        //       ),
-        //     ),
-        //   ],
-        // ),
         // indexed stack shows only one child
         body: IndexedStack(
           index: currentSelectedPage,

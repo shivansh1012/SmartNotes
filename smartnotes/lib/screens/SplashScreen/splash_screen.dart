@@ -2,7 +2,11 @@ import 'dart:async';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 import 'package:smartnotes/constants.dart';
+import 'package:smartnotes/models/user_model.dart';
+import 'package:smartnotes/services/user_status.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -15,8 +19,13 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 6),
-        () => Navigator.popAndPushNamed(context, '/mobileView')
+    fetchUser(context);
+    Timer(
+        const Duration(seconds: 6),
+        () => {
+              // fetchUser(context),
+              Navigator.popAndPushNamed(context, '/mobileView')
+            }
         // () => Navigator.pushReplacement(
         //   context,
         //   MaterialPageRoute(
@@ -24,6 +33,13 @@ class _SplashScreenState extends State<SplashScreen> {
         //   ),
         // ),
         );
+  }
+
+  fetchUser(context) async {
+    UserStatus provider = Provider.of<UserStatus>(context, listen: false);
+    UserModel? user = await UserStatus().fetchUserData();
+    Fluttertoast.showToast(msg: "User $user");
+    provider.updateUserStatus(user);
   }
 
   @override

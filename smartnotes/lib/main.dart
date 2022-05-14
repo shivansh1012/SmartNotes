@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:smartnotes/screens/Authentication/sign_in.dart';
 import 'package:smartnotes/screens/Authentication/sign_up.dart';
 import 'package:smartnotes/screens/Course/note_details.dart';
@@ -10,8 +11,8 @@ import 'package:smartnotes/screens/Home/home.dart';
 import 'package:smartnotes/screens/PersonalNotes/personal_notes.dart';
 import 'package:smartnotes/screens/Profile/profile.dart';
 import 'package:smartnotes/screens/SplashScreen/splash_screen.dart';
+import 'package:smartnotes/services/user_status.dart';
 import 'package:smartnotes/views/mobile_view/mobile_view.dart';
-// import 'package:smartnotes/views/mobile_view/mobile_view.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,28 +45,31 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return DismissKeyboard(
-      child: MaterialApp(
-        // showPerformanceOverlay: true,
-        title: 'Smart Notes',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          textButtonTheme: TextButtonThemeData(
-            style: TextButton.styleFrom(primary: const Color(0xff0081C6)),
+      child: ChangeNotifierProvider(
+        create: (context) => UserStatus(),
+        child: MaterialApp(
+          // showPerformanceOverlay: true,
+          title: 'Smart Notes',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(primary: const Color(0xff0081C6)),
+            ),
+        ),
+        routes: {
+          '/': (context) => const SplashScreen(),
+          '/home': (context) => const Home(),
+          '/mobileView': (context) => const MobileView(),
+          '/explore': (context) => const Explore(),
+          '/forum': (context) => const Forum(),
+          '/signUp': (context) => const SignUp(),
+          '/signIn': (context) => const SignIn(),
+          '/profile': (context) => const Profile(),
+          '/noteDetails': (context) => const NoteDetails(),
+          '/notesView': (context) => const PersonalNotes(),
+        },
           ),
-      ),
-      routes: {
-        '/': (context) => const SplashScreen(),
-        '/home': (context) => const Home(),
-        '/mobileView': (context) => const MobileView(),
-        '/explore': (context) => const Explore(),
-        '/forum': (context) => const Forum(),
-        '/signUp': (context) => const SignUp(),
-        '/signIn': (context) => const SignIn(),
-        '/profile': (context) => const Profile(),
-        '/noteDetails': (context) => const NoteDetails(),
-        '/notesView': (context) => const PersonalNotes(),
-      },
-    ));
+      ));
   }
 }
 

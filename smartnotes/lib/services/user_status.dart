@@ -1,26 +1,34 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smartnotes/models/user_model.dart';
 
-class UserStatus {
-  static User? user = FirebaseAuth.instance.currentUser;
-  static late UserModel loggedInUser;
+class UserStatus extends ChangeNotifier {
+  bool isUserLoggedIn = false;
+  UserModel? loggedInUser;
 
-  static void fetchUserData() async {
-    // User? user = FirebaseAuth.instance.currentUser;
-    if (FirebaseAuth.instance.currentUser == null) {
-      loggedInUser = UserModel();
+  Future<UserModel?> fetchUserData() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      Fluttertoast.showToast(msg: "No User Found");
+      return null;
     } else {
-      FirebaseFirestore.instance
+      var rawData = await FirebaseFirestore.instance
           .collection("users")
-          .doc(user!.uid)
-          .get()
-          .then((value) {
-        loggedInUser = UserModel.fromMap(value.data());
-        Fluttertoast.showToast(
-            msg: "User Found " + loggedInUser.name.toString());
-      });
+          .doc(user.uid)
+          .get();
+      return UserModel.fromMap(rawData.data());
     }
+  }
+
+  void updateUserStatus(user) {
+    if (user == null) {
+      isUserLoggedIn = false;
+    } else {
+      isUserLoggedIn = true;
+    }
+    loggedInUser = user;
+    notifyListeners();
   }
 }

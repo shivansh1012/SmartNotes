@@ -5,7 +5,6 @@ import 'package:smartnotes/models/course_model.dart';
 import 'package:smartnotes/screens/Course/course_preview.dart';
 import 'package:smartnotes/screens/Explore/explore_card.dart';
 import 'package:smartnotes/screens/Explore/topic_category.dart';
-import 'package:smartnotes/screens/PersonalNotes/personal_notes.dart';
 import 'package:smartnotes/screens/components/search_bar.dart';
 
 class Explore extends StatefulWidget {
