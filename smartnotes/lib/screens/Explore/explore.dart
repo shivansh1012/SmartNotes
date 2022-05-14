@@ -5,8 +5,8 @@ import 'package:smartnotes/models/course_model.dart';
 import 'package:smartnotes/screens/Course/course_preview.dart';
 import 'package:smartnotes/screens/Explore/explore_card.dart';
 import 'package:smartnotes/screens/Explore/topic_category.dart';
+import 'package:smartnotes/screens/PersonalNotes/personal_notes.dart';
 import 'package:smartnotes/screens/components/search_bar.dart';
-import 'package:smartnotes/screens/Explore/topic_tag.dart';
 
 class Explore extends StatefulWidget {
   const Explore({Key? key}) : super(key: key);
@@ -63,7 +63,8 @@ class _ExploreState extends State<Explore> {
               padding: const EdgeInsets.all(8.0),
               child: IconButton(
                 onPressed: () => {
-                  Navigator.pushNamed(context, '/notesView')
+                  Fluttertoast.showToast(msg: "Personal Notes Pressed")
+                  // Navigator.of(context).push(MaterialPageRoute(builder: (context) => const PersonalNotes()))
                 },
                 icon: const Icon(
                   Icons.article_outlined,

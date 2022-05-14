@@ -27,7 +27,9 @@ class Forum extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: IconButton(
                 onPressed: () => {
-                  Navigator.pushNamed(context, '/notesView')
+                  // Navigator.pushNamed(context, '/notesView')
+                  Fluttertoast.showToast(msg: "Personal Notes Pressed")
+                  // Navigator.of(context).push(MaterialPageRoute(builder: (context) => const PersonalNotes()))
                 },
                 icon: const Icon(
                   Icons.article_outlined,
