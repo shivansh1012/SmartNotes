@@ -30,8 +30,7 @@ class _PersonalNotesState extends State<PersonalNotes> {
                   child: ListView.builder(
                     itemBuilder: (context, index) {
                       return ExploreCard(
-                          topicName: noteList[index]['title'],
-                          author: noteList[index]['author'],
+                          courseData: noteList[index],
                           action: () {
                             Fluttertoast.showToast(msg: 'Card clicked');
                             // TODO: Create a dynamic page routing to route to the correct personal note detail

@@ -7,6 +7,7 @@ import 'package:smartnotes/models/user_model.dart';
 import 'package:smartnotes/screens/AboutUs/about_us.dart';
 import 'package:smartnotes/screens/Authentication/sign_in.dart';
 import 'package:smartnotes/screens/Profile/profile_button.dart';
+import 'package:smartnotes/screens/Upload/upload.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);

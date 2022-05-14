@@ -65,7 +65,7 @@ class _MyAppState extends State<MyApp> {
         '/noteDetails': (context) => const NoteDetails(),
         '/notesView': (context) => const PersonalNotes(),
       },
-    );
+    ));
   }
 }
 

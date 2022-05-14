@@ -26,7 +26,7 @@ class Home extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: IconButton(
                 onPressed: () => {
-                  Fluttertoast.showToast(msg: "Personal Notes clicked"),
+                  Navigator.pushNamed(context, '/notesView')
                 },
                 icon: const Icon(
                   Icons.article_outlined,
