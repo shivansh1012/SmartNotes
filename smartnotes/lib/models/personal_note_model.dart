@@ -6,7 +6,7 @@ class PersonalNoteModel {
   Map? authorRef;
 
   PersonalNoteModel({this.uid, this.title, this.author});
-  
+
   //converter
   PersonalNoteModel.fromJson(Map<String, Object?> json)
       : this(

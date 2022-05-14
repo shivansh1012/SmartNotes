@@ -6,7 +6,7 @@ class ForumModel {
   Map? authorRef;
 
   ForumModel({this.uid, this.title, this.author});
-  
+
   //converter
   ForumModel.fromJson(Map<String, Object?> json)
       : this(

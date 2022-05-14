@@ -15,8 +15,6 @@ class Explore extends StatefulWidget {
 }
 
 class _ExploreState extends State<Explore> {
-  // List courseList = [];
-
   @override
   void initState() {
     super.initState();
@@ -28,17 +26,9 @@ class _ExploreState extends State<Explore> {
     final rawData =
         await FirebaseFirestore.instance.collection("courses").get();
     for (var element in rawData.docs) {
-      // courseList.add(CourseModel.fromMap(element));
       courseList.add(element);
     }
     return courseList;
-    //     .then((querySnapshot) {
-    //   for (var element in querySnapshot.docs) {
-    //     setState(() {
-    //       courseList.add(element);
-    //     });
-    //   }
-    // });
   }
 
   @override
@@ -61,10 +51,8 @@ class _ExploreState extends State<Explore> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: IconButton(
-                onPressed: () => {
-                  Fluttertoast.showToast(msg: "Personal Notes Pressed")
-                  // Navigator.of(context).push(MaterialPageRoute(builder: (context) => const PersonalNotes()))
-                },
+                onPressed: () =>
+                    {Fluttertoast.showToast(msg: "Personal Notes Pressed")},
                 icon: const Icon(
                   Icons.article_outlined,
                   color: Colors.black,
@@ -75,15 +63,13 @@ class _ExploreState extends State<Explore> {
         ),
         body: Column(
           children: [
-            // Search Box
             const SearchBar(),
-            // Note Cards
             Expanded(
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: Column(
                   children: [
-                    Container(
+                    SizedBox(
                       height: 60,
                       child: ListView(
                         physics: const BouncingScrollPhysics(),
@@ -94,19 +80,23 @@ class _ExploreState extends State<Explore> {
                           ),
                           TopicCategory(
                             text: "Chemistry",
-                            onPressed: (value) => print(value),
+                            onPressed: (value) => Fluttertoast.showToast(
+                                msg: "Chemistry selected $value"),
                           ),
                           TopicCategory(
                             text: "Physics",
-                            onPressed: (value) => print(value),
+                            onPressed: (value) => Fluttertoast.showToast(
+                                msg: "Physics selected $value"),
                           ),
                           TopicCategory(
                             text: "Mathematics",
-                            onPressed: (value) => print(value),
+                            onPressed: (value) => Fluttertoast.showToast(
+                                msg: "Mathematics selected $value"),
                           ),
                           TopicCategory(
                             text: "Programming",
-                            onPressed: (value) => print(value),
+                            onPressed: (value) => Fluttertoast.showToast(
+                                msg: "Programming selected $value"),
                           ),
                         ],
                       ),

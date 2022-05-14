@@ -74,7 +74,7 @@ class _UploadState extends State<Upload> {
         description: _courseDescriptionController.text,
         coverImageURL: coverImageURL,
         document: document);
-        
+
     firebaseFirestore
         .collection("courses")
         .doc()

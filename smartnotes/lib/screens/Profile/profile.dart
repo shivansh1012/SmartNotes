@@ -15,7 +15,6 @@ class Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -82,8 +81,8 @@ class Profile extends StatelessWidget {
                               builder: (context) => const AboutUs()));
                         },
                         link: ""),
-                        const Text("App Version: 1.0.0",
-                  style: TextStyle(fontSize: 10.0, color: Colors.grey))
+                    const Text("App Version: 1.0.0",
+                        style: TextStyle(fontSize: 10.0, color: Colors.grey))
                   ],
                 );
               } else {
@@ -170,8 +169,8 @@ class Profile extends StatelessWidget {
                           _signOut(context);
                         },
                         link: ""),
-                        const Text("App Version: 1.0.0",
-                  style: TextStyle(fontSize: 10.0, color: Colors.grey))
+                    const Text("App Version: 1.0.0",
+                        style: TextStyle(fontSize: 10.0, color: Colors.grey))
                   ],
                 );
               }
@@ -184,11 +183,9 @@ class Profile extends StatelessWidget {
 
   void _signOut(context) async {
     UserStatus provider = Provider.of<UserStatus>(context, listen: false);
-    await FirebaseAuth.instance.signOut().then(
-      (value) async {
-        UserModel? userData = await UserStatus().fetchUserData();
-        provider.updateUserStatus(userData);
-      }
-    );
+    await FirebaseAuth.instance.signOut().then((value) async {
+      UserModel? userData = await UserStatus().fetchUserData();
+      provider.updateUserStatus(userData);
+    });
   }
 }

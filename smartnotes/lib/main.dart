@@ -45,16 +45,16 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return DismissKeyboard(
-      child: ChangeNotifierProvider(
-        create: (context) => UserStatus(),
-        child: MaterialApp(
-          // showPerformanceOverlay: true,
-          title: 'Smart Notes',
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            textButtonTheme: TextButtonThemeData(
-              style: TextButton.styleFrom(primary: const Color(0xff0081C6)),
-            ),
+        child: ChangeNotifierProvider(
+      create: (context) => UserStatus(),
+      child: MaterialApp(
+        // showPerformanceOverlay: true,
+        title: 'Smart Notes',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          textButtonTheme: TextButtonThemeData(
+            style: TextButton.styleFrom(primary: const Color(0xff0081C6)),
+          ),
         ),
         routes: {
           '/': (context) => const SplashScreen(),
@@ -68,8 +68,8 @@ class _MyAppState extends State<MyApp> {
           '/noteDetails': (context) => const NoteDetails(),
           '/notesView': (context) => const PersonalNotes(),
         },
-          ),
-      ));
+      ),
+    ));
   }
 }
 

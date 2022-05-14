@@ -233,10 +233,10 @@ class _CoursePreviewState extends State<CoursePreview> {
                           color: const Color(0xff4A80F0),
                           borderRadius: BorderRadius.circular(16),
                         ),
-                        child: Container(
+                        child: const SizedBox(
                             height: 56,
                             width: 319,
-                            child: const Center(
+                            child: Center(
                               child: Text("Start",
                                   style: TextStyle(
                                       fontSize: 16,

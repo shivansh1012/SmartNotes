@@ -45,10 +45,9 @@ class _CourseDetailsState extends State<CourseDetails> {
   Widget build(BuildContext context) {
     void _viewDocument(path) {
       String extension = p.extension(path);
-      Fluttertoast.showToast(msg: extension);
       if (extension.startsWith(".mp4") || extension.startsWith(".mkv")) {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => MediaPlayer(videoUri: path)));
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => MediaPlayer(videoUri: path)));
       } else {
         _launchUrl(Uri.parse(path));
       }
@@ -95,7 +94,6 @@ class _CourseDetailsState extends State<CourseDetails> {
                             _viewDocument(courseInfo.document[key].toString());
                           },
                           child: SizedBox(
-                            // height: 100,
                             width: 300,
                             child: ListTile(
                                 leading: Icon(
@@ -194,7 +192,6 @@ class _CourseDetailsState extends State<CourseDetails> {
   }
 
   void _launchUrl(Uri _url) async {
-    await Fluttertoast.showToast(msg: _url.toString());
     if (await canLaunchUrl(_url)) {
       await launchUrl(_url, mode: LaunchMode.externalNonBrowserApplication);
     }

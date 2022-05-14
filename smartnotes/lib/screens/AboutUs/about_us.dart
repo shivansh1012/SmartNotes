@@ -43,42 +43,14 @@ class _AboutUsState extends State<AboutUs> {
         margin: const EdgeInsets.symmetric(horizontal: 20),
         width: safeWidth,
         decoration: BoxDecoration(
-          gradient: const LinearGradient(
-              colors: [
-                Color(0xFF701ebd),
-                Color(0xFF873bcc),
-                Color(0xFFfe4a97),
-                Color(0xFFe17763),
-                Color(0xFF68998c),
-              ],
-              // stops: [
-              //   0.1,
-              //   0.4,
-              //   0.6,
-              //   0.8,
-              //   1
-              // ],
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft),
+          gradient: const LinearGradient(colors: [
+            Color(0xFF701ebd),
+            Color(0xFF873bcc),
+            Color(0xFFfe4a97),
+            Color(0xFFe17763),
+            Color(0xFF68998c),
+          ], begin: Alignment.topRight, end: Alignment.bottomLeft),
           borderRadius: BorderRadius.circular(15.0),
-          // border: const Border(
-          //   top: BorderSide(
-          //     width: 1.0,
-          //     color: Colors.black,
-          //   ),
-          //   bottom: BorderSide(
-          //     width: 1.0,
-          //     color: Colors.black,
-          //   ),
-          //   left: BorderSide(
-          //     width: 1.0,
-          //     color: Colors.black,
-          //   ),
-          //   right: BorderSide(
-          //     width: 1.0,
-          //     color: Colors.black,
-          //   ),
-          // )
         ),
         padding: const EdgeInsets.all(20.0),
         child: Column(children: [

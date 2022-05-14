@@ -20,12 +20,8 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     fetchUser(context);
-    Timer(
-        const Duration(seconds: 6),
-        () => {
-              // fetchUser(context),
-              Navigator.popAndPushNamed(context, '/mobileView')
-            }
+    Timer(const Duration(seconds: 6),
+        () => {Navigator.popAndPushNamed(context, '/mobileView')}
         // () => Navigator.pushReplacement(
         //   context,
         //   MaterialPageRoute(

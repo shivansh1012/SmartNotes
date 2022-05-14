@@ -44,8 +44,7 @@ class _TopicCategoryState extends State<TopicCategory> {
               ),
               child: Center(
                 child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Text(
                     widget.text!,
                     style: const TextStyle(

@@ -17,11 +17,9 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   final _formKey = GlobalKey<FormState>();
 
-  //editing controller
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  //firebase
   final _auth = FirebaseAuth.instance;
 
   @override
@@ -37,7 +35,6 @@ class _SignInState extends State<SignIn> {
         if (value!.isEmpty) {
           return ("Please enter your email");
         }
-        //regex
         if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]").hasMatch(value)) {
           return ("Enter a valid email");
         }
@@ -140,29 +137,6 @@ class _SignInState extends State<SignIn> {
                     const SizedBox(
                       height: 15.0,
                     ),
-                    // const Center(
-                    //   child: Text(
-                    //     "Don't have an account?",
-                    //     style: TextStyle(color: Colors.grey, fontSize: 15.0),
-                    //   ),
-                    // ),
-                    // const SizedBox(
-                    //   height: 10.0,
-                    // ),
-                    // OutlinedButton(
-                    //   child: const Text(
-                    //     "Sign Up",
-                    //     style: TextStyle(fontSize: 16.0),
-                    //   ),
-                    //   onPressed: () {
-                    //     Navigator.push(
-                    //       context,
-                    //       MaterialPageRoute(
-                    //         builder: (context) => const SignUp(),
-                    //       ),
-                    //     );
-                    //   },
-                    // )
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -203,14 +177,13 @@ class _SignInState extends State<SignIn> {
           .signInWithEmailAndPassword(
               email: _emailController.text, password: _passwordController.text)
           .then(
-            (uid) async {
-              Fluttertoast.showToast(msg: "Login Successful");
-              UserModel? userData = await UserStatus().fetchUserData();
-              provider.updateUserStatus(userData);
-              Navigator.pop(context);
-            },
-          )
-          .catchError(
+        (uid) async {
+          Fluttertoast.showToast(msg: "Login Successful");
+          UserModel? userData = await UserStatus().fetchUserData();
+          provider.updateUserStatus(userData);
+          Navigator.pop(context);
+        },
+      ).catchError(
         (error) {
           Fluttertoast.showToast(msg: error!.message);
         },

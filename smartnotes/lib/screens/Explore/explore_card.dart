@@ -40,12 +40,8 @@ class ExploreCard extends StatelessWidget {
           padding: const EdgeInsets.all(5.0),
           child: Column(
             children: [
-              Container(
+              SizedBox(
                 height: 150,
-                // decoration: BoxDecoration(
-                //   color: Colors.red,
-                //   borderRadius: BorderRadius.circular(15.0),
-                // ),
                 child: Image.network(
                   courseData.coverImageURL.toString(),
                   fit: BoxFit.fitHeight,
