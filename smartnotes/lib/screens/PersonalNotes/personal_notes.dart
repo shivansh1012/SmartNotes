@@ -1,108 +1,66 @@
 import 'package:flutter/material.dart';
-import 'package:smartnotes/constants.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:smartnotes/screens/Explore/explore_card.dart';
 
-class PersonalNotes extends StatelessWidget {
+class PersonalNotes extends StatefulWidget {
   const PersonalNotes({Key? key}) : super(key: key);
+
+  @override
+  State<PersonalNotes> createState() => _PersonalNotesState();
+}
+
+class _PersonalNotesState extends State<PersonalNotes> {
+  List noteList = [];
+
+  // TODO: Fetch personal notes data from firebase and store in noteList (the way its done in explore)
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
-        body: Column(
-          children: [
-            // Note Banner
-            Stack(
+        body: Expanded(
+          child: Container(
+            margin: const EdgeInsets.symmetric(
+              horizontal: 15.0,
+              vertical: 15.0,
+            ),
+            child: Column(
               children: [
-                Container(
-                  height: safeHeight * 0.25,
-                  width: safeWidth,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(
-                        'assets/images/Thumbnail.png',
-                      ),
-                      fit: BoxFit.cover,
-                    ),
+                Expanded(
+                  child: ListView.builder(
+                    itemBuilder: (context, index) {
+                      return ExploreCard(
+                          courseData: noteList[index],
+                          action: () {
+                            Fluttertoast.showToast(msg: 'Card clicked');
+                            // TODO: Create a dynamic page routing to route to the correct personal note detail
+                            // Navigator.pushNamed(context, '/personalNoteDetails');
+                          });
+                    },
                   ),
                 ),
-                Container(
-                  margin: const EdgeInsets.all(15.0),
-                  child: const CircleAvatar(
-                    radius: 15.0,
-                    child: Icon(
-                      Icons.chevron_left_outlined,
-                      color: Colors.white,
-                    ),
-                    backgroundColor: Colors.grey,
-                  ),
-                )
               ],
             ),
-            const SizedBox(
-              height: 15.0,
-            ),
-            // Note Heading
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 15.0),
-              child: Column(
-                children: [
-                  const Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      "Finite Automata",
-                      style: TextStyle(
-                        fontSize: 22.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15.0,
-                  ),
-                  const Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      "Fugiat in laborum ipsum dolore id officia nulla laborum aliquip. Aliqua officia aute adipisicing commodo velit laboris. Ut et commodo non dolor sint consequat non ipsum Lorem ad deserunt voluptate qui. Ut sint sunt officia ea anim sint ut excepteur esse anim. Tempor sint amet proident dolore ipsum excepteur.\n\nAliquip sunt esse non excepteur eiusmod ea enim consectetur amet. Ut nulla commodo veniam commodo exercitation fugiat eu anim. In fugiat veniam nisi incididunt qui voluptate. Tempor irure aliqua reprehenderit aute. Amet nulla enim deserunt excepteur laboris ad officia nisi eiusmod.\n\nEst in est quis sit cillum sint ut fugiat. Minim tempor veniam ullamco ullamco magna mollit enim reprehenderit aliquip sunt enim. Nulla laboris eu nulla elit. Ipsum cupidatat irure ad quis est id quis dolore.",
-                      style: TextStyle(fontSize: 16.0),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15.0,
-                  ),
-                  Row(
-                    children: const [
-                      Icon(
-                        Icons.thumb_up_outlined,
-                        size: 25.0,
-                      ),
-                      SizedBox(
-                        width: 5.0,
-                      ),
-                      Text(
-                        "15",
-                        style: TextStyle(fontSize: 16.0),
-                      ),
-                      SizedBox(
-                        width: 15.0,
-                      ),
-                      Icon(
-                        Icons.comment_outlined,
-                        size: 25.0,
-                      ),
-                      SizedBox(
-                        width: 5.0,
-                      ),
-                      Text(
-                        "3",
-                        style: TextStyle(fontSize: 16.0),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ],
+            // child: Column(
+            //   crossAxisAlignment: CrossAxisAlignment.start,
+            //   children: [
+            //     const Text(
+            //       'Personal Notes',
+            //       style: TextStyle(fontSize: 22.0),
+            //     ),
+            //     const SizedBox(
+            //       height: 30,
+            //     ),
+            //     ExploreCard(
+            //       topicName: 'Finite Automata',
+            //       author: 'Shivansh Pandey',
+            //       action: () {
+            //         Navigator.pushNamed(context, '/noteDetails');
+            //       },
+            //     ),
+            //   ],
+            // ),
+          ),
         ),
       ),
     );

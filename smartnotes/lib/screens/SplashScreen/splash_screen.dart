@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:smartnotes/constants.dart';
-import 'package:smartnotes/views/mobile_view/mobile_view.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -16,15 +15,15 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(
-      const Duration(seconds: 6),
-      () => Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const MobileView(),
-        ),
-      ),
-    );
+    Timer(const Duration(seconds: 6),
+        () => Navigator.popAndPushNamed(context, '/mobileView')
+        // () => Navigator.pushReplacement(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => const MobileView(),
+        //   ),
+        // ),
+        );
   }
 
   @override
