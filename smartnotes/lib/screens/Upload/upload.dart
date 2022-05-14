@@ -62,11 +62,10 @@ class _UploadState extends State<Upload> {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = FirebaseAuth.instance.currentUser;
     CollectionReference _users = firebaseFirestore.collection("users");
-    List documentURL = [];
-
+    Map document = {};
     String coverImageURL = await uploadFile(coverImageFile);
     for (PlatformFile file in pickedFile!) {
-      documentURL.add(await uploadFile(file));
+      document[file.name] = await uploadFile(file);
     }
 
     CourseModel newCourse = CourseModel(
@@ -74,7 +73,7 @@ class _UploadState extends State<Upload> {
         authorRef: _users.doc(user!.uid),
         description: _courseDescriptionController.text,
         coverImageURL: coverImageURL,
-        documentURL: documentURL);
+        document: document);
         
     firebaseFirestore
         .collection("courses")

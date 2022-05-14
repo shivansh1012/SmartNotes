@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smartnotes/models/course_model.dart';
+import 'package:path/path.dart' as p;
 
 class CourseDetails extends StatefulWidget {
   final String courseUID;
@@ -25,6 +26,19 @@ class _CourseDetailsState extends State<CourseDetails> {
     return courseDetails;
   }
 
+  IconData getIcon(path) {
+    final extension = p.extension(path);
+    if (extension == ".pdf") {
+      return Icons.picture_as_pdf;
+    } else if (extension == ".doc" || extension == ".docx") {
+      return Icons.description;
+    } else if (extension == ".mp4" || extension == ".mkv") {
+      return Icons.video_file_rounded;
+    } else {
+      return Icons.collections;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget _courseInfo(courseInfo) {
@@ -33,10 +47,9 @@ class _CourseDetailsState extends State<CourseDetails> {
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 28, right: 16),
-            child: ListView(
-              physics: const BouncingScrollPhysics(),
+            child: Column(
               children: [
-                const SizedBox(height: 66),
+                const SizedBox(height: 100),
                 Hero(
                     tag: courseInfo.title,
                     child: Material(
@@ -56,7 +69,44 @@ class _CourseDetailsState extends State<CourseDetails> {
                     maxLines: 1,
                     softWrap: false),
                 const SizedBox(height: 16),
-                
+                Expanded(
+                  child: ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: courseInfo.document.length,
+                    itemBuilder: (context, index) {
+                      String key = courseInfo.document.keys.elementAt(index);
+                      return Card(
+                        child: InkWell(
+                          splashColor: Colors.blue.withAlpha(30),
+                          onTap: () {
+                            Fluttertoast.showToast(msg: "Dude seriouly?");
+                          },
+                          child: SizedBox(
+                            // height: 100,
+                            width: 300,
+                            child: ListTile(
+                                leading: Icon(
+                                  getIcon(key),
+                                  size: 28,
+                                ),
+                                title: Text(
+                                  key,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.fade,
+                                  softWrap: false,
+                                ),
+                                subtitle: Text(
+                                  courseInfo.document[key].toString(),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.fade,
+                                  softWrap: false,
+                                )),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
               ],
             ),
           ),

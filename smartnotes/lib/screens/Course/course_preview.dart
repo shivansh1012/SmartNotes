@@ -108,7 +108,20 @@ class _CoursePreviewState extends State<CoursePreview> {
                           Icons.description,
                           size: 28,
                         )),
-                      )
+                      ),
+                      const SizedBox(width: 16),
+                      Container(
+                        height: 56,
+                        width: 56,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.black.withOpacity(0.1)),
+                        child: const Center(
+                            child: Icon(
+                          Icons.video_library_rounded,
+                          size: 28,
+                        )),
+                      ),
                     ],
                   ),
                 ),
