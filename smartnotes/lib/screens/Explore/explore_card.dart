@@ -14,8 +14,11 @@ class ExploreCard extends StatelessWidget {
           margin: const EdgeInsets.only(bottom: 10.0),
           child: Text(courseData.title.toString(),
               style: const TextStyle(fontSize: 18.0))),
-      // subtitle: Text(courseData.author.toString(),
-      //     style: const TextStyle(fontSize: 16.0)),
+      subtitle: Text(courseData.authorRef.toString(),
+          style: const TextStyle(fontSize: 16.0),
+          overflow: TextOverflow.fade,
+          maxLines: 1,
+          softWrap: false),
       leading: const CircleAvatar(backgroundColor: Colors.pink),
       trailing: const Text.rich(TextSpan(children: [
         TextSpan(text: "0 ", style: TextStyle(fontSize: 18)),

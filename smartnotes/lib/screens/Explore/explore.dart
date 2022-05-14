@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smartnotes/models/course_model.dart';
 import 'package:smartnotes/screens/Course/course_preview.dart';
 import 'package:smartnotes/screens/Explore/explore_card.dart';
+import 'package:smartnotes/screens/Explore/topic_category.dart';
 import 'package:smartnotes/screens/components/search_bar.dart';
 import 'package:smartnotes/screens/Explore/topic_tag.dart';
 
@@ -46,6 +47,32 @@ class _ExploreState extends State<Explore> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 1,
+          title: const Text(
+            'Smart Notes',
+            style: TextStyle(
+              fontSize: 30.0,
+              color: Colors.black,
+              fontFamily: 'LobsterTwo',
+            ),
+          ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: IconButton(
+                onPressed: () => {
+                  Fluttertoast.showToast(msg: "Personal Notes clicked"),
+                },
+                icon: const Icon(
+                  Icons.article_outlined,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ],
+        ),
         body: Column(
           children: [
             // Search Box
@@ -56,7 +83,34 @@ class _ExploreState extends State<Explore> {
                 margin: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: Column(
                   children: [
-                    const TopicTag(),
+                    Container(
+                      height: 60,
+                      child: ListView(
+                        physics: const BouncingScrollPhysics(),
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          const SizedBox(
+                            width: 28,
+                          ),
+                          TopicCategory(
+                            text: "Chemistry",
+                            onPressed: (value) => print(value),
+                          ),
+                          TopicCategory(
+                            text: "Physics",
+                            onPressed: (value) => print(value),
+                          ),
+                          TopicCategory(
+                            text: "Mathematics",
+                            onPressed: (value) => print(value),
+                          ),
+                          TopicCategory(
+                            text: "Programming",
+                            onPressed: (value) => print(value),
+                          ),
+                        ],
+                      ),
+                    ),
                     FutureBuilder<List>(
                         future: fetchCoursesList(),
                         builder: (context, snapshot) {

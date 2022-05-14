@@ -5,14 +5,14 @@ class CourseModel {
   DocumentReference? authorRef;
   String? description;
   String? coverImageURL;
-  List? documentURL;
+  Map? document;
 
   CourseModel(
       {this.title,
       this.description,
       this.coverImageURL,
       this.authorRef,
-      this.documentURL});
+      this.document});
 
   //converter
   CourseModel.fromJson(Map<String, Object?> json)
@@ -21,7 +21,7 @@ class CourseModel {
             description: json['description']! as String,
             coverImageURL: json['coverImageURL']! as String,
             authorRef: json['authorRef']! as DocumentReference,
-            documentURL: json['documentURL']! as List);
+            document: json['document'] as Map);
 
   //data from server
   factory CourseModel.fromMap(map) {
@@ -30,7 +30,7 @@ class CourseModel {
         authorRef: map['authorRef'],
         description: map['description'],
         coverImageURL: map['coverImageURL'],
-        documentURL: map['documentURL']);
+        document: map['document']);
   }
 
   //data format to server
@@ -40,7 +40,7 @@ class CourseModel {
       'authorRef': authorRef,
       'description': description,
       'coverImageURL': coverImageURL,
-      'documentURL': documentURL
+      'document': document
     };
   }
 }
