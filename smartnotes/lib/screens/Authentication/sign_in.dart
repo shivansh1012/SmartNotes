@@ -201,9 +201,6 @@ class _SignInState extends State<SignIn> {
             (uid) => {
               Fluttertoast.showToast(msg: "Login Successful"),
               Navigator.pushNamed(context, '/mobileView')
-              // Navigator.of(context).pushReplacement(
-              //     MaterialPageRoute(builder: (context) => const Home()))
-              // Navigator.pushNamed(context, '0')
             },
           )
           .catchError(

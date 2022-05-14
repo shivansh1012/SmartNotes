@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smartnotes/constants.dart';
 import 'package:smartnotes/models/user_model.dart';
-import 'package:smartnotes/screens/Home/home.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -247,16 +246,16 @@ class _SignUpState extends State<SignUp> {
 
     Fluttertoast.showToast(msg: "Account Created Successfully");
 
-    Navigator.replace(
-      context,
-      oldRoute: MaterialPageRoute(
-        builder: (context) => const SignUp(),
-      ),
-      newRoute: MaterialPageRoute(
-        builder: (context) => const Home(),
-      ),
-    );
-
+    // Navigator.replace(
+    //   context,
+    //   oldRoute: MaterialPageRoute(
+    //     builder: (context) => const SignUp(),
+    //   ),
+    //   newRoute: MaterialPageRoute(
+    //     builder: (context) => const Home(),
+    //   ),
+    // );
+    Navigator.pop(context);
     // Navigator.pushAndRemoveUntil(
     //     (context),
     //     MaterialPageRoute(builder: (context) => const Home()),

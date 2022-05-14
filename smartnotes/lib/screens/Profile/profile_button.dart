@@ -25,10 +25,6 @@ class ProfileButton extends StatelessWidget {
         ),
         child: Row(
           children: [
-            // const CircleAvatar(
-            //   radius: 20.0,
-            //   backgroundColor: Colors.blueAccent,
-            // ),
             Icon(buttonIcon, size: 20),
             const SizedBox(
               width: 15.0,
