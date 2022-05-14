@@ -111,71 +111,74 @@ class _ProfileState extends State<Profile> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: Column(
-          children: [
-            Container(
-                margin: const EdgeInsets.all(15.0),
-                height: safeHeight * 0.15,
-                width: safeWidth,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15.0),
-                  border: Border.all(
-                    color: secondary,
+        body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            children: [
+              Container(
+                  margin: const EdgeInsets.all(15.0),
+                  height: safeHeight * 0.15,
+                  width: safeWidth,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15.0),
+                    border: Border.all(
+                      color: secondary,
+                    ),
                   ),
-                ),
-                padding: const EdgeInsets.all(20.0),
-                child: loggedInUser.name == null ? signInGreeting : greeting),
-            if (loggedInUser.email != null)
+                  padding: const EdgeInsets.all(20.0),
+                  child: loggedInUser.name == null ? signInGreeting : greeting),
+              if (loggedInUser.email != null)
+                ProfileButton(
+                    buttonName: "Account",
+                    buttonIcon: Icons.person_rounded,
+                    action: () {
+                      Fluttertoast.showToast(msg: "Profile Clicked");
+                    },
+                    link: ""),
               ProfileButton(
-                  buttonName: "Account",
-                  buttonIcon: Icons.person_rounded,
+                  buttonName: "Settings",
+                  buttonIcon: Icons.settings,
                   action: () {
-                    Fluttertoast.showToast(msg: "Profile Clicked");
+                    Fluttertoast.showToast(msg: "Settings Clicked");
                   },
                   link: ""),
-            ProfileButton(
-                buttonName: "Settings",
-                buttonIcon: Icons.settings,
-                action: () {
-                  Fluttertoast.showToast(msg: "Settings Clicked");
-                },
-                link: ""),
-            ProfileButton(
-                buttonName: "Preference",
-                buttonIcon: Icons.precision_manufacturing,
-                action: () {
-                  Fluttertoast.showToast(msg: "Preference Clicked");
-                },
-                link: ""),
-            if (loggedInUser.email != null)
               ProfileButton(
-                  buttonName: "Personal Notes",
-                  buttonIcon: Icons.notes_rounded,
+                  buttonName: "Preference",
+                  buttonIcon: Icons.precision_manufacturing,
                   action: () {
-                    Navigator.pushNamed(context, '/notesView');
+                    Fluttertoast.showToast(msg: "Preference Clicked");
                   },
                   link: ""),
-            if (loggedInUser.email != null)
+              if (loggedInUser.email != null)
+                ProfileButton(
+                    buttonName: "Personal Notes",
+                    buttonIcon: Icons.notes_rounded,
+                    action: () {
+                      Navigator.pushNamed(context, '/notesView');
+                    },
+                    link: ""),
+              if (loggedInUser.email != null)
+                ProfileButton(
+                    buttonName: "Upload",
+                    buttonIcon: Icons.add_circle_outline_outlined,
+                    action: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const Upload()));
+                    },
+                    link: ""),
               ProfileButton(
-                  buttonName: "Upload",
-                  buttonIcon: Icons.add_circle_outline_outlined,
+                  buttonName: "About",
+                  buttonIcon: Icons.engineering_rounded,
                   action: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const Upload()));
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => const AboutUs()));
                   },
                   link: ""),
-            ProfileButton(
-                buttonName: "About",
-                buttonIcon: Icons.engineering_rounded,
-                action: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const AboutUs()));
-                },
-                link: ""),
-            if (loggedInUser.email != null) signOutButton,
-            const Text("App Version: 1.0.0",
-                style: TextStyle(fontSize: 10.0, color: Colors.grey))
-          ],
+              if (loggedInUser.email != null) signOutButton,
+              const Text("App Version: 1.0.0",
+                  style: TextStyle(fontSize: 10.0, color: Colors.grey))
+            ],
+          ),
         ),
       ),
     );

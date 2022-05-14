@@ -80,7 +80,7 @@ class _CourseDetailsState extends State<CourseDetails> {
                         child: InkWell(
                           splashColor: Colors.blue.withAlpha(30),
                           onTap: () {
-                            launchUrl(
+                            _launchUrl(
                                 Uri.parse(courseInfo.document[key].toString()));
                           },
                           child: SizedBox(
@@ -185,8 +185,7 @@ class _CourseDetailsState extends State<CourseDetails> {
   void _launchUrl(Uri _url) async {
     await Fluttertoast.showToast(msg: _url.toString());
     if (await canLaunchUrl(_url)) {
-      await launchUrl(_url, mode: LaunchMode.inAppWebView);
+      await launchUrl(_url, mode: LaunchMode.externalNonBrowserApplication);
     }
-    // if (!await launchUrl(_url)) throw 'Could not launch $_url';
   }
 }
