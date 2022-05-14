@@ -7,7 +7,6 @@ import 'package:smartnotes/models/user_model.dart';
 import 'package:smartnotes/screens/AboutUs/about_us.dart';
 import 'package:smartnotes/screens/Authentication/sign_in.dart';
 import 'package:smartnotes/screens/Profile/profile_button.dart';
-import 'package:smartnotes/screens/Upload/upload.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -144,7 +143,7 @@ class _ProfileState extends State<Profile> {
                 buttonName: "Preference",
                 buttonIcon: Icons.precision_manufacturing,
                 action: () {
-                  Fluttertoast.showToast(msg: "Preferecnde Clicked");
+                  Fluttertoast.showToast(msg: "Preference Clicked");
                 },
                 link: ""),
             if (loggedInUser.email != null)
@@ -152,7 +151,7 @@ class _ProfileState extends State<Profile> {
                   buttonName: "Personal Notes",
                   buttonIcon: Icons.notes_rounded,
                   action: () {
-                    Fluttertoast.showToast(msg: "Personal Notes Clicked");
+                    Navigator.pushNamed(context, '/notesView');
                   },
                   link: ""),
             if (loggedInUser.email != null)

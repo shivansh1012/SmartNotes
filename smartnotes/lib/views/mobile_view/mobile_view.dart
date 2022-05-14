@@ -107,6 +107,7 @@ class MobileViewState extends State<MobileView> {
         //       child: IconButton(
         //         onPressed: () => {
         //           Fluttertoast.showToast(msg: "Personal Notes clicked"),
+        //            Navigator.pushNamed(context, '/notesView')
         //         },
         //         icon: const Icon(
         //           Icons.article_outlined,

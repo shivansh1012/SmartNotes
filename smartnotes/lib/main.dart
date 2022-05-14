@@ -1,7 +1,16 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:smartnotes/screens/Authentication/sign_in.dart';
+import 'package:smartnotes/screens/Authentication/sign_up.dart';
+import 'package:smartnotes/screens/Course/note_details.dart';
+import 'package:smartnotes/screens/Explore/explore.dart';
+import 'package:smartnotes/screens/Forums/forum.dart';
+import 'package:smartnotes/screens/Home/home.dart';
+import 'package:smartnotes/screens/PersonalNotes/personal_notes.dart';
+import 'package:smartnotes/screens/Profile/profile.dart';
 import 'package:smartnotes/screens/SplashScreen/splash_screen.dart';
+import 'package:smartnotes/views/mobile_view/mobile_view.dart';
 // import 'package:smartnotes/views/mobile_view/mobile_view.dart';
 
 Future<void> main() async {
@@ -39,13 +48,23 @@ class _MyAppState extends State<MyApp> {
         // showPerformanceOverlay: true,
         title: 'Smart Notes',
         debugShowCheckedModeBanner: false,
-        home: const SplashScreen(),
         theme: ThemeData(
           textButtonTheme: TextButtonThemeData(
             style: TextButton.styleFrom(primary: const Color(0xff0081C6)),
           ),
-        ),
       ),
+      routes: {
+        '/': (context) => const SplashScreen(),
+        '/home': (context) => const Home(),
+        '/mobileView': (context) => const MobileView(),
+        '/explore': (context) => const Explore(),
+        '/forum': (context) => const Forum(),
+        '/signUp': (context) => const SignUp(),
+        '/signIn': (context) => const SignIn(),
+        '/profile': (context) => const Profile(),
+        '/noteDetails': (context) => const NoteDetails(),
+        '/notesView': (context) => const PersonalNotes(),
+      },
     );
   }
 }
