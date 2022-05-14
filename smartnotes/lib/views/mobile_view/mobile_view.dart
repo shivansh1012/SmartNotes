@@ -85,7 +85,8 @@ class _MobileViewState extends State<MobileView> {
               padding: const EdgeInsets.all(8.0),
               child: IconButton(
                 onPressed: () => {
-                  Fluttertoast.showToast(msg: "Personal Notes clicked"),
+                  // Fluttertoast.showToast(msg: "Personal Notes clicked"),
+                  Navigator.pushNamed(context, '/notesView')
                 },
                 icon: const Icon(
                   Icons.article_outlined,

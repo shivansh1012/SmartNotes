@@ -86,7 +86,7 @@ class _ProfileState extends State<Profile> {
                 buttonName: "Preference",
                 buttonIcon: Icons.precision_manufacturing,
                 action: () {
-                  Fluttertoast.showToast(msg: "Preferecnde Clicked");
+                  Fluttertoast.showToast(msg: "Preference Clicked");
                 },
                 link: ""),
             ProfileButton(
@@ -94,6 +94,8 @@ class _ProfileState extends State<Profile> {
                 buttonIcon: Icons.notes_rounded,
                 action: () {
                   Fluttertoast.showToast(msg: "Personal Notes Clicked");
+                  // ! To fix navigation
+                  Navigator.pushNamed(context, '/notesView');
                 },
                 link: ""),
             ProfileButton(

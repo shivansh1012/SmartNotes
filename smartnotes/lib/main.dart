@@ -7,6 +7,7 @@ import 'package:smartnotes/screens/Course/note_details.dart';
 import 'package:smartnotes/screens/Explore/explore.dart';
 import 'package:smartnotes/screens/Forums/forum.dart';
 import 'package:smartnotes/screens/Home/home.dart';
+import 'package:smartnotes/screens/PersonalNotes/personal_notes.dart';
 import 'package:smartnotes/screens/Profile/profile.dart';
 import 'package:smartnotes/screens/SplashScreen/splash_screen.dart';
 import 'package:smartnotes/views/mobile_view/mobile_view.dart';
@@ -60,7 +61,8 @@ class _MyAppState extends State<MyApp> {
         '/signUp': (context) => const SignUp(),
         '/signIn': (context) => const SignIn(),
         '/profile': (context) => const Profile(),
-        '/noteDetails': (context) => const NoteDetails()
+        '/noteDetails': (context) => const NoteDetails(),
+        '/notesView': (context) => const PersonalNotes(),
       },
     );
   }

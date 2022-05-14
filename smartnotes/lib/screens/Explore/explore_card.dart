@@ -4,7 +4,12 @@ class ExploreCard extends StatelessWidget {
   final String topicName;
   final String author;
   final Function() action;
-  const ExploreCard({Key? key, required this.topicName, required this.author, required this.action}) : super(key: key);
+  const ExploreCard({
+    Key? key,
+    required this.topicName,
+    required this.author,
+    required this.action,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
