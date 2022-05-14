@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smartnotes/models/course_model.dart';
 import 'package:path/path.dart' as p;
+import 'package:url_launcher/url_launcher.dart';
 
 class CourseDetails extends StatefulWidget {
   final String courseUID;
@@ -42,7 +43,6 @@ class _CourseDetailsState extends State<CourseDetails> {
   @override
   Widget build(BuildContext context) {
     Widget _courseInfo(courseInfo) {
-      Fluttertoast.showToast(msg: "Dum Dum Dum, this is not yet done");
       return Stack(
         children: [
           Padding(
@@ -76,10 +76,12 @@ class _CourseDetailsState extends State<CourseDetails> {
                     itemBuilder: (context, index) {
                       String key = courseInfo.document.keys.elementAt(index);
                       return Card(
+                        color: const Color.fromARGB(255, 228, 224, 227),
                         child: InkWell(
                           splashColor: Colors.blue.withAlpha(30),
                           onTap: () {
-                            Fluttertoast.showToast(msg: "Dude seriouly?");
+                            launchUrl(
+                                Uri.parse(courseInfo.document[key].toString()));
                           },
                           child: SizedBox(
                             // height: 100,
@@ -178,5 +180,13 @@ class _CourseDetailsState extends State<CourseDetails> {
             }
           }),
     );
+  }
+
+  void _launchUrl(Uri _url) async {
+    await Fluttertoast.showToast(msg: _url.toString());
+    if (await canLaunchUrl(_url)) {
+      await launchUrl(_url, mode: LaunchMode.inAppWebView);
+    }
+    // if (!await launchUrl(_url)) throw 'Could not launch $_url';
   }
 }
