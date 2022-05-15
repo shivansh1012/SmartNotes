@@ -15,12 +15,6 @@ class Explore extends StatefulWidget {
 }
 
 class _ExploreState extends State<Explore> {
-  @override
-  void initState() {
-    super.initState();
-    fetchCoursesList();
-  }
-
   Future<List> fetchCoursesList() async {
     List courseList = [];
     final rawData =
@@ -28,6 +22,7 @@ class _ExploreState extends State<Explore> {
     for (var element in rawData.docs) {
       courseList.add(element);
     }
+    Fluttertoast.showToast(msg: "Course List fetch complete");
     return courseList;
   }
 
