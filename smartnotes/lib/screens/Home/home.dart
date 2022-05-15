@@ -55,6 +55,7 @@ class Home extends StatelessWidget {
                     vertical: 50.0,
                   ),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,7 +79,7 @@ class Home extends StatelessWidget {
                         ],
                       ),
                       Container(
-                        margin: const EdgeInsets.only(left: 80),
+                        margin: const EdgeInsets.only(right: 20),
                         child: const CircleAvatar(
                           radius: 25,
                           backgroundColor: Colors.amber,

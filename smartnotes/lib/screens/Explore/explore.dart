@@ -81,24 +81,29 @@ class _ExploreState extends State<Explore> {
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
                             return Expanded(
-                              child: ListView.builder(
-                                  physics: const BouncingScrollPhysics(),
-                                  itemCount: snapshot.data?.length,
-                                  itemBuilder: (context, index) {
-                                    return ExploreCard(
-                                        courseData: CourseModel.fromMap(
-                                            snapshot.data?[index]),
-                                        action: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      CoursePreview(
-                                                          courseUID: snapshot
-                                                              .data?[index]
-                                                              .id)));
-                                        });
-                                  }),
+                              child: RefreshIndicator(
+                                onRefresh: () async {
+                                  setState(() {});
+                                },
+                                child: ListView.builder(
+                                    physics: const BouncingScrollPhysics(),
+                                    itemCount: snapshot.data?.length,
+                                    itemBuilder: (context, index) {
+                                      return ExploreCard(
+                                          courseData: CourseModel.fromMap(
+                                              snapshot.data?[index]),
+                                          action: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        CoursePreview(
+                                                            courseUID: snapshot
+                                                                .data?[index]
+                                                                .id)));
+                                          });
+                                    }),
+                              ),
                             );
                           } else {
                             return Center(

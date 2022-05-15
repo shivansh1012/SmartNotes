@@ -28,7 +28,7 @@ class MobileViewState extends State<MobileView> {
         page: const Explore()),
     TabItem(
         tabName: "Forum",
-        icon: Icons.cast_for_education_rounded,
+        icon: Icons.forum,
         page: const Forum()),
     TabItem(
         tabName: "Profile", icon: Icons.person_outline, page: const Profile())
