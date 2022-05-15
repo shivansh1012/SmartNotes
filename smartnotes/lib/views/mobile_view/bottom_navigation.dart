@@ -6,10 +6,11 @@ import 'package:smartnotes/views/mobile_view/tab_item.dart';
 class BottomNavigation extends StatelessWidget {
   final ValueChanged<int> onSelectTab;
   final List<TabItem> tabs;
-  BottomNavigation({
+  const BottomNavigation({
+    Key? key,
     required this.onSelectTab,
     required this.tabs,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

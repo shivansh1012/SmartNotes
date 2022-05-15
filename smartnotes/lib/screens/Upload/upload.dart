@@ -7,6 +7,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smartnotes/models/course_model.dart';
+import 'package:path/path.dart' as p;
 
 class Upload extends StatefulWidget {
   const Upload({Key? key}) : super(key: key);
@@ -16,9 +17,13 @@ class Upload extends StatefulWidget {
 }
 
 class _UploadState extends State<Upload> {
+  final _formKey = GlobalKey<FormState>();
   List<PlatformFile>? pickedFile;
   PlatformFile? coverImageFile;
   UploadTask? uploadTask;
+  int filesUploaded = 0;
+  int totalFiles = 1;
+
   final TextEditingController _courseNameController = TextEditingController();
   final TextEditingController _courseDescriptionController =
       TextEditingController();
@@ -29,6 +34,7 @@ class _UploadState extends State<Upload> {
     final result = await FilePicker.platform.pickFiles(type: FileType.image);
     if (result == null) return;
     setState(() {
+      totalFiles++;
       coverImageFile = result.files.first;
     });
   }
@@ -40,6 +46,7 @@ class _UploadState extends State<Upload> {
         allowedExtensions: ['jpg', 'png', 'pdf', 'doc']);
     if (result == null) return;
     setState(() {
+      totalFiles += result.count;
       pickedFile = result.files;
     });
   }
@@ -47,14 +54,20 @@ class _UploadState extends State<Upload> {
   Future<String> uploadFile(selectedFile) async {
     final path = 'files/${selectedFile!.name}';
     final file = File(selectedFile!.path);
-
     final ref = _storage.ref().child(path);
-    uploadTask = ref.putFile(file);
+
+    setState(() {
+      uploadTask = ref.putFile(file);
+    });
 
     final snapShot = await uploadTask!.whenComplete(() {});
 
     final urlDownload = await snapShot.ref.getDownloadURL();
     Fluttertoast.showToast(msg: 'FIle Uploaded');
+    setState(() {
+      filesUploaded += 1;
+      uploadTask = null;
+    });
     return urlDownload;
   }
 
@@ -63,24 +76,41 @@ class _UploadState extends State<Upload> {
     User? user = FirebaseAuth.instance.currentUser;
     CollectionReference _users = firebaseFirestore.collection("users");
     Map document = {};
-    String coverImageURL = await uploadFile(coverImageFile);
-    for (PlatformFile file in pickedFile!) {
-      document[file.name] = await uploadFile(file);
-    }
+    if (_formKey.currentState!.validate()) {
+      if (coverImageFile == null) {
+        Fluttertoast.showToast(msg: "Select a cover Image First");
+        return;
+      } else if (pickedFile == null) {
+        Fluttertoast.showToast(msg: "Upload Some Docs First");
+        return;
+      }
 
-    CourseModel newCourse = CourseModel(
-        title: _courseNameController.text,
-        authorRef: _users.doc(user!.uid),
-        description: _courseDescriptionController.text,
-        coverImageURL: coverImageURL,
-        document: document);
-        
-    firebaseFirestore
-        .collection("courses")
-        .doc()
-        .set(newCourse.toMap())
-        .then((value) => Fluttertoast.showToast(msg: "Upload Success"))
-        .catchError((error) => Fluttertoast.showToast(msg: "Error $error"));
+      String coverImageURL = await uploadFile(coverImageFile);
+      for (PlatformFile file in pickedFile!) {
+        document[file.name] = await uploadFile(file);
+      }
+
+      CourseModel newCourse = CourseModel(
+          title: _courseNameController.text,
+          authorRef: _users.doc(user!.uid),
+          description: _courseDescriptionController.text,
+          coverImageURL: coverImageURL,
+          document: document);
+
+      firebaseFirestore
+          .collection("courses")
+          .doc()
+          .set(newCourse.toMap())
+          .then((value) {
+        Fluttertoast.showToast(msg: "Upload Success");
+        setState(() {
+          filesUploaded += 1;
+        });
+        // Navigator.of(context).pop(context)
+      }).catchError((error) {
+        Fluttertoast.showToast(msg: "Error ${error.toString}");
+      });
+    }
   }
 
   @override
@@ -92,6 +122,12 @@ class _UploadState extends State<Upload> {
           _courseNameController.text = value!;
         },
         textInputAction: TextInputAction.next,
+        validator: (value) {
+          if (value!.isEmpty) {
+            return ("Course Name cant be empty");
+          }
+          return null;
+        },
         style: const TextStyle(fontSize: 20),
         decoration: InputDecoration(
           labelText: "Course Name",
@@ -106,6 +142,12 @@ class _UploadState extends State<Upload> {
         onSaved: (value) {
           _courseDescriptionController.text = value!;
         },
+        validator: (value) {
+          if (value!.isEmpty) {
+            return ("Course Description cant be empty");
+          }
+          return null;
+        },
         // textInputAction: TextInputAction.done,
         style: const TextStyle(fontSize: 20),
         decoration: InputDecoration(
@@ -115,43 +157,180 @@ class _UploadState extends State<Upload> {
           ),
         ));
 
+    IconData getIcon(path) {
+      final extension = p.extension(path);
+      if (extension == ".pdf") {
+        return Icons.picture_as_pdf;
+      } else if (extension == ".doc" || extension == ".docx") {
+        return Icons.description;
+      } else if (extension == ".mp4" || extension == ".mkv") {
+        return Icons.video_file_rounded;
+      } else {
+        return Icons.collections;
+      }
+    }
+
+    Widget buildUploadProgress() {
+      return StreamBuilder<TaskSnapshot>(
+        stream: uploadTask?.snapshotEvents,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final data = snapshot.data!;
+            double progress = data.bytesTransferred / data.totalBytes;
+
+            return SizedBox(
+              height: 50,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  LinearProgressIndicator(
+                    value: progress,
+                    backgroundColor: Colors.grey,
+                    color: Colors.green,
+                  ),
+                  Center(
+                    child: Text(
+                      '${(100 * progress).roundToDouble()}%',
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  )
+                ],
+              ),
+            );
+          } else {
+            return const SizedBox(height: 50);
+          }
+        },
+      );
+    }
+
+    Widget buildTotalProgress() {
+      return StreamBuilder<TaskSnapshot>(
+        stream: uploadTask?.snapshotEvents,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            double progress = filesUploaded / totalFiles;
+
+            return SizedBox(
+              height: 50,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  LinearProgressIndicator(
+                    value: progress,
+                    backgroundColor: Colors.grey,
+                    color: Colors.green,
+                  ),
+                  Center(
+                    child: Text(
+                      '${(100 * progress).roundToDouble()}%',
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  )
+                ],
+              ),
+            );
+          } else {
+            return const SizedBox(height: 50);
+          }
+        },
+      );
+    }
+
     return SafeArea(
       child: Scaffold(
           backgroundColor: Colors.white,
           body: Container(
             padding: const EdgeInsets.all(10),
             child: Center(
+                child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Form(
+                key: _formKey,
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                  if (coverImageFile != null) Text(coverImageFile!.name),
-                  ElevatedButton(
-                      onPressed: selectCoverImage,
-                      child: const Text("Select Cover Image")),
-                  courseNameTextBox,
-                  const SizedBox(height: 30),
-                  courseDescriptionTextBox,
-                  const SizedBox(height: 30),
-                  if (pickedFile != null)
-                    SingleChildScrollView(
-                      child: Container(
-                        height: 100,
-                        padding: const EdgeInsets.all(10),
-                        child: Center(
-                            child: Column(
-                                children: pickedFile!
-                                    .map((file) => Text(file.name))
-                                    .toList())),
-                      ),
-                    ),
-                  ElevatedButton(
-                      onPressed: selectDocuments,
-                      child: const Text("Select Documents")),
-                  const SizedBox(height: 30),
-                  ElevatedButton(
-                      onPressed: saveNewCourse,
-                      child: const Text('Upload Course'))
-                ])),
+                      if (coverImageFile != null)
+                        Image.file(
+                          File(coverImageFile!.path!),
+                          width: 300,
+                          height: 150,
+                        ),
+                      const SizedBox(height: 30),
+                      ElevatedButton(
+                          onPressed: selectCoverImage,
+                          child: const Text("Select Cover Image")),
+                      const SizedBox(height: 30),
+                      courseNameTextBox,
+                      const SizedBox(height: 30),
+                      courseDescriptionTextBox,
+                      const SizedBox(height: 30),
+                      ElevatedButton(
+                          onPressed: selectDocuments,
+                          child: const Text("Select Documents")),
+                      const SizedBox(height: 30),
+                      if (pickedFile != null)
+                        Container(
+                          height: 400,
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: ListView.builder(
+                            itemCount: pickedFile!.length,
+                            itemBuilder: (context, index) {
+                              return Card(
+                                color: const Color.fromARGB(255, 228, 224, 227),
+                                child: InkWell(
+                                  splashColor: Colors.blue.withAlpha(30),
+                                  onTap: () {},
+                                  child: SizedBox(
+                                    width: 300,
+                                    child: ListTile(
+                                      leading: Icon(
+                                        getIcon(pickedFile![index].name),
+                                        size: 28,
+                                      ),
+                                      title: Text(
+                                        pickedFile![index].name.toString(),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.fade,
+                                        softWrap: false,
+                                      ),
+                                      subtitle: Text(
+                                        pickedFile![index].path.toString(),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.fade,
+                                        softWrap: false,
+                                      ),
+                                      trailing: InkWell(
+                                        onTap: () {
+                                          Fluttertoast.showToast(
+                                              msg:
+                                                  "Remove this(Future Implementation)");
+                                        },
+                                        child: const Icon(
+                                          Icons.delete_outline,
+                                          size: 28,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      const SizedBox(height: 30),
+                      ElevatedButton(
+                          onPressed: saveNewCourse,
+                          child: const Text('Upload Course')),
+                      const SizedBox(height: 30),
+                      const Text("Current File Upload Progress"),
+                      buildUploadProgress(),
+                      const SizedBox(height: 30),
+                      const Text("Total Progress"),
+                      buildTotalProgress()
+                    ]),
+              ),
+            )),
           )),
     );
   }

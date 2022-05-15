@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smartnotes/models/course_model.dart';
 import 'package:path/path.dart' as p;
+import 'package:smartnotes/screens/MediaPlayer/media_player.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CourseDetails extends StatefulWidget {
@@ -42,6 +43,16 @@ class _CourseDetailsState extends State<CourseDetails> {
 
   @override
   Widget build(BuildContext context) {
+    void _viewDocument(path) {
+      String extension = p.extension(path);
+      if (extension.startsWith(".mp4") || extension.startsWith(".mkv")) {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => MediaPlayer(videoUri: path)));
+      } else {
+        _launchUrl(Uri.parse(path));
+      }
+    }
+
     Widget _courseInfo(courseInfo) {
       return Stack(
         children: [
@@ -80,11 +91,9 @@ class _CourseDetailsState extends State<CourseDetails> {
                         child: InkWell(
                           splashColor: Colors.blue.withAlpha(30),
                           onTap: () {
-                            _launchUrl(
-                                Uri.parse(courseInfo.document[key].toString()));
+                            _viewDocument(courseInfo.document[key].toString());
                           },
                           child: SizedBox(
-                            // height: 100,
                             width: 300,
                             child: ListTile(
                                 leading: Icon(
@@ -183,7 +192,6 @@ class _CourseDetailsState extends State<CourseDetails> {
   }
 
   void _launchUrl(Uri _url) async {
-    await Fluttertoast.showToast(msg: _url.toString());
     if (await canLaunchUrl(_url)) {
       await launchUrl(_url, mode: LaunchMode.externalNonBrowserApplication);
     }

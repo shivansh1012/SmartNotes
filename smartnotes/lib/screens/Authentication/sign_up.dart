@@ -19,7 +19,6 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  //firebase
   final _auth = FirebaseAuth.instance;
 
   @override
@@ -60,7 +59,6 @@ class _SignUpState extends State<SignUp> {
         if (value!.isEmpty) {
           return ("Please enter your email");
         }
-        //regex
         if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]").hasMatch(value)) {
           return ("Enter a valid email");
         }
@@ -167,29 +165,6 @@ class _SignUpState extends State<SignUp> {
                     const SizedBox(
                       height: 15.0,
                     ),
-                    // const Center(
-                    //   child: Text(
-                    //     "Already have an account?",
-                    //     style: TextStyle(color: Colors.grey, fontSize: 15.0),
-                    //   ),
-                    // ),
-                    // const SizedBox(
-                    //   height: 10.0,
-                    // ),
-                    // OutlinedButton(
-                    //   child: const Text(
-                    //     "Sign In",
-                    //     style: TextStyle(fontSize: 16.0),
-                    //   ),
-                    //   onPressed: () {
-                    //     Navigator.push(
-                    //       context,
-                    //       MaterialPageRoute(
-                    //         builder: (context) => const SignIn(),
-                    //       ),
-                    //     );
-                    //   },
-                    // )
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -245,21 +220,7 @@ class _SignUpState extends State<SignUp> {
         .set(userModel.toMap());
 
     Fluttertoast.showToast(msg: "Account Created Successfully");
-
-    // Navigator.replace(
-    //   context,
-    //   oldRoute: MaterialPageRoute(
-    //     builder: (context) => const SignUp(),
-    //   ),
-    //   newRoute: MaterialPageRoute(
-    //     builder: (context) => const Home(),
-    //   ),
-    // );
     Navigator.pop(context);
-    // Navigator.pushAndRemoveUntil(
-    //     (context),
-    //     MaterialPageRoute(builder: (context) => const Home()),
-    //     (route) => false);
   }
 
   @override

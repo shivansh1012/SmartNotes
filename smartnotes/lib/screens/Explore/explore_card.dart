@@ -13,7 +13,10 @@ class ExploreCard extends StatelessWidget {
       title: Container(
           margin: const EdgeInsets.only(bottom: 10.0),
           child: Text(courseData.title.toString(),
-              style: const TextStyle(fontSize: 18.0))),
+              style: const TextStyle(fontSize: 18.0),
+              overflow: TextOverflow.fade,
+              maxLines: 1,
+              softWrap: false)),
       subtitle: Text(courseData.authorRef.toString(),
           style: const TextStyle(fontSize: 16.0),
           overflow: TextOverflow.fade,
@@ -26,31 +29,28 @@ class ExploreCard extends StatelessWidget {
       ])),
     );
 
-    return InkWell(
-      onTap: action,
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15.0),
-          side: const BorderSide(
-            color: Colors.grey,
-            width: 1.0,
-          ),
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(25.0),
+      ),
+      color: const Color.fromARGB(255, 255, 241, 245),
+      child: InkWell(
+        customBorder: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(25.0),
         ),
+        splashColor: Colors.blue.withAlpha(30),
+        onTap: action,
         child: Container(
           padding: const EdgeInsets.all(5.0),
           child: Column(
             children: [
-              Container(
+              SizedBox(
                 height: 150,
-                // decoration: BoxDecoration(
-                //   color: Colors.red,
-                //   borderRadius: BorderRadius.circular(15.0),
-                // ),
                 child: Image.network(
                   courseData.coverImageURL.toString(),
-                  fit: BoxFit.fitHeight,
+                  fit: BoxFit.fitWidth,
                   height: 150,
-                  // width: 150,
+                  width: 300,
                 ),
               ),
               const SizedBox(

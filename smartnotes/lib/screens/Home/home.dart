@@ -27,7 +27,6 @@ class Home extends StatelessWidget {
                 onPressed: () => {
                   // Navigator.pushNamed(context, '/notesView')
                   Fluttertoast.showToast(msg: "Personal Notes Pressed")
-                  // Navigator.of(context).push(MaterialPageRoute(builder: (context) => const PersonalNotes()))
                 },
                 icon: const Icon(
                   Icons.article_outlined,
@@ -56,6 +55,7 @@ class Home extends StatelessWidget {
                     vertical: 50.0,
                   ),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,7 +79,7 @@ class Home extends StatelessWidget {
                         ],
                       ),
                       Container(
-                        margin: const EdgeInsets.only(left: 80),
+                        margin: const EdgeInsets.only(right: 20),
                         child: const CircleAvatar(
                           radius: 25,
                           backgroundColor: Colors.amber,

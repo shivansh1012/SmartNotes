@@ -29,10 +29,9 @@ class _TopicCategoryState extends State<TopicCategory> {
               height: 45,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.grey, width: 1.0),
                 color: isSelected
                     ? const Color.fromARGB(255, 162, 193, 254)
-                    : const Color(0x00000fff),
+                    : const Color.fromARGB(255, 225, 225, 225),
                 boxShadow: isSelected
                     ? [
                         BoxShadow(
@@ -44,8 +43,7 @@ class _TopicCategoryState extends State<TopicCategory> {
               ),
               child: Center(
                 child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: 32),
                   child: Text(
                     widget.text!,
                     style: const TextStyle(

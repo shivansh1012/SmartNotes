@@ -30,6 +30,89 @@ class _CoursePreviewState extends State<CoursePreview> {
 
   @override
   Widget build(BuildContext context) {
+    Widget _documentDetails(documentList) {
+      bool isVideoPresent = false;
+      bool isDocPresent = false;
+      bool isPDFPresent = false;
+      bool isImagePresent = false;
+
+      for (int index = 0; index < documentList.length; index++) {
+        String key = documentList.keys.elementAt(index);
+        if(key.endsWith("mp4") || key.endsWith("mk4")) {
+          isVideoPresent = true;
+        } else if(key.endsWith("pdf")) {
+          isPDFPresent = true;
+        } else if(key.endsWith("jpg") || key.endsWith("png") || key.endsWith("jpeg")) {
+          isImagePresent = true;
+        } else {
+          isDocPresent = true;
+        }
+      }
+
+      return Row(
+        children: [
+          if(isPDFPresent)
+          Container(
+            height: 56,
+            width: 56,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.black.withOpacity(0.1)),
+            child: const Center(
+                child: Icon(
+              Icons.picture_as_pdf,
+              size: 28,
+            )),
+          ),
+          if(isPDFPresent)
+          const SizedBox(width: 16),
+          if(isImagePresent)
+          Container(
+            height: 56,
+            width: 56,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.black.withOpacity(0.1)),
+            child: const Center(
+                child: Icon(
+              Icons.collections,
+              size: 28,
+            )),
+          ),
+          if(isImagePresent)
+          const SizedBox(width: 16),
+          if(isDocPresent)
+          Container(
+            height: 56,
+            width: 56,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.black.withOpacity(0.1)),
+            child: const Center(
+                child: Icon(
+              Icons.description,
+              size: 28,
+            )),
+          ),
+          if(isDocPresent)
+          const SizedBox(width: 16),
+          if(isVideoPresent)
+          Container(
+            height: 56,
+            width: 56,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.black.withOpacity(0.1)),
+            child: const Center(
+                child: Icon(
+              Icons.video_library_rounded,
+              size: 28,
+            )),
+          ),
+        ],
+      );
+    }
+
     Widget _coursePreview(courseDetails) => Stack(
           children: [
             ListView(
@@ -68,63 +151,8 @@ class _CoursePreviewState extends State<CoursePreview> {
                             fontSize: 16, fontWeight: FontWeight.w400))),
                 const SizedBox(height: 16),
                 Padding(
-                  padding: const EdgeInsets.only(left: 28),
-                  child: Row(
-                    children: [
-                      Container(
-                        height: 56,
-                        width: 56,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.black.withOpacity(0.1)),
-                        child: const Center(
-                            child: Icon(
-                          Icons.picture_as_pdf,
-                          size: 28,
-                        )),
-                      ),
-                      const SizedBox(width: 16),
-                      Container(
-                        height: 56,
-                        width: 56,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.black.withOpacity(0.1)),
-                        child: const Center(
-                            child: Icon(
-                          Icons.collections,
-                          size: 28,
-                        )),
-                      ),
-                      const SizedBox(width: 16),
-                      Container(
-                        height: 56,
-                        width: 56,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.black.withOpacity(0.1)),
-                        child: const Center(
-                            child: Icon(
-                          Icons.description,
-                          size: 28,
-                        )),
-                      ),
-                      const SizedBox(width: 16),
-                      Container(
-                        height: 56,
-                        width: 56,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.black.withOpacity(0.1)),
-                        child: const Center(
-                            child: Icon(
-                          Icons.video_library_rounded,
-                          size: 28,
-                        )),
-                      ),
-                    ],
-                  ),
-                ),
+                    padding: const EdgeInsets.only(left: 28),
+                    child: _documentDetails(courseDetails.document)),
                 const SizedBox(
                   height: 16,
                 ),
@@ -233,10 +261,10 @@ class _CoursePreviewState extends State<CoursePreview> {
                           color: const Color(0xff4A80F0),
                           borderRadius: BorderRadius.circular(16),
                         ),
-                        child: Container(
+                        child: const SizedBox(
                             height: 56,
                             width: 319,
-                            child: const Center(
+                            child: Center(
                               child: Text("Start",
                                   style: TextStyle(
                                       fontSize: 16,
