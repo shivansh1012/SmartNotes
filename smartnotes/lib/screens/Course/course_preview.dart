@@ -17,16 +17,17 @@ class CoursePreview extends StatefulWidget {
 
 class _CoursePreviewState extends State<CoursePreview> {
   Future<CourseModel> fetchCourseDetails() async {
-    final rawData = await FirebaseFirestore.instance
+    final rawCourseData = await FirebaseFirestore.instance
         .collection("courses")
         .doc(widget.courseUID)
         .get();
     final courseDetails =
-        CourseModel.fromMap(rawData.data() as Map<String, dynamic>);
+        CourseModel.fromMap(rawCourseData.data() as Map<String, dynamic>);
     final rawUserData = await FirebaseFirestore.instance
         .doc(courseDetails.authorRef!.path)
         .get();
     courseDetails.setAuthorInfo(UserModel.fromMap(rawUserData));
+    courseDetails.setId(widget.courseUID);
     Fluttertoast.showToast(msg: "Course Preview Fetch Complete");
     return courseDetails;
   }

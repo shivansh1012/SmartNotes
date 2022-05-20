@@ -16,16 +16,17 @@ class Carousel extends StatelessWidget {
     Future<List<CourseModel>> _getCourseData() async {
       List<CourseModel> data = [];
       for (var ref in refList) {
-        final rawData = await FirebaseFirestore.instance
+        final rawCourseData = await FirebaseFirestore.instance
             .collection("courses")
             .doc(ref)
             .get();
-        CourseModel temp = CourseModel.fromMap(rawData);
+        CourseModel tempCourseInfo = CourseModel.fromMap(rawCourseData);
         final rawUserData = await FirebaseFirestore.instance
-        .doc(temp.authorRef!.path)
-        .get();
-        temp.setAuthorInfo(UserModel.fromMap(rawUserData));
-        data.add(temp);
+            .doc(tempCourseInfo.authorRef!.path)
+            .get();
+        tempCourseInfo.setAuthorInfo(UserModel.fromMap(rawUserData));
+        tempCourseInfo.setId(ref);
+        data.add(tempCourseInfo);
       }
       Fluttertoast.showToast(msg: data.toString());
       return data;
@@ -54,7 +55,7 @@ class Carousel extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
-                                CoursePreview(courseUID: refList[index]),
+                                CoursePreview(courseUID: snapshot.data![index].id.toString()),
                           ),
                         );
                       }),

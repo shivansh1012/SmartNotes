@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smartnotes/models/course_model.dart';
 import 'package:path/path.dart' as p;
+import 'package:smartnotes/models/user_model.dart';
 import 'package:smartnotes/screens/MediaPlayer/media_player.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -16,15 +17,18 @@ class CourseDetails extends StatefulWidget {
 
 class _CourseDetailsState extends State<CourseDetails> {
   Future<CourseModel> fetchCourseDetails() async {
-    final rawData = await FirebaseFirestore.instance
+    final rawCourseData = await FirebaseFirestore.instance
         .collection("courses")
         .doc(widget.courseUID)
         .get();
-
-    Fluttertoast.showToast(msg: "Course Details Fetch Complete");
     final courseDetails =
-        CourseModel.fromMap(rawData.data() as Map<String, dynamic>);
-
+        CourseModel.fromMap(rawCourseData.data() as Map<String, dynamic>);
+    final rawUserData = await FirebaseFirestore.instance
+        .doc(courseDetails.authorRef!.path)
+        .get();
+    courseDetails.setAuthorInfo(UserModel.fromMap(rawUserData));
+    courseDetails.setId(widget.courseUID);
+    Fluttertoast.showToast(msg: "Course Preview Fetch Complete");
     return courseDetails;
   }
 

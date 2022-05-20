@@ -17,7 +17,7 @@ class ExploreCard extends StatelessWidget {
               overflow: TextOverflow.fade,
               maxLines: 1,
               softWrap: false)),
-      subtitle: Text(courseData.authorRef.toString(),
+      subtitle: Text(courseData.authorInfo!.name.toString(),
           style: const TextStyle(fontSize: 16.0),
           overflow: TextOverflow.fade,
           maxLines: 1,
