@@ -11,7 +11,6 @@ class UserStatus extends ChangeNotifier {
   Future<UserModel?> fetchUserData() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user == null) {
-      Fluttertoast.showToast(msg: "No User Found");
       return null;
     } else {
       var rawData = await FirebaseFirestore.instance

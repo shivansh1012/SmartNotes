@@ -21,7 +21,7 @@ class _CourseDetailsState extends State<CourseDetails> {
         .doc(widget.courseUID)
         .get();
 
-    Fluttertoast.showToast(msg: "Fetch Complete");
+    Fluttertoast.showToast(msg: "Course Details Fetch Complete");
     final courseDetails =
         CourseModel.fromMap(rawData.data() as Map<String, dynamic>);
 

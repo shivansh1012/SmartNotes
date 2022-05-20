@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:smartnotes/models/user_model.dart';
 
 class CourseModel {
   String? title;
@@ -6,6 +7,7 @@ class CourseModel {
   String? description;
   String? coverImageURL;
   Map? document;
+  UserModel? authorInfo;
 
   CourseModel(
       {this.title,
@@ -42,5 +44,9 @@ class CourseModel {
       'coverImageURL': coverImageURL,
       'document': document
     };
+  }
+
+  void setAuthorInfo(UserModel authorInfo) {
+    this.authorInfo = authorInfo;
   }
 }

@@ -208,11 +208,17 @@ class _SignUpState extends State<SignUp> {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = _auth.currentUser;
 
-    UserModel userModel = UserModel();
-
-    userModel.name = _nameController.text;
-    userModel.email = user!.email;
-    userModel.uid = user.uid;
+    UserModel userModel = UserModel(
+        name: _nameController.text,
+        email: user!.email,
+        uid: user.uid,
+        // wishlist: [],
+        // classroomCreated: [],
+        // classroomJoined: [],
+        // coursesBought: [],
+        // coursesCreated: [],
+        // personalNotes: []
+        );
 
     await firebaseFirestore
         .collection("users")

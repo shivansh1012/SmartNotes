@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smartnotes/models/course_model.dart';
+import 'package:smartnotes/models/user_model.dart';
 import 'package:smartnotes/screens/Authentication/sign_in.dart';
 import 'package:smartnotes/screens/Course/course_details.dart';
 
@@ -20,11 +21,13 @@ class _CoursePreviewState extends State<CoursePreview> {
         .collection("courses")
         .doc(widget.courseUID)
         .get();
-
-    Fluttertoast.showToast(msg: "Fetch Complete");
     final courseDetails =
         CourseModel.fromMap(rawData.data() as Map<String, dynamic>);
-
+    final rawUserData = await FirebaseFirestore.instance
+        .doc(courseDetails.authorRef!.path)
+        .get();
+    courseDetails.setAuthorInfo(UserModel.fromMap(rawUserData));
+    Fluttertoast.showToast(msg: "Course Preview Fetch Complete");
     return courseDetails;
   }
 
@@ -38,11 +41,13 @@ class _CoursePreviewState extends State<CoursePreview> {
 
       for (int index = 0; index < documentList.length; index++) {
         String key = documentList.keys.elementAt(index);
-        if(key.endsWith("mp4") || key.endsWith("mk4")) {
+        if (key.endsWith("mp4") || key.endsWith("mkv")) {
           isVideoPresent = true;
-        } else if(key.endsWith("pdf")) {
+        } else if (key.endsWith("pdf")) {
           isPDFPresent = true;
-        } else if(key.endsWith("jpg") || key.endsWith("png") || key.endsWith("jpeg")) {
+        } else if (key.endsWith("jpg") ||
+            key.endsWith("png") ||
+            key.endsWith("jpeg")) {
           isImagePresent = true;
         } else {
           isDocPresent = true;
@@ -51,64 +56,61 @@ class _CoursePreviewState extends State<CoursePreview> {
 
       return Row(
         children: [
-          if(isPDFPresent)
-          Container(
-            height: 56,
-            width: 56,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.black.withOpacity(0.1)),
-            child: const Center(
-                child: Icon(
-              Icons.picture_as_pdf,
-              size: 28,
-            )),
-          ),
-          if(isPDFPresent)
-          const SizedBox(width: 16),
-          if(isImagePresent)
-          Container(
-            height: 56,
-            width: 56,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.black.withOpacity(0.1)),
-            child: const Center(
-                child: Icon(
-              Icons.collections,
-              size: 28,
-            )),
-          ),
-          if(isImagePresent)
-          const SizedBox(width: 16),
-          if(isDocPresent)
-          Container(
-            height: 56,
-            width: 56,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.black.withOpacity(0.1)),
-            child: const Center(
-                child: Icon(
-              Icons.description,
-              size: 28,
-            )),
-          ),
-          if(isDocPresent)
-          const SizedBox(width: 16),
-          if(isVideoPresent)
-          Container(
-            height: 56,
-            width: 56,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.black.withOpacity(0.1)),
-            child: const Center(
-                child: Icon(
-              Icons.video_library_rounded,
-              size: 28,
-            )),
-          ),
+          if (isPDFPresent)
+            Container(
+              height: 56,
+              width: 56,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.black.withOpacity(0.1)),
+              child: const Center(
+                  child: Icon(
+                Icons.picture_as_pdf,
+                size: 28,
+              )),
+            ),
+          if (isPDFPresent) const SizedBox(width: 16),
+          if (isImagePresent)
+            Container(
+              height: 56,
+              width: 56,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.black.withOpacity(0.1)),
+              child: const Center(
+                  child: Icon(
+                Icons.collections,
+                size: 28,
+              )),
+            ),
+          if (isImagePresent) const SizedBox(width: 16),
+          if (isDocPresent)
+            Container(
+              height: 56,
+              width: 56,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.black.withOpacity(0.1)),
+              child: const Center(
+                  child: Icon(
+                Icons.description,
+                size: 28,
+              )),
+            ),
+          if (isDocPresent) const SizedBox(width: 16),
+          if (isVideoPresent)
+            Container(
+              height: 56,
+              width: 56,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.black.withOpacity(0.1)),
+              child: const Center(
+                  child: Icon(
+                Icons.video_library_rounded,
+                size: 28,
+              )),
+            ),
         ],
       );
     }
@@ -135,7 +137,11 @@ class _CoursePreviewState extends State<CoursePreview> {
                 const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.only(left: 28),
-                  child: Text(courseDetails.authorRef.toString(),
+                  child: Text(
+                      courseDetails.authorInfo.name +
+                          " ( " +
+                          courseDetails.authorInfo.email +
+                          " )",
                       style: TextStyle(
                           color: Colors.black.withOpacity(0.7),
                           fontWeight: FontWeight.w400,
