@@ -28,7 +28,9 @@ class _CourseDetailsState extends State<CourseDetails> {
         .get();
     courseDetails.setAuthorInfo(UserModel.fromMap(rawUserData));
     courseDetails.setId(widget.courseUID);
-    Fluttertoast.showToast(msg: "CourseDetails: Course Preview Fetch Complete", backgroundColor: Colors.green);
+    Fluttertoast.showToast(
+        msg: "CourseDetails: Course Preview Fetch Complete",
+        backgroundColor: Colors.green);
     return courseDetails;
   }
 
@@ -73,7 +75,11 @@ class _CourseDetailsState extends State<CourseDetails> {
                             fontSize: 34,
                             fontWeight: FontWeight.bold)))),
             const SizedBox(height: 10),
-            Text(courseInfo.authorRef.toString(),
+            Text(
+                courseInfo.authorInfo.name +
+                    " ( " +
+                    courseInfo.authorInfo.email +
+                    " )",
                 style: TextStyle(
                     color: Colors.black.withOpacity(0.7),
                     fontWeight: FontWeight.w400,
