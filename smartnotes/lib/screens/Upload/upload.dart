@@ -102,13 +102,13 @@ class _UploadState extends State<Upload> {
           likes: []);
 
       documentReference.set(newCourse.toMap()).then((value) async {
+        setState(() {
+          filesUploaded += 1;
+        });
         await _users.doc(user.uid).set({
           "coursesCreated": FieldValue.arrayUnion([documentReference.id])
         }, SetOptions(merge: true));
         Fluttertoast.showToast(msg: "Upload: Upload Success");
-        setState(() {
-          filesUploaded += 1;
-        });
         Navigator.of(context).pop(context);
       }).catchError((error) {
         Fluttertoast.showToast(msg: "Upload: Error ${error.toString}");

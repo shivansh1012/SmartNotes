@@ -24,7 +24,9 @@ class ExploreCard extends StatelessWidget {
           softWrap: false),
       leading: const CircleAvatar(backgroundColor: Colors.pink),
       trailing: Text.rich(TextSpan(children: [
-        TextSpan(text: courseData.likes!.length.toString() + " ", style: const TextStyle(fontSize: 18)),
+        TextSpan(
+            text: courseData.likes!.length.toString() + " ",
+            style: const TextStyle(fontSize: 18)),
         const WidgetSpan(child: Icon(Icons.thumb_up, size: 22.0))
       ])),
     );
@@ -47,7 +49,7 @@ class ExploreCard extends StatelessWidget {
               SizedBox(
                 height: 150,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15.0),
+                  borderRadius: BorderRadius.circular(25.0),
                   child: Image.network(
                     courseData.coverImageURL.toString(),
                     fit: BoxFit.fitWidth,

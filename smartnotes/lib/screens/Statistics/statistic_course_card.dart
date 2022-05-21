@@ -34,7 +34,7 @@ class StatisticCourseCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(25.0),
       ),
-      color: const Color.fromARGB(255, 255, 241, 245),
+      color: const Color.fromARGB(255, 241, 255, 250),
       child: Container(
         padding: const EdgeInsets.all(5.0),
         child: Column(
