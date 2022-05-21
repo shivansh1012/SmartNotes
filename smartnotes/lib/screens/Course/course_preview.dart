@@ -183,62 +183,6 @@ class _CoursePreviewState extends State<CoursePreview> {
               ],
             ),
             Align(
-              alignment: Alignment.topCenter,
-              child: Container(
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 22, right: 22, top: 40, bottom: 10),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        InkWell(
-                          borderRadius: BorderRadius.circular(360),
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Container(
-                            height: 35,
-                            width: 35,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(360),
-                            ),
-                            child: const Center(
-                              child: Icon(
-                                Icons.arrow_back,
-                                size: 26,
-                              ),
-                            ),
-                          ),
-                        ),
-                        InkWell(
-                          borderRadius: BorderRadius.circular(360),
-                          onTap: () {
-                            Fluttertoast.showToast(msg: "Add to wishlist");
-                          },
-                          child: Container(
-                            height: 35,
-                            width: 35,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(360),
-                            ),
-                            child: const Center(
-                              child: Icon(
-                                Icons.playlist_add,
-                                size: 26,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Align(
               alignment: Alignment.bottomCenter,
               child: Container(
                 height: 87,
@@ -287,8 +231,67 @@ class _CoursePreviewState extends State<CoursePreview> {
           ],
         );
 
-    return Scaffold(
-      body: FutureBuilder<CourseModel>(
+    Widget _topBar() {
+      return Align(
+        alignment: Alignment.topCenter,
+        child: Container(
+          color: Colors.white,
+          child: Padding(
+            padding:
+                const EdgeInsets.only(left: 22, right: 22, top: 40, bottom: 10),
+            child: Material(
+              color: Colors.transparent,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  InkWell(
+                    borderRadius: BorderRadius.circular(360),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      height: 35,
+                      width: 35,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(360),
+                      ),
+                      child: const Center(
+                        child: Icon(
+                          Icons.arrow_back,
+                          size: 26,
+                        ),
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    borderRadius: BorderRadius.circular(360),
+                    onTap: () {
+                      Fluttertoast.showToast(msg: "Add to wishlist");
+                    },
+                    child: Container(
+                      height: 35,
+                      width: 35,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(360),
+                      ),
+                      child: const Center(
+                        child: Icon(
+                          Icons.playlist_add,
+                          size: 26,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    Widget _body() {
+      return FutureBuilder<CourseModel>(
           future: fetchCourseDetails(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
@@ -310,8 +313,16 @@ class _CoursePreviewState extends State<CoursePreview> {
                     ]),
               );
             }
-          }),
-    );
+          });
+    }
+
+    Widget _previewStack() {
+      return Stack(
+        children: [_topBar(), _body()],
+      );
+    }
+
+    return Scaffold(body: _previewStack());
   }
 
   _startCourse() {
