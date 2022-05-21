@@ -200,7 +200,7 @@ class _SignUpState extends State<SignUp> {
           .createUserWithEmailAndPassword(
               email: _emailController.text, password: _passwordController.text)
           .then((value) => {saveDetailsToFirestore()})
-          .catchError((e) => {Fluttertoast.showToast(msg: e!.message)});
+          .catchError((e) => {Fluttertoast.showToast(msg: "SignUp: "+e!.message)});
     }
   }
 
@@ -225,7 +225,7 @@ class _SignUpState extends State<SignUp> {
         .doc(user.uid)
         .set(userModel.toMap());
 
-    Fluttertoast.showToast(msg: "Account Created Successfully");
+    Fluttertoast.showToast(msg: "SignUp: Account Created Successfully");
     Navigator.pop(context);
   }
 

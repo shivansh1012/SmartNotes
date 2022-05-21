@@ -28,7 +28,7 @@ class _CoursePreviewState extends State<CoursePreview> {
         .get();
     courseDetails.setAuthorInfo(UserModel.fromMap(rawUserData));
     courseDetails.setId(widget.courseUID);
-    Fluttertoast.showToast(msg: "Course Preview Fetch Complete");
+    Fluttertoast.showToast(msg: "CoursePreview: Course Preview Fetch Complete", backgroundColor: Colors.orange);
     return courseDetails;
   }
 
@@ -266,7 +266,7 @@ class _CoursePreviewState extends State<CoursePreview> {
                   InkWell(
                     borderRadius: BorderRadius.circular(360),
                     onTap: () {
-                      Fluttertoast.showToast(msg: "Add to wishlist");
+                      Fluttertoast.showToast(msg: "CoursePreview: Add to wishlist", backgroundColor: Colors.orange);
                     },
                     child: Container(
                       height: 35,
@@ -304,7 +304,9 @@ class _CoursePreviewState extends State<CoursePreview> {
                       SizedBox(
                         width: 60,
                         height: 60,
-                        child: CircularProgressIndicator(),
+                        child: CircularProgressIndicator(
+                          color: Colors.orange,
+                        ),
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: 16),

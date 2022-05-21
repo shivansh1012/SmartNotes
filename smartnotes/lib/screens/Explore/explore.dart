@@ -29,7 +29,7 @@ class _ExploreState extends State<Explore> {
       tempCourseInfo.setId(element.id);
       courseList.add(tempCourseInfo);
     }
-    Fluttertoast.showToast(msg: "Course List fetch complete");
+    Fluttertoast.showToast(msg: "Explore: Course List fetch complete");
     return courseList;
   }
 
@@ -58,22 +58,22 @@ class _ExploreState extends State<Explore> {
                           TopicCategory(
                             text: "Chemistry",
                             onPressed: (value) => Fluttertoast.showToast(
-                                msg: "Chemistry selected $value"),
+                                msg: "Explore: Chemistry selected $value"),
                           ),
                           TopicCategory(
                             text: "Physics",
                             onPressed: (value) => Fluttertoast.showToast(
-                                msg: "Physics selected $value"),
+                                msg: "Explore: Physics selected $value"),
                           ),
                           TopicCategory(
                             text: "Mathematics",
                             onPressed: (value) => Fluttertoast.showToast(
-                                msg: "Mathematics selected $value"),
+                                msg: "Explore: Mathematics selected $value"),
                           ),
                           TopicCategory(
                             text: "Programming",
                             onPressed: (value) => Fluttertoast.showToast(
-                                msg: "Programming selected $value"),
+                                msg: "Explore: Programming selected $value"),
                           ),
                         ],
                       ),

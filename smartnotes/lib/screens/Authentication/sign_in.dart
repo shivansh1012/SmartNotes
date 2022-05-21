@@ -178,14 +178,14 @@ class _SignInState extends State<SignIn> {
               email: _emailController.text, password: _passwordController.text)
           .then(
         (uid) async {
-          Fluttertoast.showToast(msg: "Login Successful");
+          Fluttertoast.showToast(msg: "SignIn: Login Successful");
           UserModel? userData = await UserStatus().fetchUserData();
           provider.updateUserStatus(userData);
           Navigator.pop(context);
         },
       ).catchError(
         (error) {
-          Fluttertoast.showToast(msg: error!.message);
+          Fluttertoast.showToast(msg: "SignIn: " + error!.message);
         },
       );
     }

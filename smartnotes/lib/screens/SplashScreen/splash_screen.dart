@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
   fetchUser(context) async {
     UserStatus provider = Provider.of<UserStatus>(context, listen: false);
     UserModel? user = await UserStatus().fetchUserData();
-    Fluttertoast.showToast(msg: "User $user");
+    Fluttertoast.showToast(msg: "SplashScreen: User $user");
     provider.updateUserStatus(user);
   }
 

@@ -28,7 +28,7 @@ class _CourseDetailsState extends State<CourseDetails> {
         .get();
     courseDetails.setAuthorInfo(UserModel.fromMap(rawUserData));
     courseDetails.setId(widget.courseUID);
-    Fluttertoast.showToast(msg: "Course Preview Fetch Complete");
+    Fluttertoast.showToast(msg: "CourseDetails: Course Preview Fetch Complete", backgroundColor: Colors.green);
     return courseDetails;
   }
 
@@ -195,16 +195,11 @@ class _CourseDetailsState extends State<CourseDetails> {
 
     Widget _detailsStack() {
       return Stack(
-        children: [
-          _topbar(),
-          _body()
-        ],
+        children: [_topbar(), _body()],
       );
     }
 
-    return Scaffold(
-      body: _detailsStack()
-    );
+    return Scaffold(body: _detailsStack());
   }
 
   void _launchUrl(Uri _url) async {

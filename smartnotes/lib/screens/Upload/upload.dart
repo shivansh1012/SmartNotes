@@ -63,7 +63,7 @@ class _UploadState extends State<Upload> {
     final snapShot = await uploadTask!.whenComplete(() {});
 
     final urlDownload = await snapShot.ref.getDownloadURL();
-    Fluttertoast.showToast(msg: 'FIle Uploaded');
+    Fluttertoast.showToast(msg: 'Upload: File Uploaded');
     setState(() {
       filesUploaded += 1;
       uploadTask = null;
@@ -81,10 +81,10 @@ class _UploadState extends State<Upload> {
     Map document = {};
     if (_formKey.currentState!.validate()) {
       if (coverImageFile == null) {
-        Fluttertoast.showToast(msg: "Select a cover Image First");
+        Fluttertoast.showToast(msg: "Upload: Select a cover Image First");
         return;
       } else if (pickedFile == null) {
-        Fluttertoast.showToast(msg: "Upload Some Docs First");
+        Fluttertoast.showToast(msg: "Upload: Upload Some Docs First");
         return;
       }
 
@@ -105,13 +105,13 @@ class _UploadState extends State<Upload> {
         await _users.doc(user.uid).set({
           "coursesCreated": FieldValue.arrayUnion([documentReference.id])
         }, SetOptions(merge: true));
-        Fluttertoast.showToast(msg: "Upload Success");
+        Fluttertoast.showToast(msg: "Upload: Upload Success");
         setState(() {
           filesUploaded += 1;
         });
         Navigator.of(context).pop(context);
       }).catchError((error) {
-        Fluttertoast.showToast(msg: "Error ${error.toString}");
+        Fluttertoast.showToast(msg: "Upload: Error ${error.toString}");
       });
     }
   }
@@ -307,7 +307,7 @@ class _UploadState extends State<Upload> {
                                         onTap: () {
                                           Fluttertoast.showToast(
                                               msg:
-                                                  "Remove this(Future Implementation)");
+                                                  "Upload: Remove this(Future Implementation)");
                                         },
                                         child: const Icon(
                                           Icons.delete_outline,

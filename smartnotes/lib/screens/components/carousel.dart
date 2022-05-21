@@ -28,7 +28,7 @@ class Carousel extends StatelessWidget {
         tempCourseInfo.setId(ref);
         data.add(tempCourseInfo);
       }
-      Fluttertoast.showToast(msg: data.toString());
+      Fluttertoast.showToast(msg: "Carousel:" + data.toString());
       return data;
     }
 

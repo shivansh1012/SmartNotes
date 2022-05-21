@@ -57,7 +57,7 @@ class _HomeState extends State<Home> {
               child: IconButton(
                 onPressed: () => {
                   // Navigator.pushNamed(context, '/notesView')
-                  Fluttertoast.showToast(msg: "Personal Notes Pressed")
+                  Fluttertoast.showToast(msg: "Home: Personal Notes Pressed")
                 },
                 icon: const Icon(
                   Icons.article_outlined,
