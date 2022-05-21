@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smartnotes/models/course_model.dart';
+import 'package:smartnotes/models/user_model.dart';
 import 'package:smartnotes/screens/Authentication/sign_in.dart';
 import 'package:smartnotes/screens/Course/course_details.dart';
 
@@ -16,15 +17,20 @@ class CoursePreview extends StatefulWidget {
 
 class _CoursePreviewState extends State<CoursePreview> {
   Future<CourseModel> fetchCourseDetails() async {
-    final rawData = await FirebaseFirestore.instance
+    final rawCourseData = await FirebaseFirestore.instance
         .collection("courses")
         .doc(widget.courseUID)
         .get();
-
-    Fluttertoast.showToast(msg: "Fetch Complete");
     final courseDetails =
-        CourseModel.fromMap(rawData.data() as Map<String, dynamic>);
-
+        CourseModel.fromMap(rawCourseData.data() as Map<String, dynamic>);
+    final rawUserData = await FirebaseFirestore.instance
+        .doc(courseDetails.authorRef!.path)
+        .get();
+    courseDetails.setAuthorInfo(UserModel.fromMap(rawUserData));
+    courseDetails.setId(widget.courseUID);
+    Fluttertoast.showToast(
+        msg: "CoursePreview: Course Preview Fetch Complete",
+        backgroundColor: Colors.orange);
     return courseDetails;
   }
 
@@ -38,11 +44,13 @@ class _CoursePreviewState extends State<CoursePreview> {
 
       for (int index = 0; index < documentList.length; index++) {
         String key = documentList.keys.elementAt(index);
-        if(key.endsWith("mp4") || key.endsWith("mk4")) {
+        if (key.endsWith("mp4") || key.endsWith("mkv")) {
           isVideoPresent = true;
-        } else if(key.endsWith("pdf")) {
+        } else if (key.endsWith("pdf")) {
           isPDFPresent = true;
-        } else if(key.endsWith("jpg") || key.endsWith("png") || key.endsWith("jpeg")) {
+        } else if (key.endsWith("jpg") ||
+            key.endsWith("png") ||
+            key.endsWith("jpeg")) {
           isImagePresent = true;
         } else {
           isDocPresent = true;
@@ -51,64 +59,61 @@ class _CoursePreviewState extends State<CoursePreview> {
 
       return Row(
         children: [
-          if(isPDFPresent)
-          Container(
-            height: 56,
-            width: 56,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.black.withOpacity(0.1)),
-            child: const Center(
-                child: Icon(
-              Icons.picture_as_pdf,
-              size: 28,
-            )),
-          ),
-          if(isPDFPresent)
-          const SizedBox(width: 16),
-          if(isImagePresent)
-          Container(
-            height: 56,
-            width: 56,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.black.withOpacity(0.1)),
-            child: const Center(
-                child: Icon(
-              Icons.collections,
-              size: 28,
-            )),
-          ),
-          if(isImagePresent)
-          const SizedBox(width: 16),
-          if(isDocPresent)
-          Container(
-            height: 56,
-            width: 56,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.black.withOpacity(0.1)),
-            child: const Center(
-                child: Icon(
-              Icons.description,
-              size: 28,
-            )),
-          ),
-          if(isDocPresent)
-          const SizedBox(width: 16),
-          if(isVideoPresent)
-          Container(
-            height: 56,
-            width: 56,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.black.withOpacity(0.1)),
-            child: const Center(
-                child: Icon(
-              Icons.video_library_rounded,
-              size: 28,
-            )),
-          ),
+          if (isPDFPresent)
+            Container(
+              height: 56,
+              width: 56,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.black.withOpacity(0.1)),
+              child: const Center(
+                  child: Icon(
+                Icons.picture_as_pdf,
+                size: 28,
+              )),
+            ),
+          if (isPDFPresent) const SizedBox(width: 16),
+          if (isImagePresent)
+            Container(
+              height: 56,
+              width: 56,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.black.withOpacity(0.1)),
+              child: const Center(
+                  child: Icon(
+                Icons.collections,
+                size: 28,
+              )),
+            ),
+          if (isImagePresent) const SizedBox(width: 16),
+          if (isDocPresent)
+            Container(
+              height: 56,
+              width: 56,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.black.withOpacity(0.1)),
+              child: const Center(
+                  child: Icon(
+                Icons.description,
+                size: 28,
+              )),
+            ),
+          if (isDocPresent) const SizedBox(width: 16),
+          if (isVideoPresent)
+            Container(
+              height: 56,
+              width: 56,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.black.withOpacity(0.1)),
+              child: const Center(
+                  child: Icon(
+                Icons.video_library_rounded,
+                size: 28,
+              )),
+            ),
         ],
       );
     }
@@ -135,7 +140,11 @@ class _CoursePreviewState extends State<CoursePreview> {
                 const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.only(left: 28),
-                  child: Text(courseDetails.authorRef.toString(),
+                  child: Text(
+                      courseDetails.authorInfo.name +
+                          " ( " +
+                          courseDetails.authorInfo.email +
+                          " )",
                       style: TextStyle(
                           color: Colors.black.withOpacity(0.7),
                           fontWeight: FontWeight.w400,
@@ -174,62 +183,6 @@ class _CoursePreviewState extends State<CoursePreview> {
                   ),
                 )
               ],
-            ),
-            Align(
-              alignment: Alignment.topCenter,
-              child: Container(
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 22, right: 22, top: 40, bottom: 10),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        InkWell(
-                          borderRadius: BorderRadius.circular(360),
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Container(
-                            height: 35,
-                            width: 35,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(360),
-                            ),
-                            child: const Center(
-                              child: Icon(
-                                Icons.arrow_back,
-                                size: 26,
-                              ),
-                            ),
-                          ),
-                        ),
-                        InkWell(
-                          borderRadius: BorderRadius.circular(360),
-                          onTap: () {
-                            Fluttertoast.showToast(msg: "Add to wishlist");
-                          },
-                          child: Container(
-                            height: 35,
-                            width: 35,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(360),
-                            ),
-                            child: const Center(
-                              child: Icon(
-                                Icons.playlist_add,
-                                size: 26,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
             ),
             Align(
               alignment: Alignment.bottomCenter,
@@ -280,8 +233,69 @@ class _CoursePreviewState extends State<CoursePreview> {
           ],
         );
 
-    return Scaffold(
-      body: FutureBuilder<CourseModel>(
+    Widget _topBar() {
+      return Align(
+        alignment: Alignment.topCenter,
+        child: Container(
+          color: Colors.white,
+          child: Padding(
+            padding:
+                const EdgeInsets.only(left: 22, right: 22, top: 40, bottom: 10),
+            child: Material(
+              color: Colors.transparent,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  InkWell(
+                    borderRadius: BorderRadius.circular(360),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      height: 35,
+                      width: 35,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(360),
+                      ),
+                      child: const Center(
+                        child: Icon(
+                          Icons.arrow_back,
+                          size: 26,
+                        ),
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    borderRadius: BorderRadius.circular(360),
+                    onTap: () {
+                      Fluttertoast.showToast(
+                          msg: "CoursePreview: Add to wishlist",
+                          backgroundColor: Colors.orange);
+                    },
+                    child: Container(
+                      height: 35,
+                      width: 35,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(360),
+                      ),
+                      child: const Center(
+                        child: Icon(
+                          Icons.playlist_add,
+                          size: 26,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    Widget _body() {
+      return FutureBuilder<CourseModel>(
           future: fetchCourseDetails(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
@@ -294,7 +308,9 @@ class _CoursePreviewState extends State<CoursePreview> {
                       SizedBox(
                         width: 60,
                         height: 60,
-                        child: CircularProgressIndicator(),
+                        child: CircularProgressIndicator(
+                          color: Colors.orange,
+                        ),
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: 16),
@@ -303,8 +319,16 @@ class _CoursePreviewState extends State<CoursePreview> {
                     ]),
               );
             }
-          }),
-    );
+          });
+    }
+
+    Widget _previewStack() {
+      return Stack(
+        children: [_topBar(), _body()],
+      );
+    }
+
+    return Scaffold(body: _previewStack());
   }
 
   _startCourse() {

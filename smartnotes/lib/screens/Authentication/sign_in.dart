@@ -143,8 +143,7 @@ class _SignInState extends State<SignIn> {
                         const Text("Don't have an account? "),
                         GestureDetector(
                           onTap: () {
-                            // Navigator.pushNamed(context, '/signUp');
-                            Navigator.push(
+                            Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => const SignUp()));
@@ -175,17 +174,17 @@ class _SignInState extends State<SignIn> {
     if (_formKey.currentState!.validate()) {
       await _auth
           .signInWithEmailAndPassword(
-              email: _emailController.text, password: _passwordController.text)
+              email: _emailController.text.trim(), password: _passwordController.text.trim())
           .then(
         (uid) async {
-          Fluttertoast.showToast(msg: "Login Successful");
+          Fluttertoast.showToast(msg: "SignIn: Login Successful");
           UserModel? userData = await UserStatus().fetchUserData();
           provider.updateUserStatus(userData);
           Navigator.pop(context);
         },
       ).catchError(
         (error) {
-          Fluttertoast.showToast(msg: error!.message);
+          Fluttertoast.showToast(msg: "SignIn: " + error!.message);
         },
       );
     }

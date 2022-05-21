@@ -2,8 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 import 'package:smartnotes/constants.dart';
 import 'package:smartnotes/models/user_model.dart';
+import 'package:smartnotes/screens/Authentication/sign_in.dart';
+import 'package:smartnotes/services/user_status.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -171,7 +174,10 @@ class _SignUpState extends State<SignUp> {
                         const Text("Already have an account? "),
                         GestureDetector(
                           onTap: () {
-                            Navigator.pop(context);
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const SignIn()));
                           },
                           child: const Text(
                             "Sign In",
@@ -198,28 +204,38 @@ class _SignUpState extends State<SignUp> {
     if (_formKey.currentState!.validate()) {
       await _auth
           .createUserWithEmailAndPassword(
-              email: _emailController.text, password: _passwordController.text)
+              email: _emailController.text.trim(),
+              password: _passwordController.text.trim())
           .then((value) => {saveDetailsToFirestore()})
-          .catchError((e) => {Fluttertoast.showToast(msg: e!.message)});
+          .catchError(
+              (e) => {Fluttertoast.showToast(msg: "SignUp: " + e!.message)});
     }
   }
 
   void saveDetailsToFirestore() async {
+    UserStatus provider = Provider.of<UserStatus>(context, listen: false);
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = _auth.currentUser;
 
-    UserModel userModel = UserModel();
-
-    userModel.name = _nameController.text;
-    userModel.email = user!.email;
-    userModel.uid = user.uid;
+    UserModel userModel = UserModel(
+        name: _nameController.text.trim(),
+        email: user!.email,
+        uid: user.uid,
+        wishlist: [],
+        classroomCreated: [],
+        classroomJoined: [],
+        coursesBought: [],
+        coursesCreated: [],
+        personalNotes: []);
 
     await firebaseFirestore
         .collection("users")
         .doc(user.uid)
         .set(userModel.toMap());
 
-    Fluttertoast.showToast(msg: "Account Created Successfully");
+    Fluttertoast.showToast(msg: "SignUp: Account Created Successfully");
+    UserModel? userData = await UserStatus().fetchUserData();
+    provider.updateUserStatus(userData);
     Navigator.pop(context);
   }
 

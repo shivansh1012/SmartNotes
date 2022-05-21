@@ -7,6 +7,7 @@ import 'package:smartnotes/models/user_model.dart';
 import 'package:smartnotes/screens/AboutUs/about_us.dart';
 import 'package:smartnotes/screens/Authentication/sign_in.dart';
 import 'package:smartnotes/screens/Profile/profile_button.dart';
+import 'package:smartnotes/screens/Statistics/statistics_course_list.dart';
 import 'package:smartnotes/screens/Upload/upload.dart';
 import 'package:smartnotes/services/user_status.dart';
 
@@ -63,14 +64,14 @@ class Profile extends StatelessWidget {
                         buttonName: "Settings",
                         buttonIcon: Icons.settings,
                         action: () {
-                          Fluttertoast.showToast(msg: "Settings Clicked");
+                          Fluttertoast.showToast(msg: "Profile: Settings Clicked");
                         },
                         link: ""),
                     ProfileButton(
                         buttonName: "Preference",
                         buttonIcon: Icons.precision_manufacturing,
                         action: () {
-                          Fluttertoast.showToast(msg: "Preference Clicked");
+                          Fluttertoast.showToast(msg: "Profile: Preference Clicked");
                         },
                         link: ""),
                     ProfileButton(
@@ -122,28 +123,36 @@ class Profile extends StatelessWidget {
                         buttonName: "Account",
                         buttonIcon: Icons.person_rounded,
                         action: () {
-                          Fluttertoast.showToast(msg: "Profile Clicked");
+                          Fluttertoast.showToast(msg: "Profile: Profile Clicked");
+                        },
+                        link: ""),
+                    ProfileButton(
+                        buttonName: "Statstics",
+                        buttonIcon: Icons.insights,
+                        action: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const StatisticsCourseList()));
                         },
                         link: ""),
                     ProfileButton(
                         buttonName: "Settings",
                         buttonIcon: Icons.settings,
                         action: () {
-                          Fluttertoast.showToast(msg: "Settings Clicked");
+                          Fluttertoast.showToast(msg: "Profile: Settings Clicked");
                         },
                         link: ""),
                     ProfileButton(
                         buttonName: "Preference",
                         buttonIcon: Icons.precision_manufacturing,
                         action: () {
-                          Fluttertoast.showToast(msg: "Preference Clicked");
+                          Fluttertoast.showToast(msg: "Profile: Preference Clicked");
                         },
                         link: ""),
                     ProfileButton(
                         buttonName: "Personal Notes",
                         buttonIcon: Icons.notes_rounded,
                         action: () {
-                          Fluttertoast.showToast(msg: "Personal Notes Clicked");
+                          Fluttertoast.showToast(msg: "Profile: Personal Notes Clicked");
                         },
                         link: ""),
                     ProfileButton(

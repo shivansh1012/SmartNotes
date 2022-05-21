@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smartnotes/models/course_model.dart';
+import 'package:smartnotes/models/user_model.dart';
 import 'package:smartnotes/screens/Course/course_preview.dart';
 import 'package:smartnotes/screens/Explore/explore_card.dart';
 import 'package:smartnotes/screens/Explore/topic_category.dart';
@@ -15,14 +16,20 @@ class Explore extends StatefulWidget {
 }
 
 class _ExploreState extends State<Explore> {
-  Future<List> fetchCoursesList() async {
-    List courseList = [];
+  Future<List<CourseModel>> fetchCoursesList() async {
+    List<CourseModel> courseList = [];
     final rawData =
         await FirebaseFirestore.instance.collection("courses").get();
     for (var element in rawData.docs) {
-      courseList.add(element);
+      CourseModel tempCourseInfo = CourseModel.fromMap(element);
+      final rawUserData = await FirebaseFirestore.instance
+          .doc(tempCourseInfo.authorRef!.path)
+          .get();
+      tempCourseInfo.setAuthorInfo(UserModel.fromMap(rawUserData));
+      tempCourseInfo.setId(element.id);
+      courseList.add(tempCourseInfo);
     }
-    Fluttertoast.showToast(msg: "Course List fetch complete");
+    Fluttertoast.showToast(msg: "Explore: Course List fetch complete");
     return courseList;
   }
 
@@ -51,22 +58,22 @@ class _ExploreState extends State<Explore> {
                           TopicCategory(
                             text: "Chemistry",
                             onPressed: (value) => Fluttertoast.showToast(
-                                msg: "Chemistry selected $value"),
+                                msg: "Explore: Chemistry selected $value"),
                           ),
                           TopicCategory(
                             text: "Physics",
                             onPressed: (value) => Fluttertoast.showToast(
-                                msg: "Physics selected $value"),
+                                msg: "Explore: Physics selected $value"),
                           ),
                           TopicCategory(
                             text: "Mathematics",
                             onPressed: (value) => Fluttertoast.showToast(
-                                msg: "Mathematics selected $value"),
+                                msg: "Explore: Mathematics selected $value"),
                           ),
                           TopicCategory(
                             text: "Programming",
                             onPressed: (value) => Fluttertoast.showToast(
-                                msg: "Programming selected $value"),
+                                msg: "Explore: Programming selected $value"),
                           ),
                         ],
                       ),
@@ -85,8 +92,7 @@ class _ExploreState extends State<Explore> {
                                     itemCount: snapshot.data?.length,
                                     itemBuilder: (context, index) {
                                       return ExploreCard(
-                                          courseData: CourseModel.fromMap(
-                                              snapshot.data?[index]),
+                                          courseData: snapshot.data?[index],
                                           action: () {
                                             Navigator.push(
                                                 context,

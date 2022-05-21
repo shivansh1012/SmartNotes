@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smartnotes/models/user_model.dart';
 
 class UserStatus extends ChangeNotifier {
@@ -11,7 +10,6 @@ class UserStatus extends ChangeNotifier {
   Future<UserModel?> fetchUserData() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user == null) {
-      Fluttertoast.showToast(msg: "No User Found");
       return null;
     } else {
       var rawData = await FirebaseFirestore.instance

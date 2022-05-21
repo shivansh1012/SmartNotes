@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:smartnotes/screens/Authentication/sign_in.dart';
 import 'package:smartnotes/screens/Authentication/sign_up.dart';
-import 'package:smartnotes/screens/Course/note_details.dart';
 import 'package:smartnotes/screens/Explore/explore.dart';
 import 'package:smartnotes/screens/Forums/forum.dart';
 import 'package:smartnotes/screens/Home/home.dart';
@@ -65,7 +64,6 @@ class _MyAppState extends State<MyApp> {
           '/signUp': (context) => const SignUp(),
           '/signIn': (context) => const SignIn(),
           '/profile': (context) => const Profile(),
-          '/noteDetails': (context) => const NoteDetails(),
           '/notesView': (context) => const PersonalNotes(),
         },
       ),

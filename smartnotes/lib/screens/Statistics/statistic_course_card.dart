@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:smartnotes/models/course_model.dart';
 
-class ExploreCard extends StatelessWidget {
+class StatisticCourseCard extends StatelessWidget {
   final CourseModel courseData;
-  final Function() action;
-  const ExploreCard({Key? key, required this.courseData, required this.action})
+  const StatisticCourseCard({Key? key, required this.courseData})
       : super(key: key);
 
   @override
@@ -35,35 +34,18 @@ class ExploreCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(25.0),
       ),
-      color: const Color.fromARGB(255, 255, 241, 245),
-      child: InkWell(
-        customBorder: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(25.0),
-        ),
-        splashColor: Colors.blue.withAlpha(30),
-        onTap: action,
-        child: Container(
-          padding: const EdgeInsets.all(5.0),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 150,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(25.0),
-                  child: Image.network(
-                    courseData.coverImageURL.toString(),
-                    fit: BoxFit.fitWidth,
-                    height: 150,
-                    width: double.infinity,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 5.0,
-              ),
-              courseInfo
-            ],
-          ),
+      color: const Color.fromARGB(255, 241, 255, 250),
+      child: Container(
+        padding: const EdgeInsets.all(5.0),
+        child: Column(
+          children: [
+            courseInfo,
+            Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+              ElevatedButton(
+                  onPressed: () {}, child: const Text("View Course")),
+              ElevatedButton(onPressed: () {}, child: const Text("View Stats"))
+            ])
+          ],
         ),
       ),
     );

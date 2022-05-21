@@ -1,129 +1,84 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smartnotes/models/course_model.dart';
-import 'package:smartnotes/screens/Course/note_details.dart';
+import 'package:smartnotes/models/user_model.dart';
+import 'package:smartnotes/screens/Course/course_preview.dart';
 import 'package:smartnotes/screens/Explore/explore_card.dart';
 
-int index = 0;
-
 class Carousel extends StatelessWidget {
-  const Carousel({Key? key}) : super(key: key);
+  final List refList;
+  const Carousel({Key? key, required this.refList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List<CourseModel> noteCard = [
-      CourseModel(
-          title: "Thermodynamics",
-          description: "",
-          coverImageURL:
-              "https://firebasestorage.googleapis.com/v0/b/smartnotes-46d96.appspot.com/o/notesA1_comparison.png?alt=media&token=bd5f1a19-5cdc-4534-ac49-f2b16f9e2eb9"),
-      CourseModel(
-          title: "Thermodynamics1",
-          description: "",
-          coverImageURL:
-              "https://firebasestorage.googleapis.com/v0/b/smartnotes-46d96.appspot.com/o/notesA1_comparison.png?alt=media&token=bd5f1a19-5cdc-4534-ac49-f2b16f9e2eb9"),
-      CourseModel(
-          title: "Thermodynamics3",
-          description: "",
-          coverImageURL:
-              "https://firebasestorage.googleapis.com/v0/b/smartnotes-46d96.appspot.com/o/notesA1_comparison.png?alt=media&token=bd5f1a19-5cdc-4534-ac49-f2b16f9e2eb9"),
-      CourseModel(
-          title: "Thermodynamics4",
-          description: "",
-          coverImageURL:
-              "https://firebasestorage.googleapis.com/v0/b/smartnotes-46d96.appspot.com/o/notesA1_comparison.png?alt=media&token=bd5f1a19-5cdc-4534-ac49-f2b16f9e2eb9"),
-    ];
+    Future<List<CourseModel>> _getCourseData() async {
+      List<CourseModel> data = [];
+      for (var ref in refList) {
+        final rawCourseData = await FirebaseFirestore.instance
+            .collection("courses")
+            .doc(ref)
+            .get();
+        CourseModel tempCourseInfo = CourseModel.fromMap(rawCourseData);
+        final rawUserData = await FirebaseFirestore.instance
+            .doc(tempCourseInfo.authorRef!.path)
+            .get();
+        tempCourseInfo.setAuthorInfo(UserModel.fromMap(rawUserData));
+        tempCourseInfo.setId(ref);
+        data.add(tempCourseInfo);
+      }
+      Fluttertoast.showToast(msg: "Carousel:" + data.toString());
+      return data;
+    }
+
     return SafeArea(
-      child: CarouselSlider.builder(
-        options: CarouselOptions(
-          height: 250,
-          enableInfiniteScroll: false,
-          viewportFraction: 0.8,
-          autoPlay: false,
-          aspectRatio: 2.0,
-        ),
-        itemCount: noteCard.length,
-        itemBuilder: (context, index, realIndex) => Container(
-          margin: const EdgeInsets.symmetric(horizontal: 5),
-          child: ExploreCard(
-              courseData: noteCard[index],
-              action: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const NoteDetails(),
-//         items: noteCard
-//             .map(
-//               (note) => Container(
-//                 margin: const EdgeInsets.symmetric(horizontal: 5),
-//                 child: InkWell(
-//                   onTap: () => {
-//                     // Navigator.of(context)
-//                     Navigator.pushNamed(context, '/noteDetails'),
-//                   },
-//                   child: Card(
-//                     shape: RoundedRectangleBorder(
-//                       borderRadius: BorderRadius.circular(20.0),
-//                       side: const BorderSide(
-//                         color: Colors.grey,
-//                         width: 1.0,
-//                       ),
-//                     ),
-//                     child: Container(
-//                       padding: const EdgeInsets.all(5.0),
-//                       child: Column(
-//                         children: [
-//                           Container(
-//                             height: 100,
-//                             width: double.infinity,
-//                             decoration: BoxDecoration(
-//                               color: Colors.red,
-//                               borderRadius: BorderRadius.circular(15.0),
-//                             ),
-//                           ),
-//                           const SizedBox(
-//                             height: 5.0,
-//                           ),
-//                           Align(
-//                             alignment: Alignment.topLeft,
-//                             child: Align(
-//                               alignment: Alignment.topRight,
-//                               child: Container(
-//                                 margin: const EdgeInsets.symmetric(
-//                                     horizontal: 10.0),
-//                                 padding: const EdgeInsets.all(10.0),
-//                                 child: Column(
-//                                   children: [
-//                                     Text(
-//                                       note['title'].toString(),
-//                                       textAlign: TextAlign.left,
-//                                       style: const TextStyle(
-//                                         fontSize: 18.0,
-//                                       ),
-//                                     ),
-//                                     const SizedBox(
-//                                       height: 5.0,
-//                                     ),
-//                                     Text(
-//                                       note['author'].toString(),
-//                                       style: const TextStyle(
-//                                         fontSize: 16.0,
-//                                         color: Colors.grey,
-//                                       ),
-//                                     ),
-//                                   ],
-//                                 ),
-//                               ),
-//                             ),
-//                           )
-//                         ],
-//                       ),
-//                     ),
-                  ),
-                );
-              }),
-        ),
-      ),
+      child: FutureBuilder<List<CourseModel>>(
+          future: _getCourseData(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return CarouselSlider.builder(
+                options: CarouselOptions(
+                  height: 250,
+                  enableInfiniteScroll: false,
+                  viewportFraction: 0.8,
+                  autoPlay: false,
+                  aspectRatio: 2.0,
+                ),
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index, realIndex) => Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 5),
+                  child: ExploreCard(
+                      courseData: snapshot.data![index],
+                      action: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                CoursePreview(courseUID: snapshot.data![index].id.toString()),
+                          ),
+                        );
+                      }),
+                ),
+              );
+            } else {
+              return Center(
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      SizedBox(
+                        width: 60,
+                        height: 60,
+                        child: CircularProgressIndicator(),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 16),
+                        child: Text('Awaiting Data...'),
+                      )
+                    ]),
+              );
+            }
+          }),
     );
   }
 }

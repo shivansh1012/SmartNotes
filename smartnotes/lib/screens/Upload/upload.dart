@@ -43,7 +43,7 @@ class _UploadState extends State<Upload> {
     final result = await FilePicker.platform.pickFiles(
         allowMultiple: true,
         type: FileType.custom,
-        allowedExtensions: ['jpg', 'png', 'pdf', 'doc']);
+        allowedExtensions: ['jpg', 'png', 'pdf', 'doc', 'mp4']);
     if (result == null) return;
     setState(() {
       totalFiles += result.count;
@@ -63,7 +63,7 @@ class _UploadState extends State<Upload> {
     final snapShot = await uploadTask!.whenComplete(() {});
 
     final urlDownload = await snapShot.ref.getDownloadURL();
-    Fluttertoast.showToast(msg: 'FIle Uploaded');
+    Fluttertoast.showToast(msg: 'Upload: File Uploaded');
     setState(() {
       filesUploaded += 1;
       uploadTask = null;
@@ -75,13 +75,16 @@ class _UploadState extends State<Upload> {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = FirebaseAuth.instance.currentUser;
     CollectionReference _users = firebaseFirestore.collection("users");
+    CollectionReference _courses = firebaseFirestore.collection("courses");
+    DocumentReference documentReference = _courses.doc();
+
     Map document = {};
     if (_formKey.currentState!.validate()) {
       if (coverImageFile == null) {
-        Fluttertoast.showToast(msg: "Select a cover Image First");
+        Fluttertoast.showToast(msg: "Upload: Select a cover Image First");
         return;
       } else if (pickedFile == null) {
-        Fluttertoast.showToast(msg: "Upload Some Docs First");
+        Fluttertoast.showToast(msg: "Upload: Upload Some Docs First");
         return;
       }
 
@@ -95,20 +98,20 @@ class _UploadState extends State<Upload> {
           authorRef: _users.doc(user!.uid),
           description: _courseDescriptionController.text,
           coverImageURL: coverImageURL,
-          document: document);
+          document: document,
+          likes: []);
 
-      firebaseFirestore
-          .collection("courses")
-          .doc()
-          .set(newCourse.toMap())
-          .then((value) {
-        Fluttertoast.showToast(msg: "Upload Success");
+      documentReference.set(newCourse.toMap()).then((value) async {
         setState(() {
           filesUploaded += 1;
         });
-        // Navigator.of(context).pop(context)
+        await _users.doc(user.uid).set({
+          "coursesCreated": FieldValue.arrayUnion([documentReference.id])
+        }, SetOptions(merge: true));
+        Fluttertoast.showToast(msg: "Upload: Upload Success");
+        Navigator.of(context).pop(context);
       }).catchError((error) {
-        Fluttertoast.showToast(msg: "Error ${error.toString}");
+        Fluttertoast.showToast(msg: "Upload: Error ${error.toString}");
       });
     }
   }
@@ -304,7 +307,7 @@ class _UploadState extends State<Upload> {
                                         onTap: () {
                                           Fluttertoast.showToast(
                                               msg:
-                                                  "Remove this(Future Implementation)");
+                                                  "Upload: Remove this(Future Implementation)");
                                         },
                                         child: const Icon(
                                           Icons.delete_outline,

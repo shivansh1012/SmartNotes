@@ -1,18 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:smartnotes/models/user_model.dart';
 
 class CourseModel {
+  //Stored in Db
   String? title;
-  DocumentReference? authorRef;
   String? description;
   String? coverImageURL;
   Map? document;
+  DocumentReference? authorRef;
+  List? likes;
+
+  //Not Stored in db
+  String? id;
+  UserModel? authorInfo;
 
   CourseModel(
       {this.title,
       this.description,
       this.coverImageURL,
       this.authorRef,
-      this.document});
+      this.document,
+      this.likes});
 
   //converter
   CourseModel.fromJson(Map<String, Object?> json)
@@ -21,16 +29,18 @@ class CourseModel {
             description: json['description']! as String,
             coverImageURL: json['coverImageURL']! as String,
             authorRef: json['authorRef']! as DocumentReference,
-            document: json['document'] as Map);
+            document: json['document'] as Map,
+            likes: json['likes'] as List);
 
   //data from server
   factory CourseModel.fromMap(map) {
     return CourseModel(
-        title: map['title'],
-        authorRef: map['authorRef'],
-        description: map['description'],
-        coverImageURL: map['coverImageURL'],
-        document: map['document']);
+        title: map['title'] as String,
+        authorRef: map['authorRef'] as DocumentReference,
+        description: map['description'] as String,
+        coverImageURL: map['coverImageURL'] as String,
+        document: map['document'] as Map,
+        likes: map['likes'] as List);
   }
 
   //data format to server
@@ -40,7 +50,16 @@ class CourseModel {
       'authorRef': authorRef,
       'description': description,
       'coverImageURL': coverImageURL,
-      'document': document
+      'document': document,
+      'likes': likes
     };
+  }
+
+  void setId(String id) {
+    this.id = id;
+  }
+
+  void setAuthorInfo(UserModel authorInfo) {
+    this.authorInfo = authorInfo;
   }
 }
