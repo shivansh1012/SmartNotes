@@ -8,6 +8,7 @@ class CourseModel {
   String? coverImageURL;
   Map? document;
   DocumentReference? authorRef;
+  List? likes;
 
   //Not Stored in db
   String? id;
@@ -18,7 +19,8 @@ class CourseModel {
       this.description,
       this.coverImageURL,
       this.authorRef,
-      this.document});
+      this.document,
+      this.likes});
 
   //converter
   CourseModel.fromJson(Map<String, Object?> json)
@@ -27,7 +29,8 @@ class CourseModel {
             description: json['description']! as String,
             coverImageURL: json['coverImageURL']! as String,
             authorRef: json['authorRef']! as DocumentReference,
-            document: json['document'] as Map);
+            document: json['document'] as Map,
+            likes: json['likes'] as List);
 
   //data from server
   factory CourseModel.fromMap(map) {
@@ -36,7 +39,8 @@ class CourseModel {
         authorRef: map['authorRef'] as DocumentReference,
         description: map['description'] as String,
         coverImageURL: map['coverImageURL'] as String,
-        document: map['document'] as Map);
+        document: map['document'] as Map,
+        likes: map['likes'] as List);
   }
 
   //data format to server
@@ -46,7 +50,8 @@ class CourseModel {
       'authorRef': authorRef,
       'description': description,
       'coverImageURL': coverImageURL,
-      'document': document
+      'document': document,
+      'likes': likes
     };
   }
 

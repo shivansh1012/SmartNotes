@@ -15,13 +15,21 @@ class _HomeState extends State<Home> {
 
   Future<Map<String, List>> _getHomeData() async {
     Map<String, List> data = {};
-    DatabaseReference trendingNowRef = FirebaseDatabase.instance.ref();
+    DatabaseReference realtimeFirebase = FirebaseDatabase.instance.ref();
     final trendingNowSnapshot =
-        await trendingNowRef.child('trendingnow/').get();
+        await realtimeFirebase.child('trendingnow/').get();
     if (trendingNowSnapshot.exists) {
       data['trendingnow'] = trendingNowSnapshot.value as List;
     } else {
       data['trendingnow'] = [];
+    }
+    
+    final freeCoursesSnapshot =
+        await realtimeFirebase.child('freecourses/').get();
+    if (freeCoursesSnapshot.exists) {
+      data['freecourses'] = freeCoursesSnapshot.value as List;
+    } else {
+      data['freecourses'] = [];
     }
       // Fluttertoast.showToast(msg: data.toString());
     // print(data);
@@ -129,6 +137,20 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                       Carousel(refList: snapshot.data!['trendingnow'] as List),
+
+                      
+                      Container(
+                        margin: const EdgeInsets.all(15),
+                        alignment: Alignment.topLeft,
+                        child: const Text(
+                          "Free Courses",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      Carousel(refList: snapshot.data!['freecourses'] as List),
 
                     ],
                   );

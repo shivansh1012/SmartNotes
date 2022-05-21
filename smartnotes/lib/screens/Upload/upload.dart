@@ -43,7 +43,7 @@ class _UploadState extends State<Upload> {
     final result = await FilePicker.platform.pickFiles(
         allowMultiple: true,
         type: FileType.custom,
-        allowedExtensions: ['jpg', 'png', 'pdf', 'doc']);
+        allowedExtensions: ['jpg', 'png', 'pdf', 'doc', 'mp4']);
     if (result == null) return;
     setState(() {
       totalFiles += result.count;
@@ -75,6 +75,9 @@ class _UploadState extends State<Upload> {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = FirebaseAuth.instance.currentUser;
     CollectionReference _users = firebaseFirestore.collection("users");
+    CollectionReference _courses = firebaseFirestore.collection("courses");
+    DocumentReference documentReference = _courses.doc();
+
     Map document = {};
     if (_formKey.currentState!.validate()) {
       if (coverImageFile == null) {
@@ -95,18 +98,18 @@ class _UploadState extends State<Upload> {
           authorRef: _users.doc(user!.uid),
           description: _courseDescriptionController.text,
           coverImageURL: coverImageURL,
-          document: document);
+          document: document,
+          likes: []);
 
-      firebaseFirestore
-          .collection("courses")
-          .doc()
-          .set(newCourse.toMap())
-          .then((value) {
+      documentReference.set(newCourse.toMap()).then((value) async {
+        await _users.doc(user.uid).set({
+          "coursesCreated": FieldValue.arrayUnion([documentReference.id])
+        }, SetOptions(merge: true));
         Fluttertoast.showToast(msg: "Upload Success");
         setState(() {
           filesUploaded += 1;
         });
-        // Navigator.of(context).pop(context)
+        Navigator.of(context).pop(context);
       }).catchError((error) {
         Fluttertoast.showToast(msg: "Error ${error.toString}");
       });

@@ -212,12 +212,12 @@ class _SignUpState extends State<SignUp> {
         name: _nameController.text,
         email: user!.email,
         uid: user.uid,
-        // wishlist: [],
-        // classroomCreated: [],
-        // classroomJoined: [],
-        // coursesBought: [],
-        // coursesCreated: [],
-        // personalNotes: []
+        wishlist: [],
+        classroomCreated: [],
+        classroomJoined: [],
+        coursesBought: [],
+        coursesCreated: [],
+        personalNotes: []
         );
 
     await firebaseFirestore
