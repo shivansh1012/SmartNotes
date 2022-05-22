@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smartnotes/models/course_model.dart';
 import 'package:path/path.dart' as p;
 import 'package:smartnotes/models/user_model.dart';
@@ -28,9 +27,9 @@ class _CourseDetailsState extends State<CourseDetails> {
         .get();
     courseDetails.setAuthorInfo(UserModel.fromMap(rawUserData));
     courseDetails.setId(widget.courseUID);
-    Fluttertoast.showToast(
-        msg: "CourseDetails: Course Preview Fetch Complete",
-        backgroundColor: Colors.green);
+    // Fluttertoast.showToast(
+    //     msg: "CourseDetails: Course Preview Fetch Complete",
+    //     backgroundColor: Colors.green,);
     return courseDetails;
   }
 

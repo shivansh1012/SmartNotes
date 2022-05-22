@@ -12,7 +12,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   Future<Map<String, List>> _getHomeData() async {
     Map<String, List> data = {};
     DatabaseReference realtimeFirebase = FirebaseDatabase.instance.ref();
@@ -23,7 +22,7 @@ class _HomeState extends State<Home> {
     } else {
       data['trendingnow'] = [];
     }
-    
+
     final freeCoursesSnapshot =
         await realtimeFirebase.child('freecourses/').get();
     if (freeCoursesSnapshot.exists) {
@@ -31,7 +30,7 @@ class _HomeState extends State<Home> {
     } else {
       data['freecourses'] = [];
     }
-      // Fluttertoast.showToast(msg: data.toString());
+    // Fluttertoast.showToast(msg: data.toString());
     // print(data);
     return data;
   }
@@ -98,10 +97,13 @@ class _HomeState extends State<Home> {
                                   Text(
                                     "Continue reading",
                                     style: TextStyle(
-                                      fontSize: 18,
+                                      fontSize: 20,
                                       color: secondary,
                                       fontWeight: FontWeight.bold,
                                     ),
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
                                   ),
                                   const Text(
                                     "Thermodynamics: Part 1",
@@ -117,7 +119,8 @@ class _HomeState extends State<Home> {
                                 margin: const EdgeInsets.only(right: 20),
                                 child: const CircleAvatar(
                                   radius: 25,
-                                  backgroundColor: Colors.amber,
+                                  backgroundImage:
+                                      AssetImage('assets/images/student_1.png'),
                                 ),
                               ),
                             ],
@@ -138,7 +141,6 @@ class _HomeState extends State<Home> {
                       ),
                       Carousel(refList: snapshot.data!['trendingnow'] as List),
 
-                      
                       Container(
                         margin: const EdgeInsets.all(15),
                         alignment: Alignment.topLeft,
@@ -151,7 +153,6 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                       Carousel(refList: snapshot.data!['freecourses'] as List),
-
                     ],
                   );
                 } else {

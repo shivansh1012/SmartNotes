@@ -1,7 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smartnotes/models/course_model.dart';
 import 'package:smartnotes/models/user_model.dart';
 import 'package:smartnotes/screens/Course/course_preview.dart';
@@ -28,7 +27,7 @@ class Carousel extends StatelessWidget {
         tempCourseInfo.setId(ref);
         data.add(tempCourseInfo);
       }
-      Fluttertoast.showToast(msg: "Carousel:" + data.toString());
+      // Fluttertoast.showToast(msg: "Carousel:" + data.toString());
       return data;
     }
 
@@ -54,8 +53,8 @@ class Carousel extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                CoursePreview(courseUID: snapshot.data![index].id.toString()),
+                            builder: (context) => CoursePreview(
+                                courseUID: snapshot.data![index].id.toString()),
                           ),
                         );
                       }),

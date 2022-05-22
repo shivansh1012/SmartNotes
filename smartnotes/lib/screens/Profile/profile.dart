@@ -89,7 +89,7 @@ class Profile extends StatelessWidget {
                         },
                         link: ""),
                     const Text(
-                      "App Version: 1.0.0",
+                      "App Version: 1.1.0",
                       style: TextStyle(fontSize: 10.0, color: Colors.grey),
                     ),
                   ],
@@ -112,13 +112,15 @@ class Profile extends StatelessWidget {
                         children: [
                           const CircleAvatar(
                             radius: 25.0,
-                            backgroundColor: Colors.amber,
+                            backgroundImage: AssetImage(
+                              'assets/images/student_5.png',
+                            ),
                           ),
                           const SizedBox(
                             width: 15.0,
                           ),
                           Text(
-                            "Welcome, ${value.loggedInUser!.name}",
+                            "Welcome, ${value.loggedInUser!.name!.split(' ')[0]}",
                             style: TextStyle(
                               fontSize: 20.0,
                               fontWeight: FontWeight.bold,

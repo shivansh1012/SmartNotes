@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:smartnotes/constants.dart';
 import 'package:smartnotes/models/user_model.dart';
@@ -34,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
   fetchUser(context) async {
     UserStatus provider = Provider.of<UserStatus>(context, listen: false);
     UserModel? user = await UserStatus().fetchUserData();
-    Fluttertoast.showToast(msg: "SplashScreen: User $user");
+    // Fluttertoast.showToast(msg: "SplashScreen: User $user");
     provider.updateUserStatus(user);
   }
 

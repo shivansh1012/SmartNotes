@@ -29,7 +29,7 @@ class _ExploreState extends State<Explore> {
       tempCourseInfo.setId(element.id);
       courseList.add(tempCourseInfo);
     }
-    Fluttertoast.showToast(msg: "Explore: Course List fetch complete");
+    // Fluttertoast.showToast(msg: "Explore: Course List fetch complete");
     return courseList;
   }
 
