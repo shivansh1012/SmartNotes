@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:smartnotes/screens/Forums/components/class_data.dart';
 import 'package:smartnotes/screens/Forums/components/model/subject.dart';
@@ -11,7 +12,6 @@ import 'package:smartnotes/screens/Forums/components/model/subject_stream.dart';
 import 'package:smartnotes/screens/Forums/components/ui/widgets/assignment_item.dart';
 import 'package:smartnotes/screens/Forums/components/ui/widgets/stream_item.dart';
 import 'package:smartnotes/screens/Forums/components/ui/widgets/student_item.dart';
-import 'package:smartnotes/screens/Forums/components/ui/widgets/subject_post.dart';
 
 class SubjectView extends StatefulWidget {
   final Subject subject;
@@ -53,7 +53,7 @@ class _SubjectViewState extends State<SubjectView> {
               Row(
                 children: [
                   AppIconButton(
-                    icon: Icon(Icons.arrow_back),
+                    icon: const Icon(Icons.arrow_back),
                     onTap: () {
                       // Navigate back
                       Navigator.of(context).pop();
@@ -74,15 +74,6 @@ class _SubjectViewState extends State<SubjectView> {
                           ),
                         ),
                         const SizedBox(height: 2),
-                        Text(
-                          widget.subject.desc,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            color: AppColor.black,
-                            fontSize: 12,
-                          ),
-                        ),
                       ],
                     ),
                   ),
@@ -93,12 +84,16 @@ class _SubjectViewState extends State<SubjectView> {
                     children: [
                       AppIconButton(
                         icon: const Icon(Icons.videocam),
-                        onTap: () {},
+                        onTap: () {
+                          Fluttertoast.showToast(msg: 'Video cam pressed');
+                        },
                       ),
                       const SizedBox(width: 8),
                       AppIconButton(
                         icon: const Icon(Icons.info),
-                        onTap: () {},
+                        onTap: () {
+                          Fluttertoast.showToast(msg: 'Info pressed');
+                        },
                       ),
                     ],
                   ),
@@ -178,7 +173,6 @@ class StreamBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SubjectPost(),
         const SizedBox(height: 16),
         Expanded(
           child: ListView.builder(
@@ -205,7 +199,6 @@ class AssignmentBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SubjectPost(),
         const SizedBox(height: 16),
         Expanded(
           child: ListView.builder(

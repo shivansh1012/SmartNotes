@@ -11,6 +11,7 @@ class AppIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      onTap: onTap,
       borderRadius: BorderRadius.circular(360),
       splashColor: AppColor.black.withOpacity(0.25),
       highlightColor: AppColor.black.withOpacity(0.4),
