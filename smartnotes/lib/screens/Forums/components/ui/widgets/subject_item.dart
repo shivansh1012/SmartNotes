@@ -49,16 +49,11 @@ class SubjectItem extends StatelessWidget {
               ),
               Image.asset(
                 subject.image,
-                width: 72,
-                height: 72,
+                width: 70,
+                height: 70,
               ),
             ],
           ),
-        ),
-        const Positioned(
-          right: 8,
-          top: 8,
-          child: Icon(Icons.more_vert, color: AppColor.black),
         ),
       ],
     );

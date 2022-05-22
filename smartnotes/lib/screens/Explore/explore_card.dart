@@ -11,24 +11,35 @@ class ExploreCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final courseInfo = ListTile(
       title: Container(
-          margin: const EdgeInsets.only(bottom: 10.0),
-          child: Text(courseData.title.toString(),
-              style: const TextStyle(fontSize: 18.0),
-              overflow: TextOverflow.fade,
-              maxLines: 1,
-              softWrap: false)),
-      subtitle: Text(courseData.authorInfo!.name.toString(),
-          style: const TextStyle(fontSize: 16.0),
+        margin: const EdgeInsets.only(bottom: 10.0),
+        child: Text(
+          courseData.title.toString(),
+          style: const TextStyle(fontSize: 18.0),
           overflow: TextOverflow.fade,
           maxLines: 1,
-          softWrap: false),
-      leading: const CircleAvatar(backgroundColor: Colors.pink),
-      trailing: Text.rich(TextSpan(children: [
+          softWrap: false,
+        ),
+      ),
+      subtitle: Text(
+        courseData.authorInfo!.name.toString(),
+        style: const TextStyle(fontSize: 16.0),
+        overflow: TextOverflow.fade,
+        maxLines: 1,
+        softWrap: false,
+      ),
+      leading: const CircleAvatar(
+        backgroundImage: AssetImage('assets/images/student_5.png'),
+      ),
+      trailing: Text.rich(
         TextSpan(
-            text: courseData.likes!.length.toString() + " ",
-            style: const TextStyle(fontSize: 18)),
-        const WidgetSpan(child: Icon(Icons.thumb_up, size: 22.0))
-      ])),
+          children: [
+            TextSpan(
+                text: courseData.likes!.length.toString() + " ",
+                style: const TextStyle(fontSize: 18)),
+            const WidgetSpan(child: Icon(Icons.thumb_up, size: 22.0))
+          ],
+        ),
+      ),
     );
 
     return Card(

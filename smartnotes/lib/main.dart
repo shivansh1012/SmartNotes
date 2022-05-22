@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:smartnotes/screens/Authentication/sign_in.dart';
 import 'package:smartnotes/screens/Authentication/sign_up.dart';
 import 'package:smartnotes/screens/Explore/explore.dart';
-import 'package:smartnotes/screens/Forums/forum.dart';
+import 'package:smartnotes/screens/Forums/components/forum.dart';
 import 'package:smartnotes/screens/Home/home.dart';
 import 'package:smartnotes/screens/PersonalNotes/personal_notes.dart';
 import 'package:smartnotes/screens/Profile/profile.dart';

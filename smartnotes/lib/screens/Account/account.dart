@@ -105,7 +105,9 @@ class _AccountState extends State<Account> {
                   ),
                   const CircleAvatar(
                     radius: 50,
-                    backgroundColor: Colors.yellow,
+                    backgroundImage: AssetImage(
+                      'assets/images/student_5.png',
+                    ),
                   ),
                   const SizedBox(
                     height: 50.0,

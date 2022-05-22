@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smartnotes/models/course_model.dart';
 import 'package:smartnotes/models/user_model.dart';
 import 'package:smartnotes/screens/Statistics/statistic_course_card.dart';
@@ -31,9 +30,9 @@ class StatisticsCourseList extends StatelessWidget {
       courseList.add(tempCourseInfo);
     }
 
-    Fluttertoast.showToast(
-        msg: "StatCourList: " + courseList.toString(),
-        backgroundColor: Colors.pink);
+    // Fluttertoast.showToast(
+    //     msg: "StatCourList: " + courseList.toString(),
+    //     backgroundColor: Colors.pink,);
     return courseList;
   }
 

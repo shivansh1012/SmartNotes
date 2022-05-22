@@ -21,11 +21,14 @@ class StatisticCourseCard extends StatelessWidget {
           overflow: TextOverflow.fade,
           maxLines: 1,
           softWrap: false),
-      leading: const CircleAvatar(backgroundColor: Colors.pink),
+      leading: const CircleAvatar(
+        backgroundImage: AssetImage('assets/images/student_5.png'),
+      ),
       trailing: Text.rich(TextSpan(children: [
         TextSpan(
-            text: courseData.likes!.length.toString() + " ",
-            style: const TextStyle(fontSize: 18)),
+          text: courseData.likes!.length.toString() + " ",
+          style: const TextStyle(fontSize: 18),
+        ),
         const WidgetSpan(child: Icon(Icons.thumb_up, size: 22.0))
       ])),
     );

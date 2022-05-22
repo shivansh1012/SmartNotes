@@ -88,43 +88,48 @@ class Profile extends StatelessWidget {
                               builder: (context) => const AboutUs()));
                         },
                         link: ""),
-                    const Text("App Version: 1.0.0",
-                        style: TextStyle(fontSize: 10.0, color: Colors.grey))
+                    const Text(
+                      "App Version: 1.1.0",
+                      style: TextStyle(fontSize: 10.0, color: Colors.grey),
+                    ),
                   ],
                 );
               } else {
                 return Column(
                   children: [
                     Container(
-                        margin: const EdgeInsets.all(15.0),
-                        height: safeHeight * 0.15,
-                        width: safeWidth,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.0),
-                          border: Border.all(
-                            color: secondary,
-                          ),
+                      margin: const EdgeInsets.all(15.0),
+                      height: safeHeight * 0.15,
+                      width: safeWidth,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15.0),
+                        border: Border.all(
+                          color: secondary,
                         ),
-                        padding: const EdgeInsets.all(20.0),
-                        child: Row(
-                          children: [
-                            const CircleAvatar(
-                              radius: 25.0,
-                              backgroundColor: Colors.amber,
+                      ),
+                      padding: const EdgeInsets.all(20.0),
+                      child: Row(
+                        children: [
+                          const CircleAvatar(
+                            radius: 25.0,
+                            backgroundImage: AssetImage(
+                              'assets/images/student_5.png',
                             ),
-                            const SizedBox(
-                              width: 15.0,
+                          ),
+                          const SizedBox(
+                            width: 15.0,
+                          ),
+                          Text(
+                            "Welcome, ${value.loggedInUser!.name!.split(' ')[0]}",
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold,
+                              color: secondary,
                             ),
-                            Text(
-                              "Welcome, ${value.loggedInUser!.name}",
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold,
-                                color: secondary,
-                              ),
-                            ),
-                          ],
-                        )),
+                          ),
+                        ],
+                      ),
+                    ),
                     ProfileButton(
                         buttonName: "Account",
                         buttonIcon: Icons.person_rounded,
