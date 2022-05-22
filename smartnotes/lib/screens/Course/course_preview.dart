@@ -127,7 +127,7 @@ class _CoursePreviewState extends State<CoursePreview> {
                   height: 66,
                 ),
                 Padding(
-                    padding: const EdgeInsets.only(left: 28),
+                    padding: const EdgeInsets.only(left: 28, right: 16),
                     child: Hero(
                         tag: courseDetails.title,
                         child: Material(
@@ -139,7 +139,7 @@ class _CoursePreviewState extends State<CoursePreview> {
                                     fontWeight: FontWeight.bold))))),
                 const SizedBox(height: 10),
                 Padding(
-                  padding: const EdgeInsets.only(left: 28),
+                  padding: const EdgeInsets.only(left: 28, right: 16),
                   child: Text(
                       courseDetails.authorInfo.name +
                           " ( " +
@@ -247,6 +247,7 @@ class _CoursePreviewState extends State<CoursePreview> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   InkWell(
+                    splashColor: Colors.grey.withAlpha(30),
                     borderRadius: BorderRadius.circular(360),
                     onTap: () {
                       Navigator.pop(context);
@@ -266,6 +267,7 @@ class _CoursePreviewState extends State<CoursePreview> {
                     ),
                   ),
                   InkWell(
+                    splashColor: Colors.grey.withAlpha(30),
                     borderRadius: BorderRadius.circular(360),
                     onTap: () {
                       Fluttertoast.showToast(
@@ -324,7 +326,7 @@ class _CoursePreviewState extends State<CoursePreview> {
 
     Widget _previewStack() {
       return Stack(
-        children: [_topBar(), _body()],
+        children: [_body(),_topBar()],
       );
     }
 
