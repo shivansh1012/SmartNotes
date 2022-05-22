@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:smartnotes/screens/Forums/components/forum.dart';
 
 import 'package:smartnotes/screens/Home/home.dart';
 import 'package:smartnotes/screens/Explore/explore.dart';
-import 'package:smartnotes/screens/Forums/forum.dart';
 import 'package:smartnotes/screens/Profile/profile.dart';
 import 'package:smartnotes/views/mobile_view/bottom_navigation.dart';
 import 'package:smartnotes/views/mobile_view/tab_item.dart';
@@ -26,10 +26,7 @@ class MobileViewState extends State<MobileView> {
         tabName: "Explore",
         icon: Icons.explore_outlined,
         page: const Explore()),
-    TabItem(
-        tabName: "Forum",
-        icon: Icons.forum,
-        page: const Forum()),
+    TabItem(tabName: "Forum", icon: Icons.forum, page: const Forum()),
     TabItem(
         tabName: "Profile", icon: Icons.person_outline, page: const Profile())
   ];

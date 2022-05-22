@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:smartnotes/screens/Forums/components/home_data.dart';
-import 'package:smartnotes/screens/components/search_bar.dart';
 
 import 'package:smartnotes/screens/Forums/components/subject_view.dart';
 import 'package:smartnotes/screens/Forums/components/ui/app_color.dart';
 import 'package:smartnotes/screens/Forums/components/ui/widgets/subject_item.dart';
 
-class HomeView extends StatelessWidget {
-  const HomeView({Key? key}) : super(key: key);
+class Forum extends StatelessWidget {
+  const Forum({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
