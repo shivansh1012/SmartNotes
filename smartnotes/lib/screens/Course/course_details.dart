@@ -60,35 +60,49 @@ class _CourseDetailsState extends State<CourseDetails> {
     }
 
     Widget _courseInfo(courseInfo) {
-      return Padding(
-        padding: const EdgeInsets.only(left: 28, right: 16),
-        child: Column(
-          children: [
-            const SizedBox(height: 100),
-            Hero(
+      return Column(
+        children: [
+          const SizedBox(height: 100),
+          Padding(
+            padding: const EdgeInsets.only(left: 28, right: 16),
+            child: Hero(
                 tag: courseInfo.title,
                 child: Material(
                     color: Colors.transparent,
-                    child: Text(courseInfo.title,
-                        style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 34,
-                            fontWeight: FontWeight.bold)))),
-            const SizedBox(height: 10),
-            Text(
-                courseInfo.authorInfo.name +
-                    " ( " +
-                    courseInfo.authorInfo.email +
-                    " )",
-                style: TextStyle(
-                    color: Colors.black.withOpacity(0.7),
-                    fontWeight: FontWeight.w400,
-                    fontSize: 16),
-                overflow: TextOverflow.fade,
-                maxLines: 1,
-                softWrap: false),
-            const SizedBox(height: 16),
-            Expanded(
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(courseInfo.title,
+                          style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 34,
+                              fontWeight: FontWeight.bold)),
+                    ))),
+          ),
+          const SizedBox(height: 10),
+          Padding(
+            padding: const EdgeInsets.only(left: 28, right: 16),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                  courseInfo.authorInfo.name +
+                      " ( " +
+                      courseInfo.authorInfo.email +
+                      " )",
+                  style: TextStyle(
+                      color: Colors.black.withOpacity(0.7),
+                      fontWeight: FontWeight.w400,
+                      fontSize: 16),
+                  overflow: TextOverflow.fade,
+                  maxLines: 1,
+                  softWrap: false),
+            ),
+          ),
+          const SizedBox(height: 20),
+          const Center(
+              child: Text("Course Documents", style: TextStyle(fontSize: 16))),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 28, right: 16),
               child: ListView.builder(
                 physics: const BouncingScrollPhysics(),
                 itemCount: courseInfo.document.length,
@@ -126,8 +140,8 @@ class _CourseDetailsState extends State<CourseDetails> {
                 },
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       );
     }
 
