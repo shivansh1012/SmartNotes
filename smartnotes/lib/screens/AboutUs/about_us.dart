@@ -16,17 +16,20 @@ class _AboutUsState extends State<AboutUs> {
       {
         "name": "Anand Singh Tanwar",
         "USN": "ENG19CT0005",
-        "Contribution": "Frontend Dev"
+        "Contribution": "Frontend Dev",
+        "avatar": "student_1.png"
       },
       {
         "name": "Gaurav Gupta",
         "USN": "ENG19CT0011",
-        "Contribution": "Frontend and UI/UX"
+        "Contribution": "Frontend and UI/UX",
+        "avatar": "student_5.png"
       },
       {
         "name": "Shivansh Pandey",
         "USN": "ENG19CT0024",
-        "Contribution": "FnF Dev"
+        "Contribution": "Flutter & Firebase Dev",
+        "avatar": "user.png"
       }
     ];
     return SafeArea(
@@ -36,7 +39,7 @@ class _AboutUsState extends State<AboutUs> {
           viewportFraction: 0.8,
           aspectRatio: 2.0,
           autoPlay: true,
-          autoPlayInterval: const Duration(seconds: 2),
+          autoPlayInterval: const Duration(seconds: 4),
           height: 500),
       itemCount: contributors.length,
       itemBuilder: (context, index, realIndex) => Container(
@@ -45,17 +48,21 @@ class _AboutUsState extends State<AboutUs> {
         decoration: BoxDecoration(
           gradient: const LinearGradient(colors: [
             Color(0xFF701ebd),
-            Color(0xFF873bcc),
+            // Color(0xFF873bcc),
             Color(0xFFfe4a97),
-            Color(0xFFe17763),
-            Color(0xFF68998c),
+            // Color(0xFFe17763),
+            // Color(0xFF68998c),
           ], begin: Alignment.topRight, end: Alignment.bottomLeft),
           borderRadius: BorderRadius.circular(15.0),
         ),
         padding: const EdgeInsets.all(20.0),
         child: Column(children: [
           const SizedBox(height: 100),
-          const CircleAvatar(backgroundColor: Colors.white, radius: 50),
+          CircleAvatar(
+              backgroundImage: AssetImage(
+                'assets/images/' + contributors[index]['avatar'].toString(),
+              ),
+              radius: 50),
           const SizedBox(height: 100),
           Text(contributors[index]['name'].toString(),
               style: const TextStyle(fontSize: 25, color: Colors.white)),
